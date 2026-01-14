@@ -3,11 +3,11 @@ import { Box, Button, Typography, Grid, useTheme, Stack, IconButton } from "@mui
 import PublicLayout from "../../layouts/PublicLayout";
 import OTPInput from "../../components/Otp";
 import { useNavigate, useLocation } from "react-router-dom";
-import { encryptAES } from "../../utils/helper";
+import { encryptionService } from "../../utils/EncryptionService";
 import { useDispatch } from "react-redux";
 import { showAlert } from "../../rtk/feature/alertSlice";
 import { loginUser } from "../../rtk/feature/authSlice";
-import { useResendMutation, useVerifyOtpMutation } from "../../rtk/endpoints/authApi";
+import { useResendMutation, useVerifyOtpMutation, useVerifyResetPasswordOtpMutation } from "../../rtk/endpoints/authApi";
 
 
 export default function OTPVerificationPage(): JSX.Element {
@@ -17,8 +17,9 @@ export default function OTPVerificationPage(): JSX.Element {
   const dispatch = useDispatch();
   const [resend, { isSuccess, data: resendData }] = useResendMutation();
   const [verifyOtp, { isSuccess: isVerifyOtpSuccess, data }] = useVerifyOtpMutation();
+  const [verifyResetPasswordOtp, { isSuccess: isVerifyResetOtpSuccess, data: resetOtpData }] = useVerifyResetPasswordOtpMutation();
 
-  const { email: stateEmail, token, type } = location.state || "";
+  const { email: stateEmail, verifyToken, type } = location.state || "";
   
   // Determine flow type from props or location state
   const currentFlowType = type || "login";
@@ -109,8 +110,14 @@ export default function OTPVerificationPage(): JSX.Element {
       return;
     }
     try {
+      const encryptedEmail = await encryptionService.encrypt(email);
+      
+      if (!encryptedEmail) {
+        throw new Error("Encryption failed");
+      }
+
       await resend({
-        email: encryptAES(email),
+        email: encryptedEmail,
         deviceType: "web",
         actionType: "resend_otp",
       }).unwrap();
@@ -127,13 +134,13 @@ export default function OTPVerificationPage(): JSX.Element {
       }));
       setTimer(60);
       
-      // Update the current page state with new token
+      // Update the current page state with new verifyToken from resend response
       const currentPath = currentFlowType === "login" ? "/login-otp-verification" : "/otp-verification";
       navigate(currentPath, {
         state: {
           email: email,
           type: currentFlowType,
-          token: resendData?.data?.token
+          verifyToken: resendData?.data?.token // resend API still returns token
         },
       });
     }
@@ -144,35 +151,56 @@ export default function OTPVerificationPage(): JSX.Element {
     const fullOtp = otp.join("");
 
     try {
-      await verifyOtp({
-        token: token,
-        otp: fullOtp,
-        deviceToken: "",
-        deviceType: "web"
-      }).unwrap();
+      const encryptedEmail = await encryptionService.encrypt(email);
+      
+      if (!encryptedEmail) {
+        throw new Error("Encryption failed");
+      }
+
+      if (currentFlowType === "login") {
+        // Login flow - use verifyOtp with verifyToken
+        await verifyOtp({
+          email: encryptedEmail,
+          otp: fullOtp,
+          verifyToken: verifyToken,
+        }).unwrap();
+      } else {
+        // Forgot password flow - use verifyResetPasswordOtp
+        await verifyResetPasswordOtp({
+          email: encryptedEmail,
+          otp: fullOtp,
+        }).unwrap();
+      }
     } catch (error) {
       console.error('Failed to verify OTP:', error);
     }
   };
 
+  // Handle login OTP verification success
   useEffect(() => {
-    if (isVerifyOtpSuccess) {
+    if (isVerifyOtpSuccess && currentFlowType === "login") {
       dispatch(showAlert({
         message: 'OTP verified Successfully',
         severity: 'success',
       }));
-
-      if (currentFlowType === "login") {
-        // For login flow, set user data and navigate to dashboard
-        const user = data?.data;
-        dispatch(loginUser(user));
-        navigate("/dashboard");
-      } else {
-        // For forgot password flow, navigate to reset password
-        navigate(`/reset-password?token=${data?.data?.accessToken}`);
-      }
+      // For login flow, set user data and navigate to dashboard
+      const user = data?.data;
+      dispatch(loginUser(user));
+      navigate("/dashboard");
     }
   }, [isVerifyOtpSuccess, currentFlowType, data?.data, dispatch, navigate]);
+
+  // Handle reset password OTP verification success
+  useEffect(() => {
+    if (isVerifyResetOtpSuccess && currentFlowType !== "login") {
+      dispatch(showAlert({
+        message: 'OTP verified Successfully',
+        severity: 'success',
+      }));
+      // For forgot password flow, navigate to reset password
+      navigate(`/reset-password?token=${resetOtpData?.data?.accessToken}`);
+    }
+  }, [isVerifyResetOtpSuccess, currentFlowType, resetOtpData?.data, dispatch, navigate]);
 
   const isOtpComplete = otp.every((digit) => digit !== "");
 

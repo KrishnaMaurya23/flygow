@@ -2,7 +2,8 @@ import { useEffect, type JSX } from "react";
 import { Box, Button, Typography, InputAdornment, Grid, Stack, IconButton } from "@mui/material";
 import { useForm } from "react-hook-form";
 import PublicLayout from "../../layouts/PublicLayout";
-import { encryptAES, StyledTextField } from "../../utils/helper";
+import { StyledTextField } from "../../utils/helper";
+import { encryptionService } from "../../utils/EncryptionService";
 import { useDispatch } from "react-redux";
 import { showAlert } from "../../rtk/feature/alertSlice";
 import { useNavigate } from "react-router-dom";
@@ -38,23 +39,13 @@ export default function ForgotPassword(): JSX.Element {
 
   const onSubmit = async (data: FormData): Promise<void> => {
     try {
-      // console.log("Forgot Password Data:", data);
-      // dispatch(
-      //   showAlert({
-      //     message: "OTP sent to your email",
-      //     severity: "success",
-      //   })
-      // );
-      // navigate("/otp-verification", {
-      //   state: {
-      //     email: data.email,
-      //     type: "forgot-password",
-      //   },
-      // });
-      // If you need to encrypt the email before sending it to the API
-      const encryptEmail = encryptAES(data.email);
-      await forgotPassword({ email: encryptEmail }).unwrap();
+      const encryptedEmail = await encryptionService.encrypt(data.email);
+      
+      if (!encryptedEmail) {
+        throw new Error("Encryption failed");
+      }
 
+      await forgotPassword({ email: encryptedEmail }).unwrap();
     } catch (error: any) {
       console.error("Forgot Password Error:", error);
     }

@@ -8,7 +8,8 @@ import {
   Grid,
 } from "@mui/material";
 import PublicLayout from "../../layouts/PublicLayout";
-import { decryptAES, encryptAES, StyledTextField } from "../../utils/helper";
+import { StyledTextField } from "../../utils/helper";
+import { encryptionService } from "../../utils/EncryptionService";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -42,14 +43,17 @@ export default function LoginPage(): JSX.Element {
 
   const onSubmit = async (data: LoginFormInputs) => {
     try {
-      const encryptedData = {
-        email: encryptAES(data.email),
-        password: data.password,
-        deviceToken: "",
-        deviceType: "web",
-        actionType: "signin",
-      };
-      await login(encryptedData).unwrap();
+      const encryptedEmail = await encryptionService.encrypt(data.email);
+      const encryptedPassword = await encryptionService.encrypt(data.password);
+
+      if (!encryptedEmail || !encryptedPassword) {
+        throw new Error("Encryption failed");
+      }
+
+      await login({
+        email: encryptedEmail,
+        password: encryptedPassword,
+      }).unwrap();
       // Store the email for OTP verification
       sessionStorage.setItem('loginEmail', data.email);
     } catch (err: any) {
@@ -61,11 +65,11 @@ export default function LoginPage(): JSX.Element {
     if (isSuccess) {
       // Get the email from sessionStorage
       const loginEmail = sessionStorage.getItem('loginEmail') || "";
-      // Navigate to OTP verification with token from login response
+      // Navigate to OTP verification with verifyToken from login response
       navigate("/login-otp-verification", {
         state: {
           email: loginEmail,
-          token: successData?.data?.token || "",
+          verifyToken: successData?.data?.verifyToken || "",
           type: "login"
         },
       });

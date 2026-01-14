@@ -1,48 +1,23 @@
 import api from "../services";
 
-// Helper function to simulate API delay
+// Helper function to simulate API delay (used by remaining mock endpoints)
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-
-// Mock user data for login/OTP verification
-const mockUserData = {
-  userId: "user_123",
-  email: "admin@example.com",
-  fullName: "Admin User",
-  role: "admin",
-  accessToken: "mock_access_token_12345",
-};
 
 const authApi = api.injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation({
-      queryFn: async (body: {
-        email: string;
-        password: string;
-        deviceToken: string;
-        deviceType: string;
-        actionType: string;
-      }) => {
-        await delay(800); // Simulate API delay
-        return {
-          data: {
-            data: {
-              token: "mock_otp_token_12345",
-            },
-          },
-        };
-      },
+      query: (body: { email: string; password: string }) => ({
+        url: "/api/v1/auth/admin/login",
+        method: "POST",
+        body,
+      }),
     }),
     forgotPassword: builder.mutation({
-      queryFn: async (body: { email: string }) => {
-        await delay(800); // Simulate API delay
-        return {
-          data: {
-            data: {
-              token: "mock_forgot_password_token_12345",
-            },
-          },
-        };
-      },
+      query: (body: { email: string }) => ({
+        url: "/api/v1/auth/admin/forgot-password",
+        method: "POST",
+        body,
+      }),
     }),
     resend: builder.mutation({
       queryFn: async (body: {
@@ -78,46 +53,18 @@ const authApi = api.injectEndpoints({
     }),
 
     verifyOtp: builder.mutation({
-      queryFn: async (body: {
-        token: string;
-        otp: string;
-        deviceToken: string;
-        deviceType: string;
-      }) => {
-        await delay(800); // Simulate API delay
-        
-        // Static data: Accept any OTP for testing purposes
-        // In production, this would validate the OTP against the token
-        
-        // Determine flow based on token type
-        // Login flow uses token from login response (contains "otp" or "login")
-        // Forgot password flow uses token from forgot password response (contains "forgot")
-        const isLoginFlow = 
-          body.token.includes("otp") || 
-          body.token.includes("login") ||
-          (!body.token.includes("forgot") && body.token.length > 0);
-        
-        if (isLoginFlow) {
-          // For login flow, return full user data with accessToken
-          return {
-            data: {
-              data: {
-                ...mockUserData,
-                accessToken: mockUserData.accessToken,
-              },
-            },
-          };
-        } else {
-          // Forgot password flow - return accessToken for password reset
-          return {
-            data: {
-              data: {
-                accessToken: "mock_reset_password_access_token_12345",
-              },
-            },
-          };
-        }
-      },
+      query: (body: { email: string; otp: string; verifyToken: string }) => ({
+        url: "/api/v1/auth/admin/verify-login-otp",
+        method: "POST",
+        body,
+      }),
+    }),
+    verifyResetPasswordOtp: builder.mutation({
+      query: (body: { email: string; otp: string }) => ({
+        url: "/api/v1/auth/admin/verify-reset-password-otp",
+        method: "POST",
+        body,
+      }),
     }),
     logout: builder.mutation({
       queryFn: async () => {
@@ -148,6 +95,7 @@ export const {
   useResendMutation,
   useResetPasswordMutation,
   useVerifyOtpMutation,
+  useVerifyResetPasswordOtpMutation,
   useLogoutMutation,
   useChangePasswordMutation,
 } = authApi;
