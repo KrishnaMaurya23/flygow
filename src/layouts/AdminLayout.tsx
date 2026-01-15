@@ -17,6 +17,12 @@ import type { SxProps, Theme } from "@mui/material";
 import {
   KeyboardArrowDown,
 } from "@mui/icons-material";
+import { CacheProvider } from "@emotion/react";
+import createCache from "@emotion/cache";
+// @ts-ignore
+import { prefixer } from "stylis";
+// @ts-ignore
+import rtlPlugin from "stylis-plugin-rtl";
 import { AppProvider, type Navigation } from "@toolpad/core/AppProvider";
 import { DashboardLayout } from "@toolpad/core/DashboardLayout";
 import { PageContainer } from "@toolpad/core/PageContainer";
@@ -43,6 +49,16 @@ const MENU_ITEM_SX: SxProps<Theme> = {
   fontWeight: 400,
   color: "#384250",
 };
+
+// Create rtl cache
+const cacheRtl = createCache({
+  key: 'muirtl',
+  stylisPlugins: [prefixer, rtlPlugin],
+});
+
+const cacheLtr = createCache({
+  key: 'mui',
+});
 
 // Helper function to generate selected navigation item styles
 const getSelectedItemStyles = (theme: Theme, includeImageFilter = false): SxProps<Theme> => ({
@@ -137,7 +153,7 @@ function Action() {
     setOpenDialog(true);
     handleMenuClose();
   };
-  
+
   const handleLogoutConfirm = async () => {
     try {
       await logout({});
@@ -147,7 +163,7 @@ function Action() {
       console.error("Logout error:", error);
     }
   };
-  
+
   return (
     <>
       <Box display="flex" alignItems="center" justifyContent="space-between" width="100%">
@@ -261,7 +277,7 @@ function useNavigationSelection() {
   const isPathSelected = (segment: string) => {
     // Remove leading slash and split path
     const pathParts = currentPath.replace(/^\//, '').split('/');
-    
+
     // Check if the segment matches any part of the current path
     return pathParts.includes(segment);
   };
@@ -273,10 +289,20 @@ export default function AdminLayout(props: any) {
   const { t } = useTranslation();
   const direction = useSelector((state: RootState) => state.language.direction);
   const muiTheme = useTheme();
-  const appTheme = createAppTheme(direction);
   const { window } = props;
   const router = useToolpadRouter();
   const { isPathSelected } = useNavigationSelection();
+
+  // Create memoized theme to prevent unnecessary re-renders
+  const theme = React.useMemo(() => createAppTheme(direction), [direction]);
+
+  // Update document direction
+  React.useEffect(() => {
+    document.dir = direction;
+  }, [direction]);
+
+  // Select cache based on direction
+  const currentCache = direction === 'rtl' ? cacheRtl : cacheLtr;
 
   // Add data attributes to navigation items for custom selection
   React.useEffect(() => {
@@ -307,7 +333,7 @@ export default function AdminLayout(props: any) {
               'admin-users': 'admin-users',
               'user-roles': 'user-roles',
             };
-            
+
             const segment = segmentMap[text];
             if (segment) {
               item.setAttribute('data-segment', segment);
@@ -323,29 +349,29 @@ export default function AdminLayout(props: any) {
   }, []);
 
   const NAVIGATION: Navigation = [
-    { 
-      segment: "dashboard", 
-      title: t("dashboard"), 
+    {
+      segment: "dashboard",
+      title: t("dashboard"),
       icon: <NavigationIcon variant="dashboard" />
     },
-    { 
-      segment: "shipments", 
-      title: t("shipments"), 
+    {
+      segment: "shipments",
+      title: t("shipments"),
       icon: <NavigationIcon variant="shipments" />
     },
-    { 
-      segment: "customers", 
-      title: t("customers"), 
+    {
+      segment: "customers",
+      title: t("customers"),
       icon: <NavigationIcon variant="customers" />
     },
-    { 
-      segment: "airport-handler", 
-      title: t("airportHandler"), 
+    {
+      segment: "airport-handler",
+      title: t("airportHandler"),
       icon: <NavigationIcon variant="airport-handler" />
     },
-    { 
-      segment: "transactions", 
-      title: t("transactions"), 
+    {
+      segment: "transactions",
+      title: t("transactions"),
       icon: <NavigationIcon variant="transactions" />
     },
     {
@@ -392,41 +418,41 @@ export default function AdminLayout(props: any) {
   // Generate navigation selection styles
   const getNavigationSelectionStyles = (): Record<string, SxProps<Theme>> => {
     const styles: Record<string, SxProps<Theme>> = {};
-    
+
     // Segments that need image filter when selected
     const segmentsWithImageFilter = [
-      "user-cohorts", "content-moderation", "manage-categories", 
+      "user-cohorts", "content-moderation", "manage-categories",
       "notification-management", "support-tickets", "audit-reports",
       "manage-legal-docs", "manage-admin-users"
     ];
-    
+
     // Simple selected segments
     const selectedSegments = [
-      "dashboard", "shipments", "customers", "airport-handler", 
+      "dashboard", "shipments", "customers", "airport-handler",
       "transactions", "coupon-management", "master-city-table",
       "airport-location", "shipment-pricing", "delivery-assignment"
     ];
-    
+
     // Parent segments that should be selected when child is selected
     const parentChildMappings: { [key: string]: string[] } = {
       "airport-operations": ["master-city-table", "airport-location", "shipment-pricing", "delivery-assignment"],
       "manage-categories": ["category-detail", "sub-category-detail"],
     };
-    
+
     // Apply styles for simple selected segments
     selectedSegments.forEach(segment => {
       if (isPathSelected(segment)) {
         styles[`& .MuiListItemButton-root[data-segment='${segment}']`] = getSelectedItemStyles(muiTheme);
       }
     });
-    
+
     // Apply styles for segments with image filter
     segmentsWithImageFilter.forEach(segment => {
       if (isPathSelected(segment)) {
         styles[`& .MuiListItemButton-root[data-segment='${segment}']`] = getSelectedItemStyles(muiTheme, true);
       }
     });
-    
+
     // Handle parent segments that should be selected when child is selected
     Object.entries(parentChildMappings).forEach(([parent, children]) => {
       const isParentOrChildSelected = isPathSelected(parent) || children.some(child => isPathSelected(child));
@@ -434,114 +460,116 @@ export default function AdminLayout(props: any) {
         styles[`& .MuiListItemButton-root[data-segment='${parent}']`] = getSelectedItemStyles(muiTheme);
       }
     });
-    
+
     return styles;
   };
 
   return (
-    <AppProvider
-      navigation={NAVIGATION}
-      router={router}
-      theme={appTheme}
-      window={window ? window() : undefined}
-    >
-      <DashboardLayout
-        disableCollapsibleSidebar={true}
-        sx={{
-          backgroundColor: muiTheme.palette.background.default,
-          "& .MuiCollapse-wrapperInner .MuiList-root":{
-            padding: "0px !important",
-          },
-          "& .MuiDrawer-paper": {
-            backgroundColor: muiTheme.palette.background.default,
-            border: "none",
-          },
-          "& .MuiBox-root": { 
-            padding: "2px",
-            scrollbarWidth: "none",
-          },
-          "& .MuiListItemButton-root": {
-            backgroundColor: "#fff",
-            marginBottom: 1.5,
-          },
-          "& .MuiListItemButton-root.Mui-selected": {
-            backgroundColor: muiTheme.palette.primary.light,
-            position: "relative", // Ensure relative positioning for pseudo-element
-            "&::before": {
-              content: '""',
-              position: "absolute",
-              left: 0,
-              top: 14, // decreased height
-              bottom: 14, // decreased height
-              width: "4px", // thickness of the line
-              borderRadius: "4px",
-              backgroundColor: "#0E6A37",
-              display: "block",
-            },
-          },
-          "& .MuiListItemButton-root.Mui-selected .MuiTypography-root": {
-            color: "#0E6A37",
-          },
-          // Set selected icon color to match selected text color (for <img> SVGs, use filter)
-          // "& .MuiListItemButton-root.Mui-selected img": {
-          //   filter: "invert(41%) sepia(97%) saturate(747%) hue-rotate(186deg) brightness(101%) contrast(101%)",
-          // },
-          "& .MuiListItemButton-root.Mui-selected img": {
-            filter: ICON_FILTER,
-          },
-          // Custom navigation selection based on path
-          ...getNavigationSelectionStyles(),
-          "& .MuiListItemIcon-root": {
-            minWidth: "28px",
-          },
-          "& .MuiListItemText-root .MuiTypography-root": {
-            fontSize: "13px",
-            whiteSpace: "break-spaces",
-            lineHeight: "0.885rem",
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-          },
-          "& .MuiAppBar-root": {
-            backgroundColor: muiTheme.palette.background.default,
-            border: "none",
-          },
-        }}
-        slots={{ toolbarActions: Action }}
-        branding={{
-          logo: (
-            <Box display="flex" alignItems="center">
-              <img
-                src="/assets/icons/flygow_logo_dashboard.svg"
-                alt="Flygow Logo"
-                style={{ width: "208px", height: "68px", marginRight: "4px" }}
-              />
-            </Box>
-          ),
-          title: "",
-        }}
-        sidebarExpandedWidth={sidebarWidth}
+    <CacheProvider value={currentCache}>
+      <AppProvider
+        navigation={NAVIGATION}
+        router={router}
+        theme={theme}
+        window={window ? window() : undefined}
       >
-        <Box sx={{ p: 2, marginTop: "0px !important" }}>
-          <PageContainer
-            sx={{
+        <DashboardLayout
+          disableCollapsibleSidebar={true}
+          sx={{
+            backgroundColor: muiTheme.palette.background.default,
+            "& .MuiCollapse-wrapperInner .MuiList-root": {
+              padding: "0px !important",
+            },
+            "& .MuiDrawer-paper": {
+              backgroundColor: muiTheme.palette.background.default,
+              border: "none",
+            },
+            "& .MuiBox-root": {
+              padding: "2px",
+              scrollbarWidth: "none",
+            },
+            "& .MuiListItemButton-root": {
+              backgroundColor: "#fff",
+              marginBottom: 1.5,
+            },
+            "& .MuiListItemButton-root.Mui-selected": {
               backgroundColor: muiTheme.palette.primary.light,
-              borderRadius: 6,
-              boxShadow: 1,
-              p: 2,
-              "& .MuiBox-root": {
-                marginTop: 0,
+              position: "relative", // Ensure relative positioning for pseudo-element
+              "&::before": {
+                content: '""',
+                position: "absolute",
+                left: 0,
+                top: 14, // decreased height
+                bottom: 14, // decreased height
+                width: "4px", // thickness of the line
+                borderRadius: "4px",
+                backgroundColor: "#0E6A37",
+                display: "block",
               },
-              "& .MuiStack-root": {
-                marginTop: 0,
-              },
-            }}
-            title=""
-            breadcrumbs={[]}
-          >
-            {props.children}
-          </PageContainer>
-        </Box>
-      </DashboardLayout>
-    </AppProvider>
+            },
+            "& .MuiListItemButton-root.Mui-selected .MuiTypography-root": {
+              color: "#0E6A37",
+            },
+            // Set selected icon color to match selected text color (for <img> SVGs, use filter)
+            // "& .MuiListItemButton-root.Mui-selected img": {
+            //   filter: "invert(41%) sepia(97%) saturate(747%) hue-rotate(186deg) brightness(101%) contrast(101%)",
+            // },
+            "& .MuiListItemButton-root.Mui-selected img": {
+              filter: ICON_FILTER,
+            },
+            // Custom navigation selection based on path
+            ...getNavigationSelectionStyles(),
+            "& .MuiListItemIcon-root": {
+              minWidth: "28px",
+            },
+            "& .MuiListItemText-root .MuiTypography-root": {
+              fontSize: "13px",
+              whiteSpace: "break-spaces",
+              lineHeight: "0.885rem",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+            },
+            "& .MuiAppBar-root": {
+              backgroundColor: muiTheme.palette.background.default,
+              border: "none",
+            },
+          }}
+          slots={{ toolbarActions: Action }}
+          branding={{
+            logo: (
+              <Box display="flex" alignItems="center">
+                <img
+                  src="/assets/icons/flygow_logo_dashboard.svg"
+                  alt="Flygow Logo"
+                  style={{ width: "208px", height: "68px", marginRight: "4px" }}
+                />
+              </Box>
+            ),
+            title: "",
+          }}
+          sidebarExpandedWidth={sidebarWidth}
+        >
+          <Box sx={{ p: 2, marginTop: "0px !important" }}>
+            <PageContainer
+              sx={{
+                backgroundColor: muiTheme.palette.primary.light,
+                borderRadius: 6,
+                boxShadow: 1,
+                p: 2,
+                "& .MuiBox-root": {
+                  marginTop: 0,
+                },
+                "& .MuiStack-root": {
+                  marginTop: 0,
+                },
+              }}
+              title=""
+              breadcrumbs={[]}
+            >
+              {props.children}
+            </PageContainer>
+          </Box>
+        </DashboardLayout>
+      </AppProvider>
+    </CacheProvider>
   );
 }
