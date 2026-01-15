@@ -127,6 +127,7 @@ const UserInfo: React.FC<{ showInMenu?: boolean }> = ({ showInMenu = false }) =>
   </Stack>
 );
 
+
 function Action() {
   const { t } = useTranslation();
   const [openDialog, setOpenDialog] = React.useState(false);
@@ -134,11 +135,15 @@ function Action() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const direction = useSelector((state: RootState) => state.language.direction);
+  const isRTL = direction === "rtl";
+
+  const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
   const open = Boolean(anchorEl);
 
-  const handleMenuClick = (event: React.MouseEvent<HTMLElement>) =>
-    setAnchorEl(event.currentTarget);
+  const handleMenuClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget); // ✅ IconButton ONLY
+  };
 
   const handleMenuClose = () => setAnchorEl(null);
 
@@ -147,12 +152,12 @@ function Action() {
     handleMenuClose();
   };
 
-  const handleCloseDialog = () => setOpenDialog(false);
-
   const handleLogout = () => {
     setOpenDialog(true);
     handleMenuClose();
   };
+
+  const handleCloseDialog = () => setOpenDialog(false);
 
   const handleLogoutConfirm = async () => {
     try {
@@ -164,49 +169,70 @@ function Action() {
     }
   };
 
+  // 🔍 Debug (remove later)
+  console.log(anchorEl?.getBoundingClientRect());
+
   return (
     <>
-      <Box display="flex" alignItems="center" justifyContent="space-between" width="100%">
-        <Box display="flex" alignItems="center" gap={1}>
-          <Stack direction="row" onClick={handleMenuClick} alignItems="center">
-            <UserInfo />
-            <IconButton size="small">
-              <KeyboardArrowDown />
-            </IconButton>
-          </Stack>
-        </Box>
+      {/* Header Right/Left Section */}
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="space-between"
+        width="100%"
+      >
+        <Stack direction="row" alignItems="center" spacing={1} onClick={handleMenuClick}>
+          <UserInfo />
+
+          {/* ✅ Anchor MUST be IconButton */}
+          <IconButton size="small" >
+            <KeyboardArrowDown />
+          </IconButton>
+        </Stack>
       </Box>
 
+      {/* Dropdown Menu */}
       <Menu
         anchorEl={anchorEl}
         open={open}
         onClose={handleMenuClose}
-        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-        transformOrigin={{ vertical: "top", horizontal: "right" }}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: isRTL ? "left" : "right",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: isRTL ? "left" : "right",
+        }}
         sx={{
-          maxWidth: "300px",
-          py: 2,
           "& .MuiPaper-root": {
             borderRadius: 2.5,
             width: "270px",
             minWidth: "270px",
-            top: "70px !important",
+            // marginTop: "8px", // ✅ DO NOT override top
+            top: "70px !important"
           },
         }}
       >
         <UserInfo showInMenu />
         <Divider sx={{ mt: 2 }} />
+
         <MenuItem sx={MENU_ITEM_SX} onClick={handleChangePassword}>
           {t("changePassword.title")}
         </MenuItem>
+
         <Divider sx={{ mt: 2 }} />
+
         <LanguageMenu onClose={handleMenuClose} />
+
         <Divider sx={{ mt: 2 }} />
+
         <MenuItem sx={MENU_ITEM_SX} onClick={handleLogout}>
           {t("logout.confirm")}
         </MenuItem>
       </Menu>
 
+      {/* Logout Confirmation */}
       <GlobalDialog
         open={openDialog}
         handleClose={handleCloseDialog}
