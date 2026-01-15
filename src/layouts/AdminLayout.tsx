@@ -13,6 +13,7 @@ import {
   Divider,
   useTheme,
 } from "@mui/material";
+import type { SxProps, Theme } from "@mui/material";
 import {
   KeyboardArrowDown,
 } from "@mui/icons-material";
@@ -26,15 +27,93 @@ import { logoutUser } from "../rtk/feature/authSlice";
 import GlobalDialog from "../components/dialog";
 import CommonDialog from "../components/dialog/dialog-content/CommonDialog";
 import { useLogoutMutation } from "../rtk/endpoints/authApi";
-import { decryptAES } from "../utils/helper";
 import LanguageMenu from "../components/language-switcher/LanguageMenu";
 import createAppTheme from "../theme";
 import type { RootState } from "../rtk/store";
 
+// Constants
+const SELECTED_ITEM_COLOR = "#0E6A37";
+const SELECTED_INDICATOR_WIDTH = "4px";
+const SELECTED_INDICATOR_TOP = 14;
+const SELECTED_INDICATOR_BOTTOM = 14;
+const ICON_FILTER = "invert(30%) sepia(98%) saturate(7470%) hue-rotate(215deg) brightness(103%) contrast(104%)";
+
+const MENU_ITEM_SX: SxProps<Theme> = {
+  fontSize: "14px",
+  fontWeight: 400,
+  color: "#384250",
+};
+
+// Helper function to generate selected navigation item styles
+const getSelectedItemStyles = (theme: Theme, includeImageFilter = false): SxProps<Theme> => ({
+  backgroundColor: theme.palette.primary.light,
+  position: "relative",
+  "&::before": {
+    content: '""',
+    position: "absolute",
+    left: 0,
+    top: SELECTED_INDICATOR_TOP,
+    bottom: SELECTED_INDICATOR_BOTTOM,
+    width: SELECTED_INDICATOR_WIDTH,
+    borderRadius: SELECTED_INDICATOR_WIDTH,
+    backgroundColor: SELECTED_ITEM_COLOR,
+    display: "block",
+  },
+  "& .MuiTypography-root": {
+    color: SELECTED_ITEM_COLOR,
+  },
+  ...(includeImageFilter && {
+    "& img": {
+      filter: ICON_FILTER,
+    },
+  }),
+});
+
+// Navigation icon components
+const NavigationIcon: React.FC<{ variant: string }> = ({ variant }) => {
+  const iconStyles: { [key: string]: SxProps<Theme> } = {
+    dashboard: { width: 24, height: 24, borderRadius: "50%", border: "2px solid #384250" },
+    shipments: { width: 24, height: 24, backgroundColor: "#12B76A", borderRadius: 1 },
+    customers: { width: 24, height: 24, backgroundColor: "#384250", borderRadius: "50%" },
+    "airport-handler": { width: 24, height: 24, backgroundColor: "#384250", clipPath: "polygon(50% 0%, 0% 100%, 100% 100%)" },
+    transactions: { width: 24, height: 24, backgroundColor: "#384250", borderRadius: 1 },
+    "airport-operations": { width: 24, height: 24, backgroundColor: "#12B76A", clipPath: "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)" },
+    "coupon-management": { width: 24, height: 24, borderRadius: "50%", border: "2px solid #384250", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "12px", fontWeight: "bold" },
+  };
+
+  if (variant === "coupon-management") {
+    return (
+      <Box sx={iconStyles[variant]}>%</Box>
+    );
+  }
+
+  return <Box sx={iconStyles[variant] || iconStyles.dashboard} />;
+};
+
+// User info component
+const UserInfo: React.FC<{ showInMenu?: boolean }> = ({ showInMenu = false }) => (
+  <Stack
+    direction="column"
+    gap={0}
+    sx={{
+      display: { xs: showInMenu ? "flex" : "none", sm: "flex" },
+      ...(showInMenu ? { px: 2, mt: 1 } : { marginRight: "60px" }),
+    }}
+  >
+    <Typography variant="headerTitle">Admin Flygow</Typography>
+    <Typography
+      variant="headerSubtitle"
+      color={showInMenu ? undefined : "secondary.500"}
+      sx={showInMenu ? { wordWrap: "break-word" } : undefined}
+    >
+      adminflygow@yopmail.com
+    </Typography>
+  </Stack>
+);
+
 function Action() {
   const { t } = useTranslation();
   const [openDialog, setOpenDialog] = React.useState(false);
-  const user = useSelector((state: any) => state.auth.user);
   const [logout] = useLogoutMutation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -58,6 +137,7 @@ function Action() {
     setOpenDialog(true);
     handleMenuClose();
   };
+  
   const handleLogoutConfirm = async () => {
     try {
       await logout({});
@@ -67,21 +147,13 @@ function Action() {
       console.error("Logout error:", error);
     }
   };
+  
   return (
     <>
       <Box display="flex" alignItems="center" justifyContent="space-between" width="100%">
         <Box display="flex" alignItems="center" gap={1}>
           <Stack direction="row" onClick={handleMenuClick} alignItems="center">
-            <Stack
-              direction="column"
-              gap={0}
-              sx={{ display: { xs: "none", sm: "flex" }, marginRight: "60px" }}
-            >
-              <Typography variant="headerTitle">Admin Flygow</Typography>
-              <Typography variant="headerSubtitle" color="secondary.500">
-                adminflygow@yopmail.com
-              </Typography>
-            </Stack>
+            <UserInfo />
             <IconButton size="small">
               <KeyboardArrowDown />
             </IconButton>
@@ -106,21 +178,15 @@ function Action() {
           },
         }}
       >
-        <Stack sx={{ display: { xs: "flex", sm: "flex" }, px: 2, mt: 1 }}>
-          <Typography variant="headerTitle">Admin Flygow</Typography>
-          <Typography variant="headerSubtitle" sx={{ wordWrap: "break-word" }}>
-            adminflygow@yopmail.com
-          </Typography>
-        </Stack>
+        <UserInfo showInMenu />
         <Divider sx={{ mt: 2 }} />
-        <MenuItem sx={{ fontSize: "14px", fontWeight: 400, color: "#384250" }} onClick={handleChangePassword}>
+        <MenuItem sx={MENU_ITEM_SX} onClick={handleChangePassword}>
           {t("changePassword.title")}
         </MenuItem>
         <Divider sx={{ mt: 2 }} />
         <LanguageMenu onClose={handleMenuClose} />
         <Divider sx={{ mt: 2 }} />
-
-        <MenuItem sx={{ fontSize: "14px", fontWeight: 400, color: "#384250" }} onClick={handleLogout}>
+        <MenuItem sx={MENU_ITEM_SX} onClick={handleLogout}>
           {t("logout.confirm")}
         </MenuItem>
       </Menu>
@@ -260,27 +326,27 @@ export default function AdminLayout(props: any) {
     { 
       segment: "dashboard", 
       title: t("dashboard"), 
-      icon: <Box sx={{ width: 24, height: 24, borderRadius: "50%", border: "2px solid #384250" }} />
+      icon: <NavigationIcon variant="dashboard" />
     },
     { 
       segment: "shipments", 
       title: t("shipments"), 
-      icon: <Box sx={{ width: 24, height: 24, backgroundColor: "#12B76A", borderRadius: 1 }} />
+      icon: <NavigationIcon variant="shipments" />
     },
     { 
       segment: "customers", 
       title: t("customers"), 
-      icon: <Box sx={{ width: 24, height: 24, backgroundColor: "#384250", borderRadius: "50%" }} />
+      icon: <NavigationIcon variant="customers" />
     },
     { 
       segment: "airport-handler", 
       title: t("airportHandler"), 
-      icon: <Box sx={{ width: 24, height: 24, backgroundColor: "#384250", clipPath: "polygon(50% 0%, 0% 100%, 100% 100%)" }} />
+      icon: <NavigationIcon variant="airport-handler" />
     },
     { 
       segment: "transactions", 
       title: t("transactions"), 
-      icon: <Box sx={{ width: 24, height: 24, backgroundColor: "#384250", borderRadius: 1 }} />
+      icon: <NavigationIcon variant="transactions" />
     },
     {
       segment: "notification-management",
@@ -295,7 +361,7 @@ export default function AdminLayout(props: any) {
     {
       segment: "airport-operations",
       title: t("airportOperations"),
-      icon: <Box sx={{ width: 24, height: 24, backgroundColor: "#12B76A", clipPath: "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)" }} />,
+      icon: <NavigationIcon variant="airport-operations" />,
       children: [
         { segment: "master-city-table", title: t("masterCityTable") },
         { segment: "airport-location", title: t("airportLocation") },
@@ -315,13 +381,62 @@ export default function AdminLayout(props: any) {
     {
       segment: "coupon-management",
       title: t("couponManagement"),
-      icon: <Box sx={{ width: 24, height: 24, borderRadius: "50%", border: "2px solid #384250", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "12px", fontWeight: "bold" }}>%</Box>,
+      icon: <NavigationIcon variant="coupon-management" />,
     },
   ];
   const isXs = useMediaQuery(muiTheme.breakpoints.down('sm'));
   const isMd = useMediaQuery(muiTheme.breakpoints.down('md'));
 
   const sidebarWidth = isXs ? "100%" : (isMd ? "70%" : 240);
+
+  // Generate navigation selection styles
+  const getNavigationSelectionStyles = (): Record<string, SxProps<Theme>> => {
+    const styles: Record<string, SxProps<Theme>> = {};
+    
+    // Segments that need image filter when selected
+    const segmentsWithImageFilter = [
+      "user-cohorts", "content-moderation", "manage-categories", 
+      "notification-management", "support-tickets", "audit-reports",
+      "manage-legal-docs", "manage-admin-users"
+    ];
+    
+    // Simple selected segments
+    const selectedSegments = [
+      "dashboard", "shipments", "customers", "airport-handler", 
+      "transactions", "coupon-management", "master-city-table",
+      "airport-location", "shipment-pricing", "delivery-assignment"
+    ];
+    
+    // Parent segments that should be selected when child is selected
+    const parentChildMappings: { [key: string]: string[] } = {
+      "airport-operations": ["master-city-table", "airport-location", "shipment-pricing", "delivery-assignment"],
+      "manage-categories": ["category-detail", "sub-category-detail"],
+    };
+    
+    // Apply styles for simple selected segments
+    selectedSegments.forEach(segment => {
+      if (isPathSelected(segment)) {
+        styles[`& .MuiListItemButton-root[data-segment='${segment}']`] = getSelectedItemStyles(muiTheme);
+      }
+    });
+    
+    // Apply styles for segments with image filter
+    segmentsWithImageFilter.forEach(segment => {
+      if (isPathSelected(segment)) {
+        styles[`& .MuiListItemButton-root[data-segment='${segment}']`] = getSelectedItemStyles(muiTheme, true);
+      }
+    });
+    
+    // Handle parent segments that should be selected when child is selected
+    Object.entries(parentChildMappings).forEach(([parent, children]) => {
+      const isParentOrChildSelected = isPathSelected(parent) || children.some(child => isPathSelected(child));
+      if (isParentOrChildSelected) {
+        styles[`& .MuiListItemButton-root[data-segment='${parent}']`] = getSelectedItemStyles(muiTheme);
+      }
+    });
+    
+    return styles;
+  };
 
   return (
     <AppProvider
@@ -372,414 +487,10 @@ export default function AdminLayout(props: any) {
           //   filter: "invert(41%) sepia(97%) saturate(747%) hue-rotate(186deg) brightness(101%) contrast(101%)",
           // },
           "& .MuiListItemButton-root.Mui-selected img": {
-            filter: "invert(30%) sepia(98%) saturate(7470%) hue-rotate(215deg) brightness(103%) contrast(104%)",
+            filter: ICON_FILTER,
           },
           // Custom navigation selection based on path
-          ...(isPathSelected("dashboard") && {
-            "& .MuiListItemButton-root[data-segment='dashboard']": {
-              backgroundColor: muiTheme.palette.primary.light,
-              position: "relative",
-              "&::before": {
-                content: '""',
-                position: "absolute",
-                left: 0,
-                top: 14,
-                bottom: 14,
-                width: "4px",
-                borderRadius: "4px",
-                backgroundColor: "#0E6A37",
-                display: "block",
-              },
-              "& .MuiTypography-root": {
-                color: "#0E6A37",
-              },
-            },
-          }),
-          ...(isPathSelected("shipments") && {
-            "& .MuiListItemButton-root[data-segment='shipments']": {
-              backgroundColor: muiTheme.palette.primary.light,
-              position: "relative",
-              "&::before": {
-                content: '""',
-                position: "absolute",
-                left: 0,
-                top: 14,
-                bottom: 14,
-                width: "4px",
-                borderRadius: "4px",
-                backgroundColor: "#0E6A37",
-                display: "block",
-              },
-              "& .MuiTypography-root": {
-                color: "#0E6A37",
-              },
-            },
-          }),
-          ...(isPathSelected("customers") && {
-            "& .MuiListItemButton-root[data-segment='customers']": {
-              backgroundColor: muiTheme.palette.primary.light,
-              position: "relative",
-              "&::before": {
-                content: '""',
-                position: "absolute",
-                left: 0,
-                top: 14,
-                bottom: 14,
-                width: "4px",
-                borderRadius: "4px",
-                backgroundColor: "#0E6A37",
-                display: "block",
-              },
-              "& .MuiTypography-root": {
-                color: "#0E6A37",
-              },
-            },
-          }),
-          ...(isPathSelected("airport-handler") && {
-            "& .MuiListItemButton-root[data-segment='airport-handler']": {
-              backgroundColor: muiTheme.palette.primary.light,
-              position: "relative",
-              "&::before": {
-                content: '""',
-                position: "absolute",
-                left: 0,
-                top: 14,
-                bottom: 14,
-                width: "4px",
-                borderRadius: "4px",
-                backgroundColor: "#0E6A37",
-                display: "block",
-              },
-              "& .MuiTypography-root": {
-                color: "#0E6A37",
-              },
-            },
-          }),
-          ...(isPathSelected("transactions") && {
-            "& .MuiListItemButton-root[data-segment='transactions']": {
-              backgroundColor: muiTheme.palette.primary.light,
-              position: "relative",
-              "&::before": {
-                content: '""',
-                position: "absolute",
-                left: 0,
-                top: 14,
-                bottom: 14,
-                width: "4px",
-                borderRadius: "4px",
-                backgroundColor: "#0E6A37",
-                display: "block",
-              },
-              "& .MuiTypography-root": {
-                color: "#0E6A37",
-              },
-            },
-          }),
-          ...(isPathSelected("coupon-management") && {
-            "& .MuiListItemButton-root[data-segment='coupon-management']": {
-              backgroundColor: muiTheme.palette.primary.light,
-              position: "relative",
-              "&::before": {
-                content: '""',
-                position: "absolute",
-                left: 0,
-                top: 14,
-                bottom: 14,
-                width: "4px",
-                borderRadius: "4px",
-                backgroundColor: "#0E6A37",
-                display: "block",
-              },
-              "& .MuiTypography-root": {
-                color: "#0E6A37",
-              },
-            },
-          }),
-          ...((isPathSelected("airport-operations") || isPathSelected("master-city-table") || isPathSelected("airport-location") || isPathSelected("shipment-pricing") || isPathSelected("delivery-assignment")) && {
-            "& .MuiListItemButton-root[data-segment='airport-operations']": {
-              backgroundColor: muiTheme.palette.primary.light,
-              position: "relative",
-              "&::before": {
-                content: '""',
-                position: "absolute",
-                left: 0,
-                top: 14,
-                bottom: 14,
-                width: "4px",
-                borderRadius: "4px",
-                backgroundColor: "#0E6A37",
-                display: "block",
-              },
-              "& .MuiTypography-root": {
-                color: "#0E6A37",
-              },
-            },
-          }),
-          ...(isPathSelected("master-city-table") && {
-            "& .MuiListItemButton-root[data-segment='master-city-table']": {
-              backgroundColor: muiTheme.palette.primary.light,
-              position: "relative",
-              "&::before": {
-                content: '""',
-                position: "absolute",
-                left: 0,
-                top: 14,
-                bottom: 14,
-                width: "4px",
-                borderRadius: "4px",
-                backgroundColor: "#0E6A37",
-                display: "block",
-              },
-              "& .MuiTypography-root": {
-                color: "#0E6A37",
-              },
-            },
-          }),
-          ...(isPathSelected("airport-location") && {
-            "& .MuiListItemButton-root[data-segment='airport-location']": {
-              backgroundColor: muiTheme.palette.primary.light,
-              position: "relative",
-              "&::before": {
-                content: '""',
-                position: "absolute",
-                left: 0,
-                top: 14,
-                bottom: 14,
-                width: "4px",
-                borderRadius: "4px",
-                backgroundColor: "#0E6A37",
-                display: "block",
-              },
-              "& .MuiTypography-root": {
-                color: "#0E6A37",
-              },
-            },
-          }),
-          ...(isPathSelected("shipment-pricing") && {
-            "& .MuiListItemButton-root[data-segment='shipment-pricing']": {
-              backgroundColor: muiTheme.palette.primary.light,
-              position: "relative",
-              "&::before": {
-                content: '""',
-                position: "absolute",
-                left: 0,
-                top: 14,
-                bottom: 14,
-                width: "4px",
-                borderRadius: "4px",
-                backgroundColor: "#0E6A37",
-                display: "block",
-              },
-              "& .MuiTypography-root": {
-                color: "#0E6A37",
-              },
-            },
-          }),
-          ...(isPathSelected("delivery-assignment") && {
-            "& .MuiListItemButton-root[data-segment='delivery-assignment']": {
-              backgroundColor: muiTheme.palette.primary.light,
-              position: "relative",
-              "&::before": {
-                content: '""',
-                position: "absolute",
-                left: 0,
-                top: 14,
-                bottom: 14,
-                width: "4px",
-                borderRadius: "4px",
-                backgroundColor: "#0E6A37",
-                display: "block",
-              },
-              "& .MuiTypography-root": {
-                color: "#0E6A37",
-              },
-            },
-          }),
-          ...(isPathSelected("user-cohorts") && {
-            "& .MuiListItemButton-root[data-segment='user-cohorts']": {
-              backgroundColor: muiTheme.palette.primary.light,
-              position: "relative",
-              "&::before": {
-                content: '""',
-                position: "absolute",
-                left: 0,
-                top: 14,
-                bottom: 14,
-                width: "4px",
-                borderRadius: "4px",
-                backgroundColor: "#0E6A37",
-                display: "block",
-              },
-              "& .MuiTypography-root": {
-                color: "#0E6A37",
-              },
-              "& img": {
-                filter: "invert(30%) sepia(98%) saturate(7470%) hue-rotate(215deg) brightness(103%) contrast(104%)",
-              },
-            },
-          }),
-          ...(isPathSelected("content-moderation") && {
-            "& .MuiListItemButton-root[data-segment='content-moderation']": {
-              backgroundColor: muiTheme.palette.primary.light,
-              position: "relative",
-              "&::before": {
-                content: '""',
-                position: "absolute",
-                left: 0,
-                top: 14,
-                bottom: 14,
-                width: "4px",
-                borderRadius: "4px",
-                backgroundColor: "#0E6A37",
-                display: "block",
-              },
-              "& .MuiTypography-root": {
-                color: "#0E6A37",
-              },
-              "& img": {
-                filter: "invert(30%) sepia(98%) saturate(7470%) hue-rotate(215deg) brightness(103%) contrast(104%)",
-              },
-            },
-          }),
-          // Ensure Manage Categories submenu is selected on its pages and nested details
-          ...((isPathSelected("manage-categories") || isPathSelected("category-detail") || isPathSelected("sub-category-detail")) && {
-            "& .MuiListItemButton-root[data-segment='manage-categories']": {
-              backgroundColor: muiTheme.palette.primary.light,
-              position: "relative",
-              "&::before": {
-                content: '""',
-                position: "absolute",
-                left: 0,
-                top: 14,
-                bottom: 14,
-                width: "4px",
-                borderRadius: "4px",
-                backgroundColor: "#0E6A37",
-                display: "block",
-              },
-              "& .MuiTypography-root": {
-                color: "#0E6A37",
-              },
-              "& img": {
-                filter: "invert(30%) sepia(98%) saturate(7470%) hue-rotate(215deg) brightness(103%) contrast(104%)",
-              },
-            },
-          }),
-          ...(isPathSelected("notification-management") && {
-            "& .MuiListItemButton-root[data-segment='notification-management']": {
-              backgroundColor: muiTheme.palette.primary.light,
-              position: "relative",
-              "&::before": {
-                content: '""',
-                position: "absolute",
-                left: 0,
-                top: 14,
-                bottom: 14,
-                width: "4px",
-                borderRadius: "4px",
-                backgroundColor: "#0E6A37",
-                display: "block",
-              },
-              "& .MuiTypography-root": {
-                color: "#0E6A37",
-              },
-              "& img": {
-                filter: "invert(30%) sepia(98%) saturate(7470%) hue-rotate(215deg) brightness(103%) contrast(104%)",
-              },
-            },
-          }),
-          ...(isPathSelected("support-tickets") && {
-            "& .MuiListItemButton-root[data-segment='support-tickets']": {
-              backgroundColor: muiTheme.palette.primary.light,
-              position: "relative",
-              "&::before": {
-                content: '""',
-                position: "absolute",
-                left: 0,
-                top: 14,
-                bottom: 14,
-                width: "4px",
-                borderRadius: "4px",
-                backgroundColor: "#0E6A37",
-                display: "block",
-              },
-              "& .MuiTypography-root": {
-                color: "#0E6A37",
-              },
-              "& img": {
-                filter: "invert(30%) sepia(98%) saturate(7470%) hue-rotate(215deg) brightness(103%) contrast(104%)",
-              },
-            },
-          }),
-          ...(isPathSelected("audit-reports") && {
-            "& .MuiListItemButton-root[data-segment='audit-reports']": {
-              backgroundColor: muiTheme.palette.primary.light,
-              position: "relative",
-              "&::before": {
-                content: '""',
-                position: "absolute",
-                left: 0,
-                top: 14,
-                bottom: 14,
-                width: "4px",
-                borderRadius: "4px",
-                backgroundColor: "#0E6A37",
-                display: "block",
-              },
-              "& .MuiTypography-root": {
-                color: "#0E6A37",
-              },
-              "& img": {
-                filter: "invert(30%) sepia(98%) saturate(7470%) hue-rotate(215deg) brightness(103%) contrast(104%)",
-              },
-            },
-          }),
-          ...(isPathSelected("manage-legal-docs") && {
-            "& .MuiListItemButton-root[data-segment='manage-legal-docs']": {
-              backgroundColor: muiTheme.palette.primary.light,
-              position: "relative",
-              "&::before": {
-                content: '""',
-                position: "absolute",
-                left: 0,
-                top: 14,
-                bottom: 14,
-                width: "4px",
-                borderRadius: "4px",
-                backgroundColor: "#0E6A37",
-                display: "block",
-              },
-              "& .MuiTypography-root": {
-                color: "#0E6A37",
-              },
-              "& img": {
-                filter: "invert(30%) sepia(98%) saturate(7470%) hue-rotate(215deg) brightness(103%) contrast(104%)",
-              },
-            },
-          }),
-          ...(isPathSelected("manage-admin-users") && {
-            "& .MuiListItemButton-root[data-segment='manage-admin-users']": {
-              backgroundColor: muiTheme.palette.primary.light,
-              position: "relative",
-              "&::before": {
-                content: '""',
-                position: "absolute",
-                left: 0,
-                top: 14,
-                bottom: 14,
-                width: "4px",
-                borderRadius: "4px",
-                backgroundColor: "#0E6A37",
-                display: "block",
-              },
-              "& .MuiTypography-root": {
-                color: "#0E6A37",
-              },
-              "& img": {
-                filter: "invert(30%) sepia(98%) saturate(7470%) hue-rotate(215deg) brightness(103%) contrast(104%)",
-              },
-            },
-          }),
+          ...getNavigationSelectionStyles(),
           "& .MuiListItemIcon-root": {
             minWidth: "28px",
           },
