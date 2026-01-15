@@ -2,6 +2,7 @@
 import type { ReactNode } from 'react';
 import { Box, Grid } from '@mui/material';
 import { colors } from '../utils/constants';
+import LanguageToggle from '../components/language-switcher/LanguageToggle';
 
 interface PublicLayoutProps {
   children: ReactNode;
@@ -67,8 +68,20 @@ const PublicLayout = ({ children }: PublicLayoutProps) => {
           overflowY: "auto",
           scrollbarWidth: "none",
           flex: 1,
+          position: "relative",
         }}
       >
+        {/* Language Toggle - Top Right */}
+        <Box
+          sx={{
+            position: "absolute",
+            top: 16,
+            right: 16,
+            zIndex: 1000,
+          }}
+        >
+          <LanguageToggle />
+        </Box>
         {children}
       </Grid>
     </Grid >

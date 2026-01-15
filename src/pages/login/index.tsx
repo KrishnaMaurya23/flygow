@@ -17,6 +17,7 @@ import { loginSchema } from "../../utils/yup-config";
 import { useLoginMutation } from "../../rtk/endpoints/authApi";
 import { showAlert } from "../../rtk/feature/alertSlice";
 import { useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 interface LoginFormInputs {
   email: string;
@@ -24,6 +25,7 @@ interface LoginFormInputs {
 }
 
 export default function LoginPage(): JSX.Element {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
@@ -73,7 +75,7 @@ export default function LoginPage(): JSX.Element {
           type: "login"
         },
       });
-  dispatch(showAlert({ message: "OTP has been sent to your Email", severity: "success" }));
+  dispatch(showAlert({ message: t("otpVerification.otpSentMessage"), severity: "success" }));
 
     }
   }, [isSuccess]);
@@ -107,14 +109,14 @@ export default function LoginPage(): JSX.Element {
             onSubmit={handleSubmit(onSubmit)}
           >
             <Typography variant="h5" textAlign="start" mb={2}>
-              Sign In
+              {t("login.title")}
             </Typography>
             <StyledTextField
               fullWidth
               variant="outlined"
               type="text"
               // label="Email Address"
-              placeholder="Enter Email Address"
+              placeholder={t("login.emailPlaceholder")}
               margin="normal"
               {...register("email")}
               error={Boolean(errors.email)}
@@ -139,7 +141,7 @@ export default function LoginPage(): JSX.Element {
               variant="outlined"
               // label="Password"
               type={showPassword ? "text" : "password"}
-              placeholder="Enter Password"
+              placeholder={t("login.passwordPlaceholder")}
               margin="normal"
               {...register("password")}
               error={Boolean(errors.password)}
@@ -186,7 +188,7 @@ export default function LoginPage(): JSX.Element {
               }}
               onClick={() => navigate("/forgot-password")}
             >
-              Forgot Password?
+              {t("login.forgotPassword")}
             </Typography>
 
             <Button
@@ -195,7 +197,7 @@ export default function LoginPage(): JSX.Element {
               variant="secondary"
               disabled={isSubmitting || !isFormValid}
             >
-              Sign In
+              {t("login.loginButton")}
             </Button>
           </Box>
         </Grid>

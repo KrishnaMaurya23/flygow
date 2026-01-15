@@ -1,0 +1,274 @@
+{
+  "buttons": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "update": "Update",
+    "close": "Close",
+    "submit": "Submit",
+    "reset": "Reset",
+    "search": "Search",
+    "filter": "Filter",
+    "export": "Export",
+    "import": "Import",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "yes": "Yes",
+    "no": "No",
+    "ok": "OK",
+    "apply": "Apply",
+    "clear": "Clear",
+    "saving": "Saving...",
+    "loading": "Loading...",
+    "noCancel": "No, cancel"
+  },
+  "labels": {
+    "name": "Name",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "phone": "Phone",
+    "address": "Address",
+    "status": "Status",
+    "date": "Date",
+    "time": "Time",
+    "actions": "Actions",
+    "description": "Description",
+    "title": "Title",
+    "type": "Type",
+    "reason": "Reason"
+  },
+  "messages": {
+    "success": "Operation completed successfully",
+    "error": "An error occurred",
+    "confirm": "Are you sure?",
+    "noData": "No data available",
+    "loading": "Loading...",
+    "saved": "Saved successfully",
+    "deleted": "Deleted successfully",
+    "updated": "Updated successfully"
+  },
+  "login": {
+    "title": "Sign In",
+    "email": "Email",
+    "password": "Password",
+    "emailPlaceholder": "Enter Email Address",
+    "passwordPlaceholder": "Enter Password",
+    "forgotPassword": "Forgot Password?",
+    "loginButton": "Sign In",
+    "rememberMe": "Remember me"
+  },
+  "forgotPassword": {
+    "title": "Forgot Password",
+    "subtitle": "Enter your email address and we'll send you a link to reset your password.",
+    "email": "Email Address",
+    "emailPlaceholder": "Enter Email Address",
+    "sendOtp": "Send OTP",
+    "sendResetLink": "Send Reset Link",
+    "backToLogin": "Back to Login",
+    "otpSentMessage": "OTP sent to your email"
+  },
+  "resetPassword": {
+    "title": "Reset Password",
+    "changePasswordTitle": "Change Password",
+    "newPassword": "New Password",
+    "newPasswordPlaceholder": "Enter Password",
+    "confirmPassword": "Confirm Password",
+    "confirmPasswordPlaceholder": "Confirm Password",
+    "resetButton": "Reset Password",
+    "resetSuccessTitle": "Password reset successfully!",
+    "resetSuccessMessage": "You have successfully reset your password. Please use your new password when logging in.",
+    "logInButton": "Log In"
+  },
+  "changePassword": {
+    "title": "Change Password",
+    "currentPassword": "Current Password",
+    "newPassword": "New Password",
+    "newPasswordPlaceholder": "Enter New Password",
+    "confirmPassword": "Confirm Password",
+    "confirmPasswordPlaceholder": "Enter Confirm Password",
+    "changeButton": "Change Password",
+    "changingPassword": "Changing Password...",
+    "passwordChangedMessage": "Password changed successfully. Please log in again with your new password.",
+    "passwordRequirements": "Your password should contain at least 1 uppercase, 1 lowercase, 1 special character, and 1 digit."
+  },
+  "otpVerification": {
+    "title": "OTP Verification",
+    "subtitle": "We've sent a verification code to",
+    "codeSentTo": "A 4 Digit Code has been sent to",
+    "otpSentMessage": "OTP has been sent to your Email",
+    "otpSentToEmail": "OTP sent to your email",
+    "enterOtp": "Enter OTP",
+    "resendCode": "Resend Code",
+    "resendOtp": "Resend OTP",
+    "didntReceiveOtp": "Didn't Receive OTP?",
+    "verifyButton": "Verify",
+    "verifyOtp": "Verify OTP",
+    "didntReceive": "Didn't receive the code?",
+    "resendIn": "Resend in",
+    "in": "in",
+    "otpVerifiedSuccessfully": "OTP verified Successfully",
+    "emailNotAvailable": "Email is not available."
+  },
+  "checkMail": {
+    "title": "Check Mail",
+    "subtitle": "We've sent a password reset link to your email address.",
+    "resetLinkSent": "A reset password link has been sent to",
+    "didntReceiveLink": "Didn't Receive Link?",
+    "resend": "Resend",
+    "changeEmail": "Change Email",
+    "backToLogin": "Back to Login",
+    "resetLinkResent": "Reset password link has been resent successfully.",
+    "emailNotAvailable": "Email is not available."
+  },
+  "logout": {
+    "title": "Logout",
+    "message": "Are you sure want to log out of your account?",
+    "confirm": "Logout",
+    "cancel": "Cancel"
+  },
+  "dashboard": "Dashboard",
+  "shipments": "Shipments",
+  "customers": "Customers",
+  "airportHandler": "Airport Handler",
+  "transactions": "Transactions",
+  "notificationManagement": "Notification Management",
+  "manageLegalDocs": "Manage Legal Docs",
+  "airportOperations": "Airport Operations",
+  "masterCityTable": "Master City Table",
+  "airportLocation": "Airport location",
+  "shipmentPricing": "Shipment Pricing",
+  "deliveryAssignment": "Delivery Assignment",
+  "manageAdminUsers": "Manage Admin Users",
+  "adminUsers": "Admin Users",
+  "userRoles": "User Roles",
+  "couponManagement": "Coupon management",
+  "appUsers": "App users",
+  "userCohorts": "User Cohorts",
+  "contentModeration": "Content Moderation",
+  "contentLibrary": "Content Library",
+  "flaggedContentReports": "Flagged Content Reports",
+  "vettingLogs": "Vetting Logs",
+  "scrapperLogs": "Scrapper Logs",
+  "manageTags": "Manage Tags",
+  "manageCategories": "Manage Categories",
+  "supportTickets": "Support Tickets",
+  "auditReports": "Audit reports",
+  "userLoginSecurityLogs": "User Login and Security Logs",
+  "administrativeActionLogs": "Administration Logs",
+  "dataDeletionLogs": "Data Deletion Logs",
+  "blockUser": {
+    "title": "Block User Account",
+    "subtitle": "Are you sure want to block this user's account? Please specify the reason.",
+    "reason": "Block Reason"
+  },
+  "deleteUser": {
+    "title": "Delete User Account",
+    "subtitle": "Are you sure want to delete this user's account? Please specify the reason.",
+    "reason": "Delete Reason"
+  },
+  "reactivateUser": {
+    "title": "Reactivate User Account",
+    "subtitle": "Are you sure want to reactive this user's account? Please specify the reason.",
+    "reason": "Reactivate Reason"
+  },
+  "blockBulkUsers": {
+    "title": "Block Selected User Accounts",
+    "subtitle": "Are you sure want to block selected user accounts? Please specify the reason.",
+    "reason": "Block Reason"
+  },
+  "deleteBulkUsers": {
+    "title": "Delete Selected User Accounts",
+    "subtitle": "Are you sure want to delete selected user accounts? Please specify the reason.",
+    "reason": "Delete Reason"
+  },
+  "reactivateBulkUsers": {
+    "title": "Reactive Selected User Accounts",
+    "subtitle": "Are you sure want to reactive selected user accounts? Please specify the reason.",
+    "reason": "Reactive Reason"
+  },
+  "blockSubAdmin": {
+    "title": "Block Sub-Admin Account",
+    "subtitle": "Are you sure you want to block this sub-admin account? Please specify the reason.?",
+    "reason": "Block Reason"
+  },
+  "deleteSubAdmin": {
+    "title": "Delete Sub-Admin Account",
+    "subtitle": "Are you sure you want to delete this sub-admin account? Please specify the reason.",
+    "reason": "Delete Reason"
+  },
+  "reactivateSubAdmin": {
+    "title": "Reactivate Sub-Admin Account",
+    "subtitle": "Are you sure you want to reactive this sub-admin account? Please specify the reason.",
+    "reason": "Reactivate Reason"
+  },
+  "blockBulkSubAdmins": {
+    "title": "Block Selected Sub-Admin Accounts",
+    "subtitle": "Are you sure you want to block selected sub-admin accounts? Please specify the reason.",
+    "reason": "Block Reason"
+  },
+  "deleteBulkSubAdmins": {
+    "title": "Delete Selected Sub-Admin Accounts",
+    "subtitle": "Are you sure you want to delete selected sub-admin accounts? Please specify the reason.",
+    "reason": "Delete Reason"
+  },
+  "reactivateBulkSubAdmins": {
+    "title": "Reactive Selected Sub-Admin Accounts",
+    "subtitle": "Are you sure you want to reactive selected sub-admin accounts? Please specify the reason.",
+    "reason": "Reactive Reason"
+  },
+  "publishContent": {
+    "title": "Publish Content",
+    "subtitle": "Are you sure want to publish this content on the application?"
+  },
+  "deleteContent": {
+    "title": "Delete Content",
+    "subtitle": "Are you sure want to delete this content on the application?"
+  },
+  "hideContent": {
+    "title": "Hide Content",
+    "subtitle": "Are you sure want to hide this content on the application?"
+  },
+  "publishBulkContent": {
+    "title": "Publish All Selected Content",
+    "subtitle": "Are you sure want to publish all the selected content on the application?"
+  },
+  "deleteBulkContent": {
+    "title": "Delete All Selected Content",
+    "subtitle": "Are you sure want to delete all the selected content on the application?"
+  },
+  "hideBulkContent": {
+    "title": "Hide All Selected Content",
+    "subtitle": "Are you sure want to hide all the selected content on the application?."
+  },
+  "active": "Active",
+  "hidden": "Hidden",
+  "deleted": "Deleted",
+  "blocked": "Blocked",
+  "ongoing": "Ongoing",
+  "resolved": "Resolved",
+  "superAdmin": "Super Admin",
+  "contentModerator": "Content Moderator",
+  "marketing": "Marketing",
+  "complianceOfficer": "Compliance Officer",
+  "supportDesk": "Support Desk",
+  "required": "This field is required",
+  "invalidEmail": "Please enter a valid email address",
+  "invalidPassword": "Password must be at least 8 characters",
+  "passwordMismatch": "Passwords do not match",
+  "invalidPhone": "Please enter a valid phone number",
+  "networkError": "Network error. Please try again.",
+  "unauthorized": "You are not authorized to perform this action",
+  "notFound": "Resource not found",
+  "serverError": "Server error. Please try again later.",
+  "validationError": "Validation error",
+  "addFaq": "Add FAQ",
+  "editFaq": "Edit FAQ",
+  "question": "Question",
+  "answer": "Answer",
+  "saveAndUpdate": "Save & Update"
+}

@@ -1,3 +1,5 @@
+import i18n from '../locales';
+
 export const colors = {
   // Health-Nav
   "Base-White": "#FFFFFF",
@@ -56,42 +58,43 @@ export const colors = {
 };
 
 export function getAPPUserDialogContent(type: string) {
+  const t = i18n.t;
   switch (type) {
     case "block":
       return {
-        title: "Block User Account",
-        subtitle: "Are you sure want to block this user’s account? Please specify the reason.",
-        reason: "Block Reason"
+        title: t("blockUser.title"),
+        subtitle: t("blockUser.subtitle"),
+        reason: t("blockUser.reason")
       };
     case "delete":
       return {
-        title: "Delete User Account",
-        subtitle: "Are you sure want to delete this user’s account? Please specify the reason.",
-        reason: "Delete Reason"
+        title: t("deleteUser.title"),
+        subtitle: t("deleteUser.subtitle"),
+        reason: t("deleteUser.reason")
       };
     case "reactive":
       return {
-        title: "Reactivate User Account",
-        subtitle: "Are you sure want to reactive this user’s account? Please specify the reason.",
-        reason: "Reactivate Reason"
+        title: t("reactivateUser.title"),
+        subtitle: t("reactivateUser.subtitle"),
+        reason: t("reactivateUser.reason")
       };
     case "blockBulk":
       return {
-        title: "Block Selected User Accounts",
-        subtitle: "Are you sure want to block selected user accounts? Please specify the reason.",
-        reason: "Block Reason"
+        title: t("blockBulkUsers.title"),
+        subtitle: t("blockBulkUsers.subtitle"),
+        reason: t("blockBulkUsers.reason")
       };
     case "deleteBulk":
       return {
-        title: "Delete Selected User Accounts",
-        subtitle: "Are you sure want to delete selected user accounts? Please specify the reason.",
-        reason: "Delete Reason"
+        title: t("deleteBulkUsers.title"),
+        subtitle: t("deleteBulkUsers.subtitle"),
+        reason: t("deleteBulkUsers.reason")
       };
     case "reactiveBulk":
       return {
-        title: "Reactive Selected User Accounts",
-        subtitle: "Are you sure want to reactive selected user accounts? Please specify the reason.",
-        reason: "Reactive Reason"
+        title: t("reactivateBulkUsers.title"),
+        subtitle: t("reactivateBulkUsers.subtitle"),
+        reason: t("reactivateBulkUsers.reason")
       };
     default:
       return {
@@ -102,42 +105,43 @@ export function getAPPUserDialogContent(type: string) {
   }
 }
 export function getAdminUserDialogContent(type: string) {
+  const t = i18n.t;
   switch (type) {
     case "block":
       return {
-        title: "Block Sub-Admin Account",
-        subtitle: "Are you sure you want to block this sub-admin account? Please specify the reason.?",
-        reason: "Block Reason"
+        title: t("blockSubAdmin.title"),
+        subtitle: t("blockSubAdmin.subtitle"),
+        reason: t("blockSubAdmin.reason")
       };
     case "delete":
       return {
-        title: "Delete Sub-Admin Account",
-        subtitle: "Are you sure you want to delete this sub-admin account? Please specify the reason.",
-        reason: "Delete Reason"
+        title: t("deleteSubAdmin.title"),
+        subtitle: t("deleteSubAdmin.subtitle"),
+        reason: t("deleteSubAdmin.reason")
       };
     case "reactive":
       return {
-        title: "Reactivate Sub-Admin Account",
-        subtitle: "Are you sure you want to reactive this sub-admin account? Please specify the reason.",
-        reason: "Reactivate Reason"
+        title: t("reactivateSubAdmin.title"),
+        subtitle: t("reactivateSubAdmin.subtitle"),
+        reason: t("reactivateSubAdmin.reason")
       };
     case "blockBulk":
       return {
-        title: "Block Selected Sub-Admin Accounts",
-        subtitle: "Are you sure you want to block selected sub-admin accounts? Please specify the reason.",
-        reason: "Block Reason"
+        title: t("blockBulkSubAdmins.title"),
+        subtitle: t("blockBulkSubAdmins.subtitle"),
+        reason: t("blockBulkSubAdmins.reason")
       };
     case "deleteBulk":
       return {
-        title: "Delete Selected Sub-Admin Accounts",
-        subtitle: "Are you sure you want to delete selected sub-admin accounts? Please specify the reason.",
-        reason: "Delete Reason"
+        title: t("deleteBulkSubAdmins.title"),
+        subtitle: t("deleteBulkSubAdmins.subtitle"),
+        reason: t("deleteBulkSubAdmins.reason")
       };
     case "reactiveBulk":
       return {
-        title: "Reactive Selected Sub-Admin Accounts",
-        subtitle: "Are you sure you want to reactive selected sub-admin accounts? Please specify the reason.",
-        reason: "Reactive Reason"
+        title: t("reactivateBulkSubAdmins.title"),
+        subtitle: t("reactivateBulkSubAdmins.subtitle"),
+        reason: t("reactivateBulkSubAdmins.reason")
       };
     default:
       return {
@@ -148,36 +152,37 @@ export function getAdminUserDialogContent(type: string) {
   }
 }
 export function getContentLibraryDialogContent(type: string) {
+  const t = i18n.t;
   switch (type) {
     case "publish":
       return {
-        title: "Publish Content",
-        subtitle: "Are you sure want to publish this content on the application?",
+        title: t("publishContent.title"),
+        subtitle: t("publishContent.subtitle"),
       };
     case "delete":
       return {
-        title: "Delete Content",
-        subtitle: "Are you sure want to delete this content on the application?",
+        title: t("deleteContent.title"),
+        subtitle: t("deleteContent.subtitle"),
       };
     case "hidden":
       return {
-        title: "Hide Content",
-        subtitle: "Are you sure want to hide this content on the application?",
+        title: t("hideContent.title"),
+        subtitle: t("hideContent.subtitle"),
       };
     case "publishBulk":
       return {
-        title: "Publish All Selected Content",
-        subtitle: "Are you sure want to publish all the selected content on the application?",
+        title: t("publishBulkContent.title"),
+        subtitle: t("publishBulkContent.subtitle"),
       };
     case "deleteBulk":
       return {
-        title: "Delete All Selected Content",
-        subtitle: "Are you sure want to delete all the selected content on the application?",
+        title: t("deleteBulkContent.title"),
+        subtitle: t("deleteBulkContent.subtitle"),
       };
     case "hiddenBulk":
       return {
-        title: "Hide All Selected Content",
-        subtitle: "Are you sure want to hide all the selected content on the application?.",
+        title: t("hideBulkContent.title"),
+        subtitle: t("hideBulkContent.subtitle"),
       };
     default:
       return {
@@ -186,81 +191,107 @@ export function getContentLibraryDialogContent(type: string) {
       };
   }
 }
-export const contentLibraryFilterList = [
-  {
-    title: "Active",
-    value: "active",
-  },
-  {
-    title: "Hidden",
-    value: "hidden",
-  },
+// These filter lists need to be functions to access translations dynamically
+export const getContentLibraryFilterList = () => {
+  const t = i18n.t;
+  return [
+    {
+      title: t("active"),
+      value: "active",
+    },
+    {
+      title: t("hidden"),
+      value: "hidden",
+    },
+    {
+      title: t("deleted"),
+      value: "deleted",
+    },
+  ];
+};
 
-  {
-    title: "Deleted",
-    value: "deleted",
-  },
-];
-export const supportStatusFilterList = [
-  {
-    title: "Ongoing",
-    value: "ongoing",
-  },
-  {
-    title: "Resolved",
-    value: "resolved",
-  },
-];
-export const AdminUserStatusFilterList = [
-  {
-    title: "Active",
-    value: "active",
-  },
-  {
-    title: "Blocked",
-    value: "blocked",
-  },
-  {
-    title: "Deleted",
-    value: "deleted",
-  },
-];
-export const AdminUserRoleFilterList = [
-  {
-    title: "Super Admin",
-    value: "super-admin",
-  },
-  {
-    title: "Content Moderator",
-    value: "content-moderator",
-  },
-  {
-    title: "Marketing",
-    value: "marketing",
-  },
-  {
-    title: "Compliance Officer",
-    value: "compliance-officer",
-  },
-  {
-    title: "Support Desk",
-    value: "support-desk",
-  }
-];
-export const AppUserStatusFilterList = [
-  {
-    title: "Active",
-    value: "active",
-  },
-  {
-    title: "Blocked",
-    value: "blocked",
-  },
-  {
-    title: "Deleted",
-    value: "deleted",
-  },
-];
+export const getSupportStatusFilterList = () => {
+  const t = i18n.t;
+  return [
+    {
+      title: t("ongoing"),
+      value: "ongoing",
+    },
+    {
+      title: t("resolved"),
+      value: "resolved",
+    },
+  ];
+};
+
+export const getAdminUserStatusFilterList = () => {
+  const t = i18n.t;
+  return [
+    {
+      title: t("active"),
+      value: "active",
+    },
+    {
+      title: t("blocked"),
+      value: "blocked",
+    },
+    {
+      title: t("deleted"),
+      value: "deleted",
+    },
+  ];
+};
+
+export const getAdminUserRoleFilterList = () => {
+  const t = i18n.t;
+  return [
+    {
+      title: t("superAdmin"),
+      value: "super-admin",
+    },
+    {
+      title: t("contentModerator"),
+      value: "content-moderator",
+    },
+    {
+      title: t("marketing"),
+      value: "marketing",
+    },
+    {
+      title: t("complianceOfficer"),
+      value: "compliance-officer",
+    },
+    {
+      title: t("supportDesk"),
+      value: "support-desk",
+    }
+  ];
+};
+
+export const getAppUserStatusFilterList = () => {
+  const t = i18n.t;
+  return [
+    {
+      title: t("active"),
+      value: "active",
+    },
+    {
+      title: t("blocked"),
+      value: "blocked",
+    },
+    {
+      title: t("deleted"),
+      value: "deleted",
+    },
+  ];
+};
+
+// Keep old exports for backward compatibility (will be deprecated)
+export const contentLibraryFilterList = getContentLibraryFilterList();
+export const supportStatusFilterList = getSupportStatusFilterList();
+export const AdminUserStatusFilterList = getAdminUserStatusFilterList();
+export const AdminUserRoleFilterList = getAdminUserRoleFilterList();
+export const AppUserStatusFilterList = getAppUserStatusFilterList();
 
 export const accessRights = [
   { label: "App users", value: "689072215b454dbe03014d93" },

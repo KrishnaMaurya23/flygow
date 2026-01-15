@@ -11,6 +11,7 @@ import {
   MenuItem,
   useMediaQuery,
   Divider,
+  useTheme,
 } from "@mui/material";
 import {
   KeyboardArrowDown,
@@ -20,14 +21,18 @@ import { DashboardLayout } from "@toolpad/core/DashboardLayout";
 import { PageContainer } from "@toolpad/core/PageContainer";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import { logoutUser } from "../rtk/feature/authSlice";
-import theme from "../theme";
 import GlobalDialog from "../components/dialog";
 import CommonDialog from "../components/dialog/dialog-content/CommonDialog";
 import { useLogoutMutation } from "../rtk/endpoints/authApi";
 import { decryptAES } from "../utils/helper";
+import LanguageMenu from "../components/language-switcher/LanguageMenu";
+import createAppTheme from "../theme";
+import type { RootState } from "../rtk/store";
 
 function Action() {
+  const { t } = useTranslation();
   const [openDialog, setOpenDialog] = React.useState(false);
   const user = useSelector((state: any) => state.auth.user);
   const [logout] = useLogoutMutation();
@@ -109,12 +114,14 @@ function Action() {
         </Stack>
         <Divider sx={{ mt: 2 }} />
         <MenuItem sx={{ fontSize: "14px", fontWeight: 400, color: "#384250" }} onClick={handleChangePassword}>
-          Change Password
+          {t("changePassword.title")}
         </MenuItem>
+        <Divider sx={{ mt: 2 }} />
+        <LanguageMenu onClose={handleMenuClose} />
         <Divider sx={{ mt: 2 }} />
 
         <MenuItem sx={{ fontSize: "14px", fontWeight: 400, color: "#384250" }} onClick={handleLogout}>
-          Logout
+          {t("logout.confirm")}
         </MenuItem>
       </Menu>
 
@@ -124,8 +131,8 @@ function Action() {
         component={
           <CommonDialog
             handleCancel={handleCloseDialog}
-            title="Logout"
-            subTitle="Are you sure want to log out of your account?"
+            title={t("logout.title")}
+            subTitle={t("logout.message")}
             handleConfirm={handleLogoutConfirm}
           />
         }
@@ -197,6 +204,10 @@ function useNavigationSelection() {
 }
 
 export default function AdminLayout(props: any) {
+  const { t } = useTranslation();
+  const direction = useSelector((state: RootState) => state.language.direction);
+  const muiTheme = useTheme();
+  const appTheme = createAppTheme(direction);
   const { window } = props;
   const router = useToolpadRouter();
   const { isPathSelected } = useNavigationSelection();
@@ -248,67 +259,67 @@ export default function AdminLayout(props: any) {
   const NAVIGATION: Navigation = [
     { 
       segment: "dashboard", 
-      title: "Dashboard", 
+      title: t("dashboard"), 
       icon: <Box sx={{ width: 24, height: 24, borderRadius: "50%", border: "2px solid #384250" }} />
     },
     { 
       segment: "shipments", 
-      title: "Shipments", 
+      title: t("shipments"), 
       icon: <Box sx={{ width: 24, height: 24, backgroundColor: "#12B76A", borderRadius: 1 }} />
     },
     { 
       segment: "customers", 
-      title: "Customers", 
+      title: t("customers"), 
       icon: <Box sx={{ width: 24, height: 24, backgroundColor: "#384250", borderRadius: "50%" }} />
     },
     { 
       segment: "airport-handler", 
-      title: "Airport Handler", 
+      title: t("airportHandler"), 
       icon: <Box sx={{ width: 24, height: 24, backgroundColor: "#384250", clipPath: "polygon(50% 0%, 0% 100%, 100% 100%)" }} />
     },
     { 
       segment: "transactions", 
-      title: "Transactions", 
+      title: t("transactions"), 
       icon: <Box sx={{ width: 24, height: 24, backgroundColor: "#384250", borderRadius: 1 }} />
     },
     {
       segment: "notification-management",
-      title: "Notification Management",
+      title: t("notificationManagement"),
       icon: <img src="/assets/icons/NotificationManagement.svg" alt="Notification Management" style={{ width: 24, height: 24 }} />,
     },
     {
       segment: "manage-legal-docs",
-      title: "Manage Legal Docs",
+      title: t("manageLegalDocs"),
       icon: <img src="/assets/icons/ManageLegalDocs.svg" alt="Manage Legal Docs" style={{ width: 24, height: 24 }} />,
     },
     {
       segment: "airport-operations",
-      title: "Airport Operations",
+      title: t("airportOperations"),
       icon: <Box sx={{ width: 24, height: 24, backgroundColor: "#12B76A", clipPath: "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)" }} />,
       children: [
-        { segment: "master-city-table", title: "Master City Table" },
-        { segment: "airport-location", title: "Airport location" },
-        { segment: "shipment-pricing", title: "Shipment Pricing" },
-        { segment: "delivery-assignment", title: "Delivery Assignment" },
+        { segment: "master-city-table", title: t("masterCityTable") },
+        { segment: "airport-location", title: t("airportLocation") },
+        { segment: "shipment-pricing", title: t("shipmentPricing") },
+        { segment: "delivery-assignment", title: t("deliveryAssignment") },
       ],
     },
     {
       segment: "manage-admin-users",
-      title: "Manage Admin Users",
+      title: t("manageAdminUsers"),
       icon: <img src="/assets/icons/ManageAdminUsers.svg" alt="Manage Admin Users" style={{ width: 24, height: 24 }} />,
       children: [
-        { segment: "admin-users", title: "Admin Users" },
-        { segment: "user-roles", title: "User Roles" },
+        { segment: "admin-users", title: t("adminUsers") },
+        { segment: "user-roles", title: t("userRoles") },
       ],
     },
     {
       segment: "coupon-management",
-      title: "Coupon management",
+      title: t("couponManagement"),
       icon: <Box sx={{ width: 24, height: 24, borderRadius: "50%", border: "2px solid #384250", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "12px", fontWeight: "bold" }}>%</Box>,
     },
   ];
-  const isXs = useMediaQuery(theme.breakpoints.down('sm'));
-  const isMd = useMediaQuery(theme.breakpoints.down('md'));
+  const isXs = useMediaQuery(muiTheme.breakpoints.down('sm'));
+  const isMd = useMediaQuery(muiTheme.breakpoints.down('md'));
 
   const sidebarWidth = isXs ? "100%" : (isMd ? "70%" : 240);
 
@@ -316,18 +327,18 @@ export default function AdminLayout(props: any) {
     <AppProvider
       navigation={NAVIGATION}
       router={router}
-      theme={theme}
+      theme={appTheme}
       window={window ? window() : undefined}
     >
       <DashboardLayout
         disableCollapsibleSidebar={true}
         sx={{
-          backgroundColor: theme.palette.background.default,
+          backgroundColor: muiTheme.palette.background.default,
           "& .MuiCollapse-wrapperInner .MuiList-root":{
             padding: "0px !important",
           },
           "& .MuiDrawer-paper": {
-            backgroundColor: theme.palette.background.default,
+            backgroundColor: muiTheme.palette.background.default,
             border: "none",
           },
           "& .MuiBox-root": { 
@@ -339,7 +350,7 @@ export default function AdminLayout(props: any) {
             marginBottom: 1.5,
           },
           "& .MuiListItemButton-root.Mui-selected": {
-            backgroundColor: theme.palette.primary.light,
+            backgroundColor: muiTheme.palette.primary.light,
             position: "relative", // Ensure relative positioning for pseudo-element
             "&::before": {
               content: '""',
@@ -366,7 +377,7 @@ export default function AdminLayout(props: any) {
           // Custom navigation selection based on path
           ...(isPathSelected("dashboard") && {
             "& .MuiListItemButton-root[data-segment='dashboard']": {
-              backgroundColor: theme.palette.primary.light,
+              backgroundColor: muiTheme.palette.primary.light,
               position: "relative",
               "&::before": {
                 content: '""',
@@ -386,7 +397,7 @@ export default function AdminLayout(props: any) {
           }),
           ...(isPathSelected("shipments") && {
             "& .MuiListItemButton-root[data-segment='shipments']": {
-              backgroundColor: theme.palette.primary.light,
+              backgroundColor: muiTheme.palette.primary.light,
               position: "relative",
               "&::before": {
                 content: '""',
@@ -406,7 +417,7 @@ export default function AdminLayout(props: any) {
           }),
           ...(isPathSelected("customers") && {
             "& .MuiListItemButton-root[data-segment='customers']": {
-              backgroundColor: theme.palette.primary.light,
+              backgroundColor: muiTheme.palette.primary.light,
               position: "relative",
               "&::before": {
                 content: '""',
@@ -426,7 +437,7 @@ export default function AdminLayout(props: any) {
           }),
           ...(isPathSelected("airport-handler") && {
             "& .MuiListItemButton-root[data-segment='airport-handler']": {
-              backgroundColor: theme.palette.primary.light,
+              backgroundColor: muiTheme.palette.primary.light,
               position: "relative",
               "&::before": {
                 content: '""',
@@ -446,7 +457,7 @@ export default function AdminLayout(props: any) {
           }),
           ...(isPathSelected("transactions") && {
             "& .MuiListItemButton-root[data-segment='transactions']": {
-              backgroundColor: theme.palette.primary.light,
+              backgroundColor: muiTheme.palette.primary.light,
               position: "relative",
               "&::before": {
                 content: '""',
@@ -466,7 +477,7 @@ export default function AdminLayout(props: any) {
           }),
           ...(isPathSelected("coupon-management") && {
             "& .MuiListItemButton-root[data-segment='coupon-management']": {
-              backgroundColor: theme.palette.primary.light,
+              backgroundColor: muiTheme.palette.primary.light,
               position: "relative",
               "&::before": {
                 content: '""',
@@ -486,7 +497,7 @@ export default function AdminLayout(props: any) {
           }),
           ...((isPathSelected("airport-operations") || isPathSelected("master-city-table") || isPathSelected("airport-location") || isPathSelected("shipment-pricing") || isPathSelected("delivery-assignment")) && {
             "& .MuiListItemButton-root[data-segment='airport-operations']": {
-              backgroundColor: theme.palette.primary.light,
+              backgroundColor: muiTheme.palette.primary.light,
               position: "relative",
               "&::before": {
                 content: '""',
@@ -506,7 +517,7 @@ export default function AdminLayout(props: any) {
           }),
           ...(isPathSelected("master-city-table") && {
             "& .MuiListItemButton-root[data-segment='master-city-table']": {
-              backgroundColor: theme.palette.primary.light,
+              backgroundColor: muiTheme.palette.primary.light,
               position: "relative",
               "&::before": {
                 content: '""',
@@ -526,7 +537,7 @@ export default function AdminLayout(props: any) {
           }),
           ...(isPathSelected("airport-location") && {
             "& .MuiListItemButton-root[data-segment='airport-location']": {
-              backgroundColor: theme.palette.primary.light,
+              backgroundColor: muiTheme.palette.primary.light,
               position: "relative",
               "&::before": {
                 content: '""',
@@ -546,7 +557,7 @@ export default function AdminLayout(props: any) {
           }),
           ...(isPathSelected("shipment-pricing") && {
             "& .MuiListItemButton-root[data-segment='shipment-pricing']": {
-              backgroundColor: theme.palette.primary.light,
+              backgroundColor: muiTheme.palette.primary.light,
               position: "relative",
               "&::before": {
                 content: '""',
@@ -566,7 +577,7 @@ export default function AdminLayout(props: any) {
           }),
           ...(isPathSelected("delivery-assignment") && {
             "& .MuiListItemButton-root[data-segment='delivery-assignment']": {
-              backgroundColor: theme.palette.primary.light,
+              backgroundColor: muiTheme.palette.primary.light,
               position: "relative",
               "&::before": {
                 content: '""',
@@ -586,7 +597,7 @@ export default function AdminLayout(props: any) {
           }),
           ...(isPathSelected("user-cohorts") && {
             "& .MuiListItemButton-root[data-segment='user-cohorts']": {
-              backgroundColor: theme.palette.primary.light,
+              backgroundColor: muiTheme.palette.primary.light,
               position: "relative",
               "&::before": {
                 content: '""',
@@ -609,7 +620,7 @@ export default function AdminLayout(props: any) {
           }),
           ...(isPathSelected("content-moderation") && {
             "& .MuiListItemButton-root[data-segment='content-moderation']": {
-              backgroundColor: theme.palette.primary.light,
+              backgroundColor: muiTheme.palette.primary.light,
               position: "relative",
               "&::before": {
                 content: '""',
@@ -633,7 +644,7 @@ export default function AdminLayout(props: any) {
           // Ensure Manage Categories submenu is selected on its pages and nested details
           ...((isPathSelected("manage-categories") || isPathSelected("category-detail") || isPathSelected("sub-category-detail")) && {
             "& .MuiListItemButton-root[data-segment='manage-categories']": {
-              backgroundColor: theme.palette.primary.light,
+              backgroundColor: muiTheme.palette.primary.light,
               position: "relative",
               "&::before": {
                 content: '""',
@@ -656,7 +667,7 @@ export default function AdminLayout(props: any) {
           }),
           ...(isPathSelected("notification-management") && {
             "& .MuiListItemButton-root[data-segment='notification-management']": {
-              backgroundColor: theme.palette.primary.light,
+              backgroundColor: muiTheme.palette.primary.light,
               position: "relative",
               "&::before": {
                 content: '""',
@@ -679,7 +690,7 @@ export default function AdminLayout(props: any) {
           }),
           ...(isPathSelected("support-tickets") && {
             "& .MuiListItemButton-root[data-segment='support-tickets']": {
-              backgroundColor: theme.palette.primary.light,
+              backgroundColor: muiTheme.palette.primary.light,
               position: "relative",
               "&::before": {
                 content: '""',
@@ -702,7 +713,7 @@ export default function AdminLayout(props: any) {
           }),
           ...(isPathSelected("audit-reports") && {
             "& .MuiListItemButton-root[data-segment='audit-reports']": {
-              backgroundColor: theme.palette.primary.light,
+              backgroundColor: muiTheme.palette.primary.light,
               position: "relative",
               "&::before": {
                 content: '""',
@@ -725,7 +736,7 @@ export default function AdminLayout(props: any) {
           }),
           ...(isPathSelected("manage-legal-docs") && {
             "& .MuiListItemButton-root[data-segment='manage-legal-docs']": {
-              backgroundColor: theme.palette.primary.light,
+              backgroundColor: muiTheme.palette.primary.light,
               position: "relative",
               "&::before": {
                 content: '""',
@@ -748,7 +759,7 @@ export default function AdminLayout(props: any) {
           }),
           ...(isPathSelected("manage-admin-users") && {
             "& .MuiListItemButton-root[data-segment='manage-admin-users']": {
-              backgroundColor: theme.palette.primary.light,
+              backgroundColor: muiTheme.palette.primary.light,
               position: "relative",
               "&::before": {
                 content: '""',
@@ -780,7 +791,7 @@ export default function AdminLayout(props: any) {
             textOverflow: "ellipsis",
           },
           "& .MuiAppBar-root": {
-            backgroundColor: theme.palette.background.default,
+            backgroundColor: muiTheme.palette.background.default,
             border: "none",
           },
         }}
@@ -802,7 +813,7 @@ export default function AdminLayout(props: any) {
         <Box sx={{ p: 2, marginTop: "0px !important" }}>
           <PageContainer
             sx={{
-              backgroundColor: theme.palette.primary.light,
+              backgroundColor: muiTheme.palette.primary.light,
               borderRadius: 6,
               boxShadow: 1,
               p: 2,

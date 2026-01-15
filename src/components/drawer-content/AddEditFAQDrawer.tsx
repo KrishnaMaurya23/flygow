@@ -11,6 +11,7 @@ import CommonDialog from "../dialog/dialog-content/CommonDialog";
 import { useGetLegalDocsQuery, useUpdateLegalDocsMutation } from "../../rtk/endpoints/legalDocsApi";
 import { useDispatch } from "react-redux";
 import { showAlert } from "../../rtk/feature/alertSlice";
+import { useTranslation } from "react-i18next";
 
 interface AddEditDrawerProps {
   type?: string;
@@ -24,7 +25,7 @@ interface FAQFormInputs {
 }
 
 export default function AddEditFAQDrawer({ handleClose, type = "new", id }: AddEditDrawerProps) {
-  
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const [openDialog, setOpenDialog] = useState(false);
   const [unsavedChangesDialog, setUnsavedChangesDialog] = useState(false);
@@ -133,7 +134,7 @@ export default function AddEditFAQDrawer({ handleClose, type = "new", id }: AddE
         alignItems="center"
         sx={{ width: "100%" }}
       >
-        <Typography variant="h4">{type === "new" ? "Add FAQ" : "Edit FAQ"}</Typography>
+        <Typography variant="h4">{type === "new" ? t("addFaq") : t("editFaq")}</Typography>
         <IconButton onClick={hasUnsavedChanges() ? handleCloseWithUnsavedChanges : handleClose}>
           <CloseIcon />
         </IconButton>
@@ -143,7 +144,7 @@ export default function AddEditFAQDrawer({ handleClose, type = "new", id }: AddE
         <Stack gap={2}>
           <Stack>
             <label style={{ fontWeight: 500, fontSize: "14px", color: "#4693DD" }}>
-              Question
+              {t("question")}
             </label>
             <Controller
               name="question"
@@ -162,7 +163,7 @@ export default function AddEditFAQDrawer({ handleClose, type = "new", id }: AddE
 
           <Stack>
             <label style={{ fontWeight: 500, fontSize: "14px", color: "#4693DD" }}>
-              Answer
+              {t("answer")}
             </label>
             <Controller
               name="answer"
@@ -184,7 +185,7 @@ export default function AddEditFAQDrawer({ handleClose, type = "new", id }: AddE
             variant="primarySquare"
             disabled={isUpdating}
           >
-            {isUpdating ? "Saving..." : (type === "new" ? "Save" : "Save & Update")}
+            {isUpdating ? t("buttons.saving") : (type === "new" ? t("buttons.save") : t("saveAndUpdate"))}
           </Button>
         </Stack>
       </form>

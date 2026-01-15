@@ -18,6 +18,7 @@ import { useNavigate } from 'react-router-dom';
 import { useChangePasswordMutation, useLogoutMutation } from '../../rtk/endpoints/authApi';
 import { logoutUser } from '../../rtk/feature/authSlice';
 import { colors } from '../../utils/constants';
+import { useTranslation } from 'react-i18next';
 
 interface ChangePasswordFormInputs {
     newPassword: string;
@@ -25,6 +26,7 @@ interface ChangePasswordFormInputs {
 }
 
 export default function ChangePasswordPage() {
+    const { t } = useTranslation();
     const [showNewPassword, setShowNewPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [changePassword, {isSuccess}] = useChangePasswordMutation();
@@ -58,7 +60,7 @@ export default function ChangePasswordPage() {
 
     useEffect(() => {
       if (isSuccess) {
-        dispatch(showAlert({ message: "Password changed successfully. Please log in again with your new password.", severity: "success" }));
+        dispatch(showAlert({ message: t("changePassword.passwordChangedMessage"), severity: "success" }));
         logout({}).then(() => {
           dispatch(logoutUser());
           navigate("/login");
@@ -82,7 +84,7 @@ export default function ChangePasswordPage() {
               textAlign="center"
               mb={4}
             >
-              Change Password
+              {t("changePassword.title")}
             </Typography>
 
             {/* New Password Field */}
@@ -95,12 +97,12 @@ export default function ChangePasswordPage() {
                   fontSize: "14px",
                 }}
               >
-                -New Password-
+                {t("changePassword.newPassword")}
               </Typography>
             <StyledTextField
               fullWidth
               type={showNewPassword ? "text" : "password"}
-              placeholder="Enter New Password"
+              placeholder={t("changePassword.newPasswordPlaceholder")}
               margin="normal"
               {...register("newPassword")}
               error={Boolean(errors.newPassword)}
@@ -142,7 +144,7 @@ export default function ChangePasswordPage() {
                   ml: 1,
                 }}
               >
-                Your password should contain at least 1 uppercase, 1 lowercase, 1 special character, and 1 digit.
+                {t("changePassword.passwordRequirements")}
               </Typography>
             </Box>
 
@@ -156,12 +158,12 @@ export default function ChangePasswordPage() {
                   fontSize: "14px",
                 }}
               >
-                -Confirm Password-
+                {t("changePassword.confirmPassword")}
               </Typography>
             <StyledTextField
               fullWidth
               type={showConfirmPassword ? "text" : "password"}
-                placeholder="Enter Confirm Password"
+                placeholder={t("changePassword.confirmPasswordPlaceholder")}
               margin="normal"
               {...register("confirmPassword")}
               error={Boolean(errors.confirmPassword)}
@@ -202,7 +204,7 @@ export default function ChangePasswordPage() {
               variant="secondary"
               disabled={isSubmitting || !isFormValid}
             >
-              {isSubmitting ? "Changing Password..." : "Change Password"}
+              {isSubmitting ? t("changePassword.changingPassword") : t("changePassword.changeButton")}
             </Button>
           </Box>
         </Grid>

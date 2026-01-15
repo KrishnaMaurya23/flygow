@@ -1,4 +1,5 @@
 import { Button, Stack, Typography, } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 
 
@@ -14,6 +15,7 @@ export default function CommonDialog({
   title,
   subTitle
 }: CommonDialogProps) {
+  const { t } = useTranslation();
   const submitHandler = (data: any) => {
     handleConfirm(data);
   };
@@ -37,10 +39,10 @@ export default function CommonDialog({
         </Typography>
       <Stack flexDirection={"row"} justifyContent={"flex-end"} gap={2}>
         <Button variant="primary" onClick={handleCancel}>
-          No, cancel
+          {t("buttons.noCancel")}
         </Button>
         <Button variant="secondary" onClick={submitHandler}>
-          Confirm
+          {t("buttons.confirm")}
         </Button>
       </Stack>
     </Stack>

@@ -17,6 +17,7 @@ import { resetPassSchema } from "../../utils/yup-config";
 import { showAlert } from "../../rtk/feature/alertSlice";
 import { useDispatch } from "react-redux";
 import { useResetPasswordMutation } from "../../rtk/endpoints/authApi";
+import { useTranslation } from "react-i18next";
 
 interface ResetPasswordFormInputs {
   password: string;
@@ -24,6 +25,7 @@ interface ResetPasswordFormInputs {
 }
 
 export default function ResetPasswordPage(): JSX.Element {
+  const { t } = useTranslation();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   let token = searchParams.get("token");
@@ -118,7 +120,7 @@ export default function ResetPasswordPage(): JSX.Element {
                   fontSize: "28px",
                 }}
               >
-                Password reset successfully!
+                {t("resetPassword.resetSuccessTitle")}
               </Typography>
 
               {/* Success Description */}
@@ -130,7 +132,7 @@ export default function ResetPasswordPage(): JSX.Element {
                   lineHeight: "24px",
                 }}
               >
-                You have successfully reset your password. Please use your new password when logging in.
+                {t("resetPassword.resetSuccessMessage")}
               </Typography>
 
               {/* Log In Button */}
@@ -146,7 +148,7 @@ export default function ResetPasswordPage(): JSX.Element {
                 }}
                 onClick={() => navigate("/")}
               >
-                Log In
+                {t("resetPassword.logInButton")}
               </Button>
             </Stack>
           </Grid>
@@ -174,15 +176,15 @@ export default function ResetPasswordPage(): JSX.Element {
             onSubmit={handleSubmit(onSubmit)}
           >
             <Typography variant="h5" textAlign="center" mb={2}>
-             Change Password
+             {t("resetPassword.changePasswordTitle")}
             </Typography>
 
             {/* Password Field */}
             <StyledTextField
               fullWidth
               type={showPassword ? "text" : "password"}
-              label="New Password"
-              placeholder="Enter Password"
+              label={t("resetPassword.newPassword")}
+              placeholder={t("resetPassword.newPasswordPlaceholder")}
               margin="normal"
               {...register("password")}
               error={Boolean(errors.password)}
@@ -219,8 +221,8 @@ export default function ResetPasswordPage(): JSX.Element {
             <StyledTextField
               fullWidth
               type={showConfirmPassword ? "text" : "password"}
-              label="Confirm Password"
-              placeholder="Confirm Password"
+              label={t("resetPassword.confirmPassword")}
+              placeholder={t("resetPassword.confirmPasswordPlaceholder")}
               margin="normal"
               {...register("confirmPassword")}
               error={Boolean(errors.confirmPassword)}
@@ -264,7 +266,7 @@ export default function ResetPasswordPage(): JSX.Element {
               variant="secondary"
               disabled={isSubmitting || !isFormValid}
             >
-              Change Password
+              {t("resetPassword.resetButton")}
             </Button>
           </Box>
         </Grid>

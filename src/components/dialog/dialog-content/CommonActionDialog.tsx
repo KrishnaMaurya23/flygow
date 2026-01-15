@@ -3,6 +3,7 @@ import { Button, Stack, Typography, useTheme } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { reasonSchema } from "../../../utils/yup-config";
 import { StyledTextField } from "../../../utils/helper";
+import { useTranslation } from "react-i18next";
 
 interface UserActionDialogProps {
   title: string;
@@ -24,6 +25,7 @@ export default function CommonActionDialog({
   handleCancel,
   onSubmit,
 }: UserActionDialogProps) {
+  const { t } = useTranslation();
   const theme = useTheme();
 
   const {
@@ -68,7 +70,7 @@ export default function CommonActionDialog({
         <StyledTextField
           fullWidth
           variant="outlined"
-          placeholder="Type here"
+          placeholder={t("labels.reason")}
           margin="normal"
           {...register("reason")}
           error={Boolean(errors.reason)}
@@ -79,10 +81,10 @@ export default function CommonActionDialog({
         />
         <Stack flexDirection={"row"} justifyContent={"flex-end"} gap={2}>
           <Button variant="primary" onClick={handleCancel}>
-            No, cancel
+            {t("buttons.noCancel")}
           </Button>
           <Button variant="secondary" type="submit" disabled={isSubmitting}>
-            Confirm
+            {t("buttons.confirm")}
           </Button>
         </Stack>
       </form>

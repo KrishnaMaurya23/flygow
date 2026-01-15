@@ -1,9 +1,9 @@
-import { createTheme } from "@mui/material/styles";
+import { createTheme, type ThemeOptions } from "@mui/material/styles";
 // @ts-ignore
 import '@fontsource/poppins';
 
-
-const theme = createTheme({
+const getThemeOptions = (direction: 'ltr' | 'rtl'): ThemeOptions => ({
+  direction,
   palette: {
     mode: "light", // switch to 'dark' for dark mode
     primary: {
@@ -318,4 +318,8 @@ const theme = createTheme({
   },
 });
 
-export default theme;
+const createAppTheme = (direction: 'ltr' | 'rtl' = 'ltr') => {
+  return createTheme(getThemeOptions(direction));
+};
+
+export default createAppTheme;

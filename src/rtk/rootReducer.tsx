@@ -6,6 +6,7 @@ import { encryptTransform } from "redux-persist-transform-encrypt";
 import api from "./services";
 import alertSlice from "./feature/alertSlice";
 import authSlice from "./feature/authSlice";
+import languageSlice from "./feature/languageSlice";
 
 const persistConfig = {
   transforms: [
@@ -25,6 +26,10 @@ const rootReducer = combineReducers({
     authSlice.reducer
   ),
   [alertSlice.name]: alertSlice.reducer,
+  [languageSlice.name]: persistReducer(
+    { ...persistConfig, key: "language" },
+    languageSlice.reducer
+  ),
   [api.reducerPath]: api.reducer,
 });
 

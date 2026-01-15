@@ -6,8 +6,10 @@ import { useResendMutation } from '../../rtk/endpoints/authApi';
 import { useDispatch } from 'react-redux';
 import { showAlert } from '../../rtk/feature/alertSlice';
 import { encryptAES } from '../../utils/helper';
+import { useTranslation } from 'react-i18next';
 
 export default function CheckMail(): JSX.Element {
+    const { t } = useTranslation();
     const [resend, {isSuccess}] = useResendMutation();
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -16,7 +18,7 @@ export default function CheckMail(): JSX.Element {
     const handleResendClick = async () => {
         if (!email) {
             dispatch(showAlert({
-                message: 'Email is not available.',
+                message: t("checkMail.emailNotAvailable"),
                 severity: 'error',
             }));
             return;
@@ -33,7 +35,7 @@ export default function CheckMail(): JSX.Element {
     useEffect(() => {
         if (isSuccess) {
             dispatch(showAlert({
-                message: 'Reset password link has been resent successfully.',
+                message: t("checkMail.resetLinkResent"),
                 severity: 'success',
             }));
         }
@@ -53,11 +55,11 @@ export default function CheckMail(): JSX.Element {
                 >
                     <Box maxWidth={400} width="100%" textAlign="center">
                         <Typography variant="h5" fontWeight="bold" mb={2}>
-                            Check Mail
+                            {t("checkMail.title")}
                         </Typography>
 
                         <Typography variant="body1" mb={1}>
-                            A reset password link has been sent to
+                            {t("checkMail.resetLinkSent")}{' '}
                             <Typography component="span" fontWeight="bold" ml={0.5}>
                                 {email}
                             </Typography>
@@ -67,7 +69,7 @@ export default function CheckMail(): JSX.Element {
                             variant="body2"
                             sx={{ color: '#888', mt: 1 }}
                         >
-                            Didn’t Receive Link?{' '}
+                            {t("checkMail.didntReceiveLink")}{' '}
                             <Typography
                                 component="span"
                                 color="#2B2738"
@@ -75,7 +77,7 @@ export default function CheckMail(): JSX.Element {
                                 sx={{ cursor: 'pointer' }}
                                 onClick={handleResendClick}
                             >
-                                Resend
+                                {t("checkMail.resend")}
                             </Typography>
                         </Typography>
 
@@ -94,7 +96,7 @@ export default function CheckMail(): JSX.Element {
                                     navigate('/forgot-password');
                             }}
                         >
-                            Change Email
+                            {t("checkMail.changeEmail")}
                         </Button>
                     </Box>
                 </Grid>

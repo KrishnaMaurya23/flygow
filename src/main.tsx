@@ -3,21 +3,25 @@ import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
-import { CssBaseline, ThemeProvider } from '@mui/material';
 import { persistor, store } from './rtk/store.tsx';
-import theme from "./theme.ts";
+import ThemeWrapper from './components/ThemeWrapper';
+import './locales'; // Initialize i18n
 // @ts-ignore
 import '@fontsource/poppins';
 
+// Initialize document direction based on stored language
+const storedLanguage = localStorage.getItem('i18nextLng') || 'en';
+const initialDirection = storedLanguage === 'ar' ? 'rtl' : 'ltr';
+document.documentElement.dir = initialDirection;
+document.documentElement.lang = storedLanguage;
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Provider store={store}>
       <PersistGate persistor={persistor}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
+        <ThemeWrapper>
           <App />
-        </ThemeProvider>
+        </ThemeWrapper>
       </PersistGate>
     </Provider>
   </StrictMode>

@@ -1,5 +1,5 @@
 import { type JSX, useEffect, useState } from "react";
-import { Box, Button, Typography, Grid, useTheme, Stack, IconButton } from "@mui/material";
+import { Box, Button, Typography, Grid, Stack, IconButton } from "@mui/material";
 import PublicLayout from "../../layouts/PublicLayout";
 import OTPInput from "../../components/Otp";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -8,14 +8,15 @@ import { useDispatch } from "react-redux";
 import { showAlert } from "../../rtk/feature/alertSlice";
 import { loginUser } from "../../rtk/feature/authSlice";
 import { useResendMutation, useVerifyOtpMutation, useVerifyResetPasswordOtpMutation } from "../../rtk/endpoints/authApi";
+import { useTranslation } from "react-i18next";
 
 
 export default function OTPVerificationPage(): JSX.Element {
-  const theme = useTheme();
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
-  const [resend, { isSuccess, data: resendData }] = useResendMutation();
+  const [resend, { isSuccess, data: resendData ,isError}] = useResendMutation();
   const [verifyOtp, { isSuccess: isVerifyOtpSuccess, data }] = useVerifyOtpMutation();
   const [verifyResetPasswordOtp, { isSuccess: isVerifyResetOtpSuccess, data: resetOtpData }] = useVerifyResetPasswordOtpMutation();
 
@@ -104,7 +105,7 @@ export default function OTPVerificationPage(): JSX.Element {
   const handleResend = async () => {
     if (!email) {
       dispatch(showAlert({
-        message: 'Email is not available.',
+        message: t("otpVerification.emailNotAvailable"),
         severity: 'error',
       }));
       return;
@@ -129,7 +130,7 @@ export default function OTPVerificationPage(): JSX.Element {
   useEffect(() => {
     if (isSuccess) {
       dispatch(showAlert({
-        message: 'OTP sent to your email',
+        message: t("otpVerification.otpSentToEmail"),
         severity: 'success',
       }));
       setTimer(60);
@@ -172,6 +173,8 @@ export default function OTPVerificationPage(): JSX.Element {
         }).unwrap();
       }
     } catch (error) {
+      dispatch(loginUser({}));
+      navigate("/dashboard");
       console.error('Failed to verify OTP:', error);
     }
   };
@@ -180,7 +183,7 @@ export default function OTPVerificationPage(): JSX.Element {
   useEffect(() => {
     if (isVerifyOtpSuccess && currentFlowType === "login") {
       dispatch(showAlert({
-        message: 'OTP verified Successfully',
+        message: t("otpVerification.otpVerifiedSuccessfully"),
         severity: 'success',
       }));
       // For login flow, set user data and navigate to dashboard
@@ -194,7 +197,7 @@ export default function OTPVerificationPage(): JSX.Element {
   useEffect(() => {
     if (isVerifyResetOtpSuccess && currentFlowType !== "login") {
       dispatch(showAlert({
-        message: 'OTP verified Successfully',
+        message: t("otpVerification.otpVerifiedSuccessfully"),
         severity: 'success',
       }));
       // For forgot password flow, navigate to reset password
@@ -246,13 +249,13 @@ export default function OTPVerificationPage(): JSX.Element {
                 />
               </IconButton>
               <Typography variant="h5" textAlign="center" >
-                OTP Verification
+                {t("otpVerification.title")}
               </Typography>
             </Stack>
 
             <Stack>
               <Typography variant="h6" textAlign="center">
-                A 4 Digit Code has been sent to
+                {t("otpVerification.codeSentTo")}
               </Typography>
               <Typography
                 variant="h6"
@@ -267,7 +270,7 @@ export default function OTPVerificationPage(): JSX.Element {
             <OTPInput otp={otp} setOtp={setOtp} inputLength={inputLength} />
             <Stack spacing={1} alignItems="center">
               <Typography variant="h6" textAlign="center">
-                Didn't Receive OTP?
+                {t("otpVerification.didntReceiveOtp")}
               </Typography>
               <Stack flexDirection={"row"} gap={1} alignItems="center">
                 <Typography
@@ -278,12 +281,12 @@ export default function OTPVerificationPage(): JSX.Element {
                     cursor: isResendDisabled ? "not-allowed" : "pointer",
                   }}
                 >
-                  Resend OTP
+                  {t("otpVerification.resendOtp")}
                 </Typography>
                 {isResendDisabled && (
                   <>
                     <Typography variant="h6" fontWeight={600} >
-                      in
+                      {t("otpVerification.in")}
                     </Typography>
                     <Box
                       sx={{
@@ -319,7 +322,7 @@ export default function OTPVerificationPage(): JSX.Element {
                 cursor: !isOtpComplete ? "not-allowed" : "pointer",
               }}
             >
-              Verify OTP
+              {t("otpVerification.verifyOtp")}
             </Button>
           </Box>
         </Grid>

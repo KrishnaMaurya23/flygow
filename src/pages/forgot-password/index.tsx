@@ -10,12 +10,14 @@ import { useNavigate } from "react-router-dom";
 import { forgotPassSchema } from "../../utils/yup-config";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForgotPasswordMutation } from "../../rtk/endpoints/authApi";
+import { useTranslation } from "react-i18next";
 
 type FormData = {
   email: string;
 };
 
 export default function ForgotPassword(): JSX.Element {
+  const { t } = useTranslation();
   const [forgotPassword, { isSuccess, data }] = useForgotPasswordMutation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -55,7 +57,7 @@ export default function ForgotPassword(): JSX.Element {
     if (isSuccess) {
       dispatch(
         showAlert({
-          message: "OTP sent to your email",
+          message: t("forgotPassword.otpSentMessage"),
           severity: "success",
         })
       );
@@ -107,7 +109,7 @@ export default function ForgotPassword(): JSX.Element {
                 variant="h5"
                 textAlign="center"
               >
-                Forgot Password
+                {t("forgotPassword.title")}
               </Typography>
             </Stack>
 
@@ -115,8 +117,8 @@ export default function ForgotPassword(): JSX.Element {
               <StyledTextField
                 fullWidth
                 type="email"
-                label="Email Address"
-                placeholder="Enter Email Address"
+                label={t("forgotPassword.email")}
+                placeholder={t("forgotPassword.emailPlaceholder")}
                 margin="normal"
                 {...register("email", { required: "Email is required" })}
                 error={Boolean(errors.email)}
@@ -141,7 +143,7 @@ export default function ForgotPassword(): JSX.Element {
                 variant="secondary"
                 disabled={isSubmitting || !isFormValid}
               >
-                Send OTP
+                {t("forgotPassword.sendOtp")}
               </Button>
             </form>
           </Box>

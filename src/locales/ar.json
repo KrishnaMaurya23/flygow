@@ -1,0 +1,274 @@
+{
+  "buttons": {
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "confirm": "تأكيد",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "add": "إضافة",
+    "update": "تحديث",
+    "close": "إغلاق",
+    "submit": "إرسال",
+    "reset": "إعادة تعيين",
+    "search": "بحث",
+    "filter": "تصفية",
+    "export": "تصدير",
+    "import": "استيراد",
+    "back": "رجوع",
+    "next": "التالي",
+    "previous": "السابق",
+    "yes": "نعم",
+    "no": "لا",
+    "ok": "موافق",
+    "apply": "تطبيق",
+    "clear": "مسح",
+    "saving": "جاري الحفظ...",
+    "loading": "جاري التحميل...",
+    "noCancel": "لا، إلغاء"
+  },
+  "labels": {
+    "name": "الاسم",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "confirmPassword": "تأكيد كلمة المرور",
+    "phone": "الهاتف",
+    "address": "العنوان",
+    "status": "الحالة",
+    "date": "التاريخ",
+    "time": "الوقت",
+    "actions": "الإجراءات",
+    "description": "الوصف",
+    "title": "العنوان",
+    "type": "النوع",
+    "reason": "السبب"
+  },
+  "messages": {
+    "success": "تمت العملية بنجاح",
+    "error": "حدث خطأ",
+    "confirm": "هل أنت متأكد؟",
+    "noData": "لا توجد بيانات متاحة",
+    "loading": "جاري التحميل...",
+    "saved": "تم الحفظ بنجاح",
+    "deleted": "تم الحذف بنجاح",
+    "updated": "تم التحديث بنجاح"
+  },
+  "login": {
+    "title": "تسجيل الدخول",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "emailPlaceholder": "أدخل عنوان البريد الإلكتروني",
+    "passwordPlaceholder": "أدخل كلمة المرور",
+    "forgotPassword": "نسيت كلمة المرور؟",
+    "loginButton": "تسجيل الدخول",
+    "rememberMe": "تذكرني"
+  },
+  "forgotPassword": {
+    "title": "نسيت كلمة المرور",
+    "subtitle": "أدخل عنوان بريدك الإلكتروني وسنرسل لك رابط لإعادة تعيين كلمة المرور.",
+    "email": "عنوان البريد الإلكتروني",
+    "emailPlaceholder": "أدخل عنوان البريد الإلكتروني",
+    "sendOtp": "إرسال رمز OTP",
+    "sendResetLink": "إرسال رابط إعادة التعيين",
+    "backToLogin": "العودة لتسجيل الدخول",
+    "otpSentMessage": "تم إرسال رمز OTP إلى بريدك الإلكتروني"
+  },
+  "resetPassword": {
+    "title": "إعادة تعيين كلمة المرور",
+    "changePasswordTitle": "تغيير كلمة المرور",
+    "newPassword": "كلمة المرور الجديدة",
+    "newPasswordPlaceholder": "أدخل كلمة المرور",
+    "confirmPassword": "تأكيد كلمة المرور",
+    "confirmPasswordPlaceholder": "تأكيد كلمة المرور",
+    "resetButton": "إعادة تعيين كلمة المرور",
+    "resetSuccessTitle": "تم إعادة تعيين كلمة المرور بنجاح!",
+    "resetSuccessMessage": "لقد قمت بإعادة تعيين كلمة المرور بنجاح. يرجى استخدام كلمة المرور الجديدة عند تسجيل الدخول.",
+    "logInButton": "تسجيل الدخول"
+  },
+  "changePassword": {
+    "title": "تغيير كلمة المرور",
+    "currentPassword": "كلمة المرور الحالية",
+    "newPassword": "كلمة المرور الجديدة",
+    "newPasswordPlaceholder": "أدخل كلمة المرور الجديدة",
+    "confirmPassword": "تأكيد كلمة المرور",
+    "confirmPasswordPlaceholder": "أدخل تأكيد كلمة المرور",
+    "changeButton": "تغيير كلمة المرور",
+    "changingPassword": "جاري تغيير كلمة المرور...",
+    "passwordChangedMessage": "تم تغيير كلمة المرور بنجاح. يرجى تسجيل الدخول مرة أخرى بكلمة المرور الجديدة.",
+    "passwordRequirements": "يجب أن تحتوي كلمة المرور على حرف كبير واحد على الأقل، وحرف صغير واحد، ورمز خاص واحد، ورقم واحد."
+  },
+  "otpVerification": {
+    "title": "التحقق من رمز OTP",
+    "subtitle": "لقد أرسلنا رمز التحقق إلى",
+    "codeSentTo": "تم إرسال رمز مكون من 4 أرقام إلى",
+    "otpSentMessage": "تم إرسال رمز OTP إلى بريدك الإلكتروني",
+    "otpSentToEmail": "تم إرسال رمز OTP إلى بريدك الإلكتروني",
+    "enterOtp": "أدخل رمز OTP",
+    "resendCode": "إعادة إرسال الرمز",
+    "resendOtp": "إعادة إرسال رمز OTP",
+    "didntReceiveOtp": "لم تستلم رمز OTP؟",
+    "verifyButton": "تحقق",
+    "verifyOtp": "التحقق من رمز OTP",
+    "didntReceive": "لم تستلم الرمز؟",
+    "resendIn": "إعادة الإرسال خلال",
+    "in": "خلال",
+    "otpVerifiedSuccessfully": "تم التحقق من رمز OTP بنجاح",
+    "emailNotAvailable": "البريد الإلكتروني غير متاح."
+  },
+  "checkMail": {
+    "title": "تحقق من بريدك الإلكتروني",
+    "subtitle": "لقد أرسلنا رابط إعادة تعيين كلمة المرور إلى عنوان بريدك الإلكتروني.",
+    "resetLinkSent": "تم إرسال رابط إعادة تعيين كلمة المرور إلى",
+    "didntReceiveLink": "لم تستلم الرابط؟",
+    "resend": "إعادة الإرسال",
+    "changeEmail": "تغيير البريد الإلكتروني",
+    "backToLogin": "العودة لتسجيل الدخول",
+    "resetLinkResent": "تم إعادة إرسال رابط إعادة تعيين كلمة المرور بنجاح.",
+    "emailNotAvailable": "البريد الإلكتروني غير متاح."
+  },
+  "logout": {
+    "title": "تسجيل الخروج",
+    "message": "هل أنت متأكد أنك تريد تسجيل الخروج من حسابك؟",
+    "confirm": "تسجيل الخروج",
+    "cancel": "إلغاء"
+  },
+  "dashboard": "لوحة التحكم",
+  "shipments": "الشحنات",
+  "customers": "العملاء",
+  "airportHandler": "معالج المطار",
+  "transactions": "المعاملات",
+  "notificationManagement": "إدارة الإشعارات",
+  "manageLegalDocs": "إدارة المستندات القانونية",
+  "airportOperations": "عمليات المطار",
+  "masterCityTable": "جدول المدن الرئيسي",
+  "airportLocation": "موقع المطار",
+  "shipmentPricing": "تسعير الشحنة",
+  "deliveryAssignment": "تعيين التسليم",
+  "manageAdminUsers": "إدارة مستخدمي الإدارة",
+  "adminUsers": "مستخدمو الإدارة",
+  "userRoles": "أدوار المستخدمين",
+  "couponManagement": "إدارة القسائم",
+  "appUsers": "مستخدمو التطبيق",
+  "userCohorts": "مجموعات المستخدمين",
+  "contentModeration": "تعديل المحتوى",
+  "contentLibrary": "مكتبة المحتوى",
+  "flaggedContentReports": "تقارير المحتوى المميز",
+  "vettingLogs": "سجلات الفحص",
+  "scrapperLogs": "سجلات الكاشط",
+  "manageTags": "إدارة العلامات",
+  "manageCategories": "إدارة الفئات",
+  "supportTickets": "تذاكر الدعم",
+  "auditReports": "تقارير التدقيق",
+  "userLoginSecurityLogs": "سجلات تسجيل الدخول والأمان للمستخدمين",
+  "administrativeActionLogs": "سجلات الإدارة",
+  "dataDeletionLogs": "سجلات حذف البيانات",
+  "blockUser": {
+    "title": "حظر حساب المستخدم",
+    "subtitle": "هل أنت متأكد أنك تريد حظر حساب هذا المستخدم؟ يرجى تحديد السبب.",
+    "reason": "سبب الحظر"
+  },
+  "deleteUser": {
+    "title": "حذف حساب المستخدم",
+    "subtitle": "هل أنت متأكد أنك تريد حذف حساب هذا المستخدم؟ يرجى تحديد السبب.",
+    "reason": "سبب الحذف"
+  },
+  "reactivateUser": {
+    "title": "إعادة تفعيل حساب المستخدم",
+    "subtitle": "هل أنت متأكد أنك تريد إعادة تفعيل حساب هذا المستخدم؟ يرجى تحديد السبب.",
+    "reason": "سبب إعادة التفعيل"
+  },
+  "blockBulkUsers": {
+    "title": "حظر حسابات المستخدمين المحددة",
+    "subtitle": "هل أنت متأكد أنك تريد حظر حسابات المستخدمين المحددة؟ يرجى تحديد السبب.",
+    "reason": "سبب الحظر"
+  },
+  "deleteBulkUsers": {
+    "title": "حذف حسابات المستخدمين المحددة",
+    "subtitle": "هل أنت متأكد أنك تريد حذف حسابات المستخدمين المحددة؟ يرجى تحديد السبب.",
+    "reason": "سبب الحذف"
+  },
+  "reactivateBulkUsers": {
+    "title": "إعادة تفعيل حسابات المستخدمين المحددة",
+    "subtitle": "هل أنت متأكد أنك تريد إعادة تفعيل حسابات المستخدمين المحددة؟ يرجى تحديد السبب.",
+    "reason": "سبب إعادة التفعيل"
+  },
+  "blockSubAdmin": {
+    "title": "حظر حساب المسؤول الفرعي",
+    "subtitle": "هل أنت متأكد أنك تريد حظر حساب المسؤول الفرعي هذا؟ يرجى تحديد السبب.",
+    "reason": "سبب الحظر"
+  },
+  "deleteSubAdmin": {
+    "title": "حذف حساب المسؤول الفرعي",
+    "subtitle": "هل أنت متأكد أنك تريد حذف حساب المسؤول الفرعي هذا؟ يرجى تحديد السبب.",
+    "reason": "سبب الحذف"
+  },
+  "reactivateSubAdmin": {
+    "title": "إعادة تفعيل حساب المسؤول الفرعي",
+    "subtitle": "هل أنت متأكد أنك تريد إعادة تفعيل حساب المسؤول الفرعي هذا؟ يرجى تحديد السبب.",
+    "reason": "سبب إعادة التفعيل"
+  },
+  "blockBulkSubAdmins": {
+    "title": "حظر حسابات المسؤولين الفرعيين المحددة",
+    "subtitle": "هل أنت متأكد أنك تريد حظر حسابات المسؤولين الفرعيين المحددة؟ يرجى تحديد السبب.",
+    "reason": "سبب الحظر"
+  },
+  "deleteBulkSubAdmins": {
+    "title": "حذف حسابات المسؤولين الفرعيين المحددة",
+    "subtitle": "هل أنت متأكد أنك تريد حذف حسابات المسؤولين الفرعيين المحددة؟ يرجى تحديد السبب.",
+    "reason": "سبب الحذف"
+  },
+  "reactivateBulkSubAdmins": {
+    "title": "إعادة تفعيل حسابات المسؤولين الفرعيين المحددة",
+    "subtitle": "هل أنت متأكد أنك تريد إعادة تفعيل حسابات المسؤولين الفرعيين المحددة؟ يرجى تحديد السبب.",
+    "reason": "سبب إعادة التفعيل"
+  },
+  "publishContent": {
+    "title": "نشر المحتوى",
+    "subtitle": "هل أنت متأكد أنك تريد نشر هذا المحتوى على التطبيق؟"
+  },
+  "deleteContent": {
+    "title": "حذف المحتوى",
+    "subtitle": "هل أنت متأكد أنك تريد حذف هذا المحتوى على التطبيق؟"
+  },
+  "hideContent": {
+    "title": "إخفاء المحتوى",
+    "subtitle": "هل أنت متأكد أنك تريد إخفاء هذا المحتوى على التطبيق؟"
+  },
+  "publishBulkContent": {
+    "title": "نشر جميع المحتوى المحدد",
+    "subtitle": "هل أنت متأكد أنك تريد نشر جميع المحتوى المحدد على التطبيق؟"
+  },
+  "deleteBulkContent": {
+    "title": "حذف جميع المحتوى المحدد",
+    "subtitle": "هل أنت متأكد أنك تريد حذف جميع المحتوى المحدد على التطبيق؟"
+  },
+  "hideBulkContent": {
+    "title": "إخفاء جميع المحتوى المحدد",
+    "subtitle": "هل أنت متأكد أنك تريد إخفاء جميع المحتوى المحدد على التطبيق؟"
+  },
+  "active": "نشط",
+  "hidden": "مخفي",
+  "deleted": "محذوف",
+  "blocked": "محظور",
+  "ongoing": "قيد التنفيذ",
+  "resolved": "تم الحل",
+  "superAdmin": "المسؤول الرئيسي",
+  "contentModerator": "معدل المحتوى",
+  "marketing": "التسويق",
+  "complianceOfficer": "ضابط الامتثال",
+  "supportDesk": "مكتب الدعم",
+  "required": "هذا الحقل مطلوب",
+  "invalidEmail": "يرجى إدخال عنوان بريد إلكتروني صالح",
+  "invalidPassword": "يجب أن تكون كلمة المرور 8 أحرف على الأقل",
+  "passwordMismatch": "كلمات المرور غير متطابقة",
+  "invalidPhone": "يرجى إدخال رقم هاتف صالح",
+  "networkError": "خطأ في الشبكة. يرجى المحاولة مرة أخرى.",
+  "unauthorized": "غير مصرح لك بتنفيذ هذا الإجراء",
+  "notFound": "المورد غير موجود",
+  "serverError": "خطأ في الخادم. يرجى المحاولة مرة أخرى لاحقًا.",
+  "validationError": "خطأ في التحقق",
+  "addFaq": "إضافة سؤال متكرر",
+  "editFaq": "تعديل سؤال متكرر",
+  "question": "السؤال",
+  "answer": "الإجابة",
+  "saveAndUpdate": "حفظ وتحديث"
+}
