@@ -135,7 +135,7 @@
   "dashboard": "لوحة التحكم",
   "shipments": "الشحنات",
   "customers": "العملاء",
-  "airportHandler": "معالج المطار",
+  "airportHandler": "حسابات معالجي المطارات",
   "transactions": "المعاملات",
   "notificationManagement": "إدارة الإشعارات",
   "manageLegalDocs": "إدارة المستندات القانونية",
@@ -316,5 +316,19 @@
     "other": "أخرى",
     "primary": "أساسي",
     "work": "عمل"
+  },
+  "airportHandlerAccounts": {
+    "title": "حسابات معالجي المطارات",
+    "createAccount": "إنشاء حساب"
+  },
+  "createAccountDrawer": {
+    "title": "إضافة حساب معالج مطار",
+    "firstName": "الاسم الأول",
+    "lastName": "اسم العائلة",
+    "email": "البريد الإلكتروني",
+    "phone": "رقم الهاتف",
+    "location": "الموقع",
+    "selectLocation": "اختر الموقع",
+    "submit": "إضافة وإرسال دعوة"
   }
 }

@@ -124,7 +124,7 @@ export const StyledActionButton = styled(Button)<StyledActionButtonProps>(
       success: {
         borderColor: colors["Success-600"],
         color: colors["Success-600"],
-        bg: colors["Success-600"],
+        bg: colors["Success-button"],
         hoverBorderColor: colors["Success-700"],
         hoverBg: colors["Success-50"],
         hoverBgFilled: colors["Success-700"],

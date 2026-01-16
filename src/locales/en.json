@@ -135,7 +135,7 @@
   "dashboard": "Dashboard",
   "shipments": "Shipments",
   "customers": "Customers",
-  "airportHandler": "Airport Handler",
+  "airportHandler": "Airport Handler Accounts",
   "transactions": "Transactions",
   "notificationManagement": "Notification Management",
   "manageLegalDocs": "Manage Legal Docs",
@@ -316,5 +316,19 @@
     "other": "Other",
     "primary": "Primary",
     "work": "Work"
+  },
+  "airportHandlerAccounts": {
+    "title": "Airport Handler Accounts",
+    "createAccount": "Create account"
+  },
+  "createAccountDrawer": {
+    "title": "Create Airport Handler Account",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email Address",
+    "phone": "Phone number",
+    "location": "Location",
+    "selectLocation": "Select location",
+    "submit": "Create & Send invite"
   }
 }

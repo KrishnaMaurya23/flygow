@@ -175,6 +175,49 @@ export function createShipmentData(
 }
 
 //*********************************************************************************************** */
+// Airport Handler Types
+export type AirportHandlerData = {
+  userId: string;
+  accountName: string | null;
+  emailAddress: string | null;
+  location: string;
+  locationId: string;
+  lastLogin: string;
+  status: JSX.Element;
+  action: JSX.Element;
+};
+export const AirportHandlerColumns: readonly Column<AirportHandlerData>[] = [
+  { id: "userId", label: "User ID", minWidth: 100, sortable: true },
+  { id: "accountName", label: "Account name", minWidth: 150, sortable: false },
+  { id: "emailAddress", label: "Email address", minWidth: 170, sortable: false },
+  { id: "location", label: "Location", minWidth: 130, sortable: false },
+  { id: "locationId", label: "Location ID", minWidth: 120, sortable: false },
+  { id: "lastLogin", label: "Last login", minWidth: 170, sortable: true },
+  { id: "status", label: "Status", minWidth: 150, sortable: false },
+  { id: "action", label: "", minWidth: 80, sortable: false },
+];
+export function createAirportHandlerData(
+  userId: string,
+  accountName: string | null,
+  emailAddress: string | null,
+  location: string,
+  locationId: string,
+  lastLogin: string,
+  status: JSX.Element,
+  action: JSX.Element
+): AirportHandlerData {
+  return {
+    userId,
+    accountName,
+    emailAddress,
+    location,
+    locationId,
+    lastLogin,
+    status,
+    action,
+  };
+}
+
 // Audit Report Types
 //  User Login & Security Event Logs
 export type UserLoginSecurityEvent = {

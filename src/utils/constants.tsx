@@ -24,7 +24,7 @@ export const colors = {
   "Primary-600": "#307abf",
   "Primary-700": "#2869ad",
   "Primary-800": "#21599b",
-  "Primary-900": "#153c7c",
+  "Primary-900": "#031C5F",
   "Error-50": "#FEF3F2",
   "Error-100": "#FEE4E2",
   "Error-200": "#FECDCA",
@@ -55,6 +55,7 @@ export const colors = {
   "Success-700": "#027A48",
   "Success-800": "#05603A",
   "Success-900": "#054F31",
+  "Success-button": "#0E6A37"
 };
 
 export function getAPPUserDialogContent(type: string) {
