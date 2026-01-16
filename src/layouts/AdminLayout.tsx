@@ -42,8 +42,8 @@ const SELECTED_ITEM_COLOR = "#0E6A37";
 const SELECTED_INDICATOR_WIDTH = "4px";
 const SELECTED_INDICATOR_TOP = 14;
 const SELECTED_INDICATOR_BOTTOM = 14;
-const ICON_FILTER = "invert(30%) sepia(98%) saturate(7470%) hue-rotate(215deg) brightness(103%) contrast(104%)";
-
+// const ICON_FILTER = "invert(30%) sepia(98%) saturate(7470%) hue-rotate(215deg) brightness(103%) contrast(104%)";
+const ICON_FILTER = "invert(13%) sepia(86%) saturate(1350%) hue-rotate(96deg) brightness(92%) contrast(94%)";
 const MENU_ITEM_SX: SxProps<Theme> = {
   fontSize: "14px",
   fontWeight: 400,
@@ -87,23 +87,21 @@ const getSelectedItemStyles = (theme: Theme, includeImageFilter = false): SxProp
 
 // Navigation icon components
 const NavigationIcon: React.FC<{ variant: string }> = ({ variant }) => {
-  const iconStyles: { [key: string]: SxProps<Theme> } = {
-    dashboard: { width: 24, height: 24, borderRadius: "50%", border: "2px solid #384250" },
-    shipments: { width: 24, height: 24, backgroundColor: "#12B76A", borderRadius: 1 },
-    customers: { width: 24, height: 24, backgroundColor: "#384250", borderRadius: "50%" },
-    "airport-handler": { width: 24, height: 24, backgroundColor: "#384250", clipPath: "polygon(50% 0%, 0% 100%, 100% 100%)" },
-    transactions: { width: 24, height: 24, backgroundColor: "#384250", borderRadius: 1 },
-    "airport-operations": { width: 24, height: 24, backgroundColor: "#12B76A", clipPath: "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)" },
-    "coupon-management": { width: 24, height: 24, borderRadius: "50%", border: "2px solid #384250", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "12px", fontWeight: "bold" },
-  };
-
-  if (variant === "coupon-management") {
-    return (
-      <Box sx={iconStyles[variant]}>%</Box>
-    );
-  }
-
-  return <Box sx={iconStyles[variant] || iconStyles.dashboard} />;
+  return (
+    <Box sx={{ width: 32, height: 32, display: "flex", alignItems: "center", justifyContent: "center" }}>
+      <img
+        src={`/assets/sidebar/${variant}.png`}
+        alt={variant}
+        style={{ width: "100%", height: "100%", objectFit: "contain" }}
+        onError={(e) => {
+          // Fallback if image doesn't exist yet (shows a small circle)
+          (e.target as any).style.display = 'none';
+          (e.target as any).parentElement.style.border = '2px solid #384250';
+          (e.target as any).parentElement.style.borderRadius = '50%';
+        }}
+      />
+    </Box>
+  );
 };
 
 // User info component
@@ -403,12 +401,12 @@ export default function AdminLayout(props: any) {
     {
       segment: "notification-management",
       title: t("notificationManagement"),
-      icon: <img src="/assets/icons/NotificationManagement.svg" alt="Notification Management" style={{ width: 24, height: 24 }} />,
+      icon: <NavigationIcon variant="notification-management" />,
     },
     {
       segment: "manage-legal-docs",
       title: t("manageLegalDocs"),
-      icon: <img src="/assets/icons/ManageLegalDocs.svg" alt="Manage Legal Docs" style={{ width: 24, height: 24 }} />,
+      icon: <NavigationIcon variant="manage-legal-docs" />,
     },
     {
       segment: "airport-operations",
@@ -424,7 +422,7 @@ export default function AdminLayout(props: any) {
     {
       segment: "manage-admin-users",
       title: t("manageAdminUsers"),
-      icon: <img src="/assets/icons/ManageAdminUsers.svg" alt="Manage Admin Users" style={{ width: 24, height: 24 }} />,
+      icon: <NavigationIcon variant="manage-admin-users" />,
       children: [
         { segment: "admin-users", title: t("adminUsers") },
         { segment: "user-roles", title: t("userRoles") },
