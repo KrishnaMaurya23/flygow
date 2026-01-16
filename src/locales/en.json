@@ -24,7 +24,8 @@
     "clear": "Clear",
     "saving": "Saving...",
     "loading": "Loading...",
-    "noCancel": "No, cancel"
+    "noCancel": "No, cancel",
+    "block": "Block"
   },
   "labels": {
     "name": "Name",

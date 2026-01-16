@@ -103,56 +103,69 @@ interface StyledActionButtonProps extends ButtonProps {
 }
 
 export const StyledActionButton = styled(Button)<StyledActionButtonProps>(
-  ({ buttonType = "primary", buttonStyle = "flat" }) => {
+  ({ buttonType = "primary", buttonStyle = "flat", variant }) => {
     const colorMap = {
       error: {
         borderColor: colors["Error-600"],
         color: colors["Error-600"],
+        bg: colors["Error-600"],
         hoverBorderColor: colors["Error-700"],
         hoverBg: colors["Error-50"],
+        hoverBgFilled: colors["Error-700"],
       },
       warning: {
         borderColor: colors["Warning-600"],
         color: colors["Warning-600"],
+        bg: colors["Warning-600"],
         hoverBorderColor: colors["Warning-700"],
         hoverBg: colors["Warning-50"],
+        hoverBgFilled: colors["Warning-700"],
       },
       success: {
         borderColor: colors["Success-600"],
         color: colors["Success-600"],
+        bg: colors["Success-600"],
         hoverBorderColor: colors["Success-700"],
         hoverBg: colors["Success-50"],
+        hoverBgFilled: colors["Success-700"],
       },
       primary: {
         borderColor: colors["Primary-600"],
         color: colors["Primary-600"],
+        bg: colors["Primary-600"],
         hoverBorderColor: colors["Primary-700"],
         hoverBg: colors["Primary-50"],
+        hoverBgFilled: colors["Primary-700"],
       },
       secondary: {
         borderColor: colors["Gray-600"],
         color: colors["Gray-600"],
+        bg: colors["Gray-600"],
         hoverBorderColor: colors["Gray-700"],
         hoverBg: colors["Gray-100"],
+        hoverBgFilled: colors["Gray-700"],
       },
     };
 
     const selectedColors = colorMap[buttonType];
     const borderRadius = buttonStyle === "rounded" ? "100px" : "8px";
+    const isFilled = variant === "contained";
 
     return {
       textTransform: "none",
-      borderColor: selectedColors.borderColor,
-      color: selectedColors.color,
+      borderColor: isFilled ? "transparent" : selectedColors.borderColor,
+      color: isFilled ? "white" : selectedColors.color,
+      backgroundColor: isFilled ? selectedColors.bg : "transparent",
       borderRadius: borderRadius,
       padding: "10px 24px",
-      fontSize: "18px",
+      fontSize: "18px", // Adjusted as per user's earlier manual change
       fontWeight: 600,
-      borderWidth: "1.5px",
+      borderWidth: isFilled ? "0px" : "1px",
+      boxShadow: "none", // Remove default MUI shadow for contained buttons
       "&:hover": {
-        borderColor: selectedColors.hoverBorderColor,
-        backgroundColor: selectedColors.hoverBg,
-        borderWidth: "0px",
+        borderColor: isFilled ? "transparent" : selectedColors.hoverBorderColor,
+        backgroundColor: isFilled ? selectedColors.hoverBgFilled : selectedColors.hoverBg,
+        borderWidth: isFilled ? "0px" : "0px", // Keep border on hover if outlined
       },
     };
   }
@@ -220,7 +233,7 @@ export function encryptAES(plaintext: string): string {
   }
 }
 
-export function decryptAES(cipherHex: string|null|undefined): string {
+export function decryptAES(cipherHex: string | null | undefined): string {
   try {
     if (!cipherHex) return "";
     const key = CryptoJS.enc.Hex.parse(AES_KEY);

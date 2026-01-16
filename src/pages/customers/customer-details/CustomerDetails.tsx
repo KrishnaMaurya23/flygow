@@ -1,4 +1,4 @@
-import { Box, Stack, Typography, IconButton, useTheme } from "@mui/material";
+import { Box, Stack, Typography, IconButton, useTheme, Divider } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { colors } from "../../../utils/constants";
@@ -10,14 +10,14 @@ interface InfoItemProps {
 }
 
 const InfoItem = ({ label, value }: InfoItemProps) => (
-    <Box sx={{ minWidth: 0 }}>
+    <Box sx={{ flex: 1 }}>
         <Typography
             variant="body2"
             sx={{
                 fontSize: "14px",
-                fontWeight: 500,
-                color: colors["Gray-600"],
-                marginBottom: "4px",
+                fontWeight: 400,
+                color: colors["Gray-500"],
+                marginBottom: "8px",
             }}
         >
             {label}
@@ -25,14 +25,10 @@ const InfoItem = ({ label, value }: InfoItemProps) => (
         <Typography
             variant="body1"
             sx={{
-                fontSize: "16px",
+                fontSize: "18px",
                 fontWeight: 500,
                 color: colors["Gray-900"],
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                whiteSpace: "nowrap",
             }}
-            title={value}
         >
             {value}
         </Typography>
@@ -46,146 +42,102 @@ export default function CustomerInfoCard() {
     const isRtl = theme.direction === "rtl";
 
     return (
-        <Box
-            sx={{
-                backgroundColor: "white",
-                borderRadius: "24px",
-                padding: "24px !important",
-                "@media (max-width: 600px)": {
-                    padding: "16px !important",
-                },
-                width: "100%",
-                boxShadow: "0px 1px 3px rgba(16, 24, 40, 0.1), 0px 1px 2px rgba(16, 24, 40, 0.06)",
-            }}
-        >
-            {/* Header Section */}
-            <Stack
-                direction={{ xs: "column", sm: "row" }}
-                alignItems={{ xs: "flex-start", sm: "center" }}
-                justifyContent="space-between"
-                spacing={2}
-                sx={{ marginBottom: "24px" }}
-            >
-                <Stack direction="row" alignItems="center" spacing={1}>
-                    <IconButton
-                        onClick={() => navigate(-1)}
-                        aria-label={t("buttons.back")}
-                        sx={{
-                            padding: "8px",
-                            "&:hover": {
-                                backgroundColor: colors["Gray-50"],
-                            },
-                            transform: isRtl ? "rotate(180deg)" : "none",
-                        }}
-                    >
-                        <img
-                            src="/assets/icons/back-arrow.svg"
-                            alt=""
-                            style={{ width: 24, height: 24 }}
-                        />
-                    </IconButton>
-                    <Typography
-                        variant="h5"
-                        sx={{
-                            fontSize: { xs: "18px", sm: "20px" },
-                            fontWeight: 600,
-                            color: colors["Gray-900"],
-                        }}
-                    >
-                        {t("customerDetails.title")}
-                    </Typography>
-                </Stack>
-                <Typography
+        <Box sx={{ width: "100%", }}>
+            {/* Page Header */}
+            <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 0, p: 1 }}>
+                <IconButton
+                    onClick={() => navigate(-1)}
+                    aria-label={t("buttons.back")}
                     sx={{
-                        fontSize: "16px",
-                        fontWeight: 600,
-                        color: colors["Success-600"],
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "4px",
+                        padding: "8px",
+                        "&:hover": {
+                            backgroundColor: colors["Gray-50"],
+                        },
+                        transform: isRtl ? "rotate(180deg)" : "none",
                     }}
                 >
-                    <Box component="span" sx={{ fontWeight: 600, color: colors["Gray-600"] }}>
-                        {t("labels.status")}:
-                    </Box>
-                    {t("active")}
+                    <img
+                        src="/assets/icons/back-arrow.svg"
+                        alt=""
+                        style={{ width: 24, height: 24 }}
+                    />
+                </IconButton>
+                <Typography
+                    variant="h5"
+                    sx={{
+                        fontSize: "24px",
+                        fontWeight: 700,
+                        color: colors["Gray-900"],
+                    }}
+                >
+                    {t("customerDetails.title")}
                 </Typography>
             </Stack>
-
-            {/* Customer ID and Action Buttons */}
-            <Stack
-                direction={{ xs: "column", md: "row" }}
-                justifyContent="space-between"
-                alignItems={{ xs: "flex-start", md: "center" }}
-                spacing={2}
-                sx={{ padding: "10px 10px !important", mb: 2 }}
-            >
-                <Stack direction="row" spacing={2} alignItems="center">
-                    <Typography
-                        variant="body2"
-                        sx={{
-                            fontSize: "14px",
-                            fontWeight: 500,
-                            color: colors["Gray-600"],
-                        }}
-                    >
-                        {t("customerDetails.userId")}
-                    </Typography>
-                    <Typography
-                        variant="h6"
-                        sx={{
-                            fontSize: "18px",
-                            fontWeight: 600,
-                            color: colors["Gray-900"],
-                        }}
-                    >
-                        #001
-                    </Typography>
-                </Stack>
+            <Box sx={{ padding: "32px !important", "@media (max-width: 600px)": { padding: "16px !important", }, }}>
+                {/* Account Status and Action Buttons */}
                 <Stack
                     direction={{ xs: "column", sm: "row" }}
+                    justifyContent="space-between"
+                    alignItems={{ xs: "flex-start", sm: "center" }}
                     spacing={2}
-                    sx={{ width: { xs: "100%", sm: "auto" } }}
                 >
-                    <StyledActionButton
-                        variant="outlined"
-                        buttonType="secondary"
-                        buttonStyle="rounded"
-                    >
-                        {t("customerDetails.blockCustomer")}
-                    </StyledActionButton>
-                    <StyledActionButton
-                        variant="outlined"
-                        buttonType="error"
-                        buttonStyle="rounded"
-                        sx={{ borderColor: colors["Error-300"], color: colors["Error-700"] }}
-                    >
-                        {t("customerDetails.deleteCustomer")}
-                    </StyledActionButton>
-                </Stack>
-            </Stack>
+                    <Box>
+                        <Typography
+                            sx={{
+                                fontSize: "14px",
+                                fontWeight: 400,
+                                color: colors["Gray-500"],
+                                mb: 1,
+                            }}
+                        >
+                            Account Status
+                        </Typography>
+                        <Typography
+                            sx={{
+                                fontSize: "20px",
+                                fontWeight: 500,
+                                color: colors["Gray-900"],
+                            }}
+                        >
+                            {t("active")}
+                        </Typography>
+                    </Box>
 
-            {/* Grid of Info */}
-            <Box
-                sx={{
-                    display: "grid",
-                    gridTemplateColumns: {
-                        xs: "1fr",
-                        sm: "1fr 1fr",
-                        md: "repeat(4, 1fr)",
-                    },
-                    gap: 3,
-                    padding: "10px 10px !important",
-                }}
-            >
-                <InfoItem label={t("customerDetails.fullName")} value="Olivia Rhye" />
-                <InfoItem label={t("customerDetails.phoneNumber")} value="+966 9877827388" />
-                <InfoItem label={t("customerDetails.email")} value="olivia@example.com" />
-                <InfoItem label={t("customerDetails.registrationDate")} value="Mar 20, 2025" />
-                <InfoItem label={t("customerDetails.totalShipments")} value="45" />
-                <InfoItem label={t("customerDetails.walletBalance")} value="SAR 250.00" />
-                <InfoItem label={t("customerDetails.lastLogin")} value="2 Hours ago" />
-                <InfoItem label={t("customerDetails.deviceInfo")} value="iPhone 14 Pro" />
+                    <Stack
+                        direction="row"
+                        spacing={2}
+                        sx={{ width: { xs: "100%", sm: "auto" } }}
+                    >
+                        <StyledActionButton
+                            variant="contained"
+                            buttonType="error"
+                            buttonStyle="flat"
+
+                        >
+                            {t("buttons.delete")}
+                        </StyledActionButton>
+                        <StyledActionButton
+                            variant="outlined"
+                            buttonType="error"
+                            buttonStyle="flat"
+                        >
+                            {t("buttons.block")}
+                        </StyledActionButton>
+                    </Stack>
+                </Stack>
+                <Divider sx={{ my: 2 }} />
+
+                {/* Info Row */}
+                <Stack
+                    direction={{ xs: "column", md: "row" }}
+                    spacing={8}
+                    sx={{ pt: 1 }}
+                >
+                    <InfoItem label="Customer Name" value="John Doe" />
+                    <InfoItem label="Phone Number" value="+966 9877827388" />
+                    <InfoItem label="Email Address" value="johndoe@gmail.com" />
+                </Stack>
+                <Divider sx={{ my: 2 }} />
             </Box>
         </Box>
     );
