@@ -507,7 +507,9 @@ export default function AdminLayout(props: any) {
             },
             "& .MuiDrawer-paper": {
               backgroundColor: muiTheme.palette.background.default,
+              paddingTop: "40px",
               border: "none",
+
             },
             "& .MuiBox-root": {
               padding: "2px",
@@ -566,7 +568,7 @@ export default function AdminLayout(props: any) {
                 <img
                   src="/assets/icons/flygow_logo_dashboard.svg"
                   alt="Flygow Logo"
-                  style={{ width: "208px", height: "68px", marginRight: "4px" }}
+                  style={{ width: "208px", height: "68px", marginRight: "4px", maxHeight: "68px", marginTop: "25px" }}
                 />
               </Box>
             ),
