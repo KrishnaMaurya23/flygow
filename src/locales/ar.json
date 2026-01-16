@@ -270,5 +270,30 @@
   "editFaq": "تعديل سؤال متكرر",
   "question": "السؤال",
   "answer": "الإجابة",
-  "saveAndUpdate": "حفظ وتحديث"
+  "saveAndUpdate": "حفظ وتحديث",
+  "shipmentDetails": {
+    "title": "تفاصيل الشحنة",
+    "status": "الحالة-",
+    "shipmentId": "رقم الشحنة",
+    "cancelShipment": "إلغاء الشحنة",
+    "onHoldShipment": "تعليق الشحنة",
+    "package": "الطرد",
+    "weight": "الوزن",
+    "orderedPlaced": "تم الطلب",
+    "estimatedDelivery": "التسليم المتوقع",
+    "priceDetails": "تفاصيل السعر",
+    "price": "السعر",
+    "vat": "الضريبة",
+    "totalPrice": "السعر الإجمالي",
+    "arrivedAtPickup": "وصلت إلى مطار الاستلام"
+  },
+  "infoLabels": {
+    "senderDetails": "تفاصيل المرسل",
+    "senderName": "اسم المرسل",
+    "phoneNumber": "رقم الهاتف",
+    "pickupLocation": "موقع الاستلام",
+    "receiverDetails": "تفاصيل المستلم",
+    "receiverName": "اسم المستلم",
+    "dropLocation": "موقع التسليم"
+  }
 }

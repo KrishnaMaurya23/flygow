@@ -577,10 +577,10 @@ export default function AdminLayout(props: any) {
           <Box sx={{ p: 2, marginTop: "0px !important" }}>
             <PageContainer
               sx={{
-                backgroundColor: muiTheme.palette.primary.light,
-                borderRadius: 6,
-                boxShadow: 1,
-                p: 2,
+                // backgroundColor: muiTheme.palette.primary.light,
+                // borderRadius: 6,
+                // boxShadow: 1,
+                p: 0,
                 "& .MuiBox-root": {
                   marginTop: 0,
                 },

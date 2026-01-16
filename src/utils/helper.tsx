@@ -5,7 +5,9 @@ import CryptoJS from "crypto-js";
 import {
   TextField,
   Typography,
+  Button,
   type TypographyProps,
+  type ButtonProps,
 } from "@mui/material";
 
 
@@ -93,6 +95,68 @@ export const StyledHeaderTypography = styled((props: TypographyProps) => (
   fontWeight: "600",
   color: colors["Gray-900"],
 }));
+
+// Styled Action Button for Shipment Details
+interface StyledActionButtonProps extends ButtonProps {
+  buttonType?: "error" | "warning" | "success" | "primary" | "secondary";
+  buttonStyle?: "rounded" | "flat";
+}
+
+export const StyledActionButton = styled(Button)<StyledActionButtonProps>(
+  ({ buttonType = "primary", buttonStyle = "flat" }) => {
+    const colorMap = {
+      error: {
+        borderColor: colors["Error-600"],
+        color: colors["Error-600"],
+        hoverBorderColor: colors["Error-700"],
+        hoverBg: colors["Error-50"],
+      },
+      warning: {
+        borderColor: colors["Warning-600"],
+        color: colors["Warning-600"],
+        hoverBorderColor: colors["Warning-700"],
+        hoverBg: colors["Warning-50"],
+      },
+      success: {
+        borderColor: colors["Success-600"],
+        color: colors["Success-600"],
+        hoverBorderColor: colors["Success-700"],
+        hoverBg: colors["Success-50"],
+      },
+      primary: {
+        borderColor: colors["Primary-600"],
+        color: colors["Primary-600"],
+        hoverBorderColor: colors["Primary-700"],
+        hoverBg: colors["Primary-50"],
+      },
+      secondary: {
+        borderColor: colors["Gray-600"],
+        color: colors["Gray-600"],
+        hoverBorderColor: colors["Gray-700"],
+        hoverBg: colors["Gray-100"],
+      },
+    };
+
+    const selectedColors = colorMap[buttonType];
+    const borderRadius = buttonStyle === "rounded" ? "100px" : "8px";
+
+    return {
+      textTransform: "none",
+      borderColor: selectedColors.borderColor,
+      color: selectedColors.color,
+      borderRadius: borderRadius,
+      padding: "10px 24px",
+      fontSize: "18px",
+      fontWeight: 600,
+      borderWidth: "1.5px",
+      "&:hover": {
+        borderColor: selectedColors.hoverBorderColor,
+        backgroundColor: selectedColors.hoverBg,
+        borderWidth: "0px",
+      },
+    };
+  }
+);
 
 const IV_KEY = import.meta.env.VITE_IV_KEY || "";
 const AES_KEY = import.meta.env.VITE_AES_KEY || ""; // 16 bytes for IV

@@ -270,5 +270,30 @@
   "editFaq": "Edit FAQ",
   "question": "Question",
   "answer": "Answer",
-  "saveAndUpdate": "Save & Update"
+  "saveAndUpdate": "Save & Update",
+  "shipmentDetails": {
+    "title": "Shipment Details",
+    "status": "Status-",
+    "shipmentId": "Shipment ID",
+    "cancelShipment": "Cancel Shipment",
+    "onHoldShipment": "On-Hold Shipment",
+    "package": "Package",
+    "weight": "Weight",
+    "orderedPlaced": "Ordered Placed",
+    "estimatedDelivery": "Estimated delivery",
+    "priceDetails": "Price details",
+    "price": "Price",
+    "vat": "VAT",
+    "totalPrice": "Total Price",
+    "arrivedAtPickup": "Arrived at Pickup Airport"
+  },
+  "infoLabels": {
+    "senderDetails": "Sender details",
+    "senderName": "Sender's Name",
+    "phoneNumber": "Phone Number",
+    "pickupLocation": "Pickup location",
+    "receiverDetails": "Receiver details",
+    "receiverName": "Receiver's Name",
+    "dropLocation": "Drop location"
+  }
 }
