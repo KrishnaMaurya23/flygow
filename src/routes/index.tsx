@@ -57,6 +57,7 @@ import SupportTicketDetail from "../pages/support-tickets/support-ticket-detail"
 import AboutUs from "../pages/manage-legal-docs/about-us";
 import OTPVerificationPage from "../pages/otp-verification";
 import SubCategoryDetail from "../pages/content-moderation/manage-categories/category-detail/sub-category-detail";
+import CustomerDetails from "../pages/customers/customer-details";
 
 // Airport Operations
 import MasterCityTable from "../pages/airport-operations/master-city-table";
@@ -250,7 +251,16 @@ export default function AppRoutes() {
       path: "/app-users/user-details",
       element: (
         <PrivateRoute>
-          <UserDetails status="Active" />
+          <UserDetails />
+        </PrivateRoute>
+      ),
+    },
+    //customer details
+    {
+      path: "/customers/customer-details",
+      element: (
+        <PrivateRoute>
+          <CustomerDetails />
         </PrivateRoute>
       ),
     },
@@ -359,7 +369,7 @@ export default function AppRoutes() {
       element: (
         <PrivateRoute>
           <NotificationManagement />
-       </PrivateRoute>
+        </PrivateRoute>
       ),
     },
     {
@@ -367,15 +377,15 @@ export default function AppRoutes() {
       element: (
         <PrivateRoute>
           <CreateEditNotification />
-       </PrivateRoute>
+        </PrivateRoute>
       ),
     },
     {
       path: "/notification-management/edit-notification",
       element: (
-       <PrivateRoute>
+        <PrivateRoute>
           <CreateEditNotification />
-       </PrivateRoute>
+        </PrivateRoute>
       ),
     },
     {
@@ -444,7 +454,7 @@ export default function AppRoutes() {
           <TermCondition />
         </PrivateRoute>
       ),
-    },{
+    }, {
       path: "/manage-legal-docs/privacy-policy",
       element: (
         <PrivateRoute>
@@ -459,7 +469,7 @@ export default function AppRoutes() {
           <AboutUs />
         </PrivateRoute>
       ),
-    },{
+    }, {
       path: "/manage-legal-docs/faqs",
       element: (
         <PrivateRoute>

@@ -295,5 +295,25 @@
     "receiverDetails": "تفاصيل المستلم",
     "receiverName": "اسم المستلم",
     "dropLocation": "موقع التسليم"
+  },
+  "customerDetails": {
+    "title": "تفاصيل العميل",
+    "userId": "معرف المستخدم",
+    "fullName": "الاسم الكامل",
+    "phoneNumber": "رقم الهاتف",
+    "email": "البريد الإلكتروني",
+    "registrationDate": "تاريخ التسجيل",
+    "totalShipments": "إجمالي الشحنات",
+    "walletBalance": "رصيد المحفظة",
+    "lastLogin": "آخر تسجيل دخول",
+    "deviceInfo": "معلومات الجهاز",
+    "blockCustomer": "حظر العميل",
+    "deleteCustomer": "حذف العميل",
+    "savedAddresses": "العناوين المحفوظة",
+    "home": "المنزل",
+    "office": "المكتب",
+    "other": "أخرى",
+    "primary": "أساسي",
+    "work": "عمل"
   }
 }

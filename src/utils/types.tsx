@@ -92,6 +92,41 @@ export function createAppUserData(
   };
 }
 
+// Customer Types
+export type CustomerData = {
+  userId: string;
+  name: string | null;
+  registrationDate: string;
+  phoneNumber: string | null;
+  status: JSX.Element;
+  action: JSX.Element;
+};
+export const CustomerColumns: readonly Column<CustomerData>[] = [
+  { id: "userId", label: "User ID", minWidth: 100, sortable: true },
+  { id: "name", label: "Name", minWidth: 150, sortable: false },
+  { id: "registrationDate", label: "Registration date", minWidth: 170, sortable: true },
+  { id: "phoneNumber", label: "Phone Number", minWidth: 150, sortable: false },
+  { id: "status", label: "Status", minWidth: 150, sortable: false },
+  { id: "action", label: "", minWidth: 80, sortable: false },
+];
+export function createCustomerData(
+  userId: string,
+  name: string | null,
+  registrationDate: string,
+  phoneNumber: string | null,
+  status: JSX.Element,
+  action: JSX.Element
+): CustomerData {
+  return {
+    userId,
+    name,
+    registrationDate,
+    phoneNumber,
+    status,
+    action,
+  };
+}
+
 // Shipment Types
 export type ShipmentData = {
   shipmentId: string;
@@ -205,7 +240,7 @@ export type AdministrativeActionLog = {
 };
 export const administrativeActionsColumns: readonly Column<AdministrativeActionLog>[] =
   [
-    { id: "logId", label: "Log ID", minWidth: 80,  },
+    { id: "logId", label: "Log ID", minWidth: 80, },
     { id: "adminId", label: "Admin ID", minWidth: 120 },
     { id: "userId", label: "User ID", minWidth: 120 },
     { id: "actionType", label: "Action Type", minWidth: 150 },
@@ -644,7 +679,7 @@ export const ContentCategoryColumns: readonly Column<ContentCategoryData>[] = [
     minWidth: 150,
     sortable: false,
   },
- 
+
 ];
 
 
@@ -724,7 +759,7 @@ export function createContentSubCategoryData(
   title: string,
   diseases: string,
   action: JSX.Element
-  
+
 ): ContentSubCategoryData {
   return {
     id,
@@ -973,16 +1008,16 @@ export function createScrapperLogDetailData(
   };
 }
 export type LegalDocsData = {
-  docName:JSX.Element;
-  updatedAt:string;
+  docName: JSX.Element;
+  updatedAt: string;
 };
 export const LegalDocsColumns: readonly Column<LegalDocsData>[] = [
   { id: "docName", label: "Document Name", minWidth: 100, sortable: false },
   { id: "updatedAt", label: "Last Updated At", minWidth: 100, sortable: false },
 ]
 export function createLegalDocsData(
-  docName:JSX.Element,
-  updatedAt:string
+  docName: JSX.Element,
+  updatedAt: string
 ): LegalDocsData {
   return {
     docName,
@@ -990,13 +1025,13 @@ export function createLegalDocsData(
   };
 }
 export type NotificationData = {
-  id:string;
-  title:string;
-  type:string;
-  createAt:string;
-  scheduleAt:String;
-  status:JSX.Element;
-  action:JSX.Element;
+  id: string;
+  title: string;
+  type: string;
+  createAt: string;
+  scheduleAt: String;
+  status: JSX.Element;
+  action: JSX.Element;
 };
 export const NotificationColumns: readonly Column<NotificationData>[] = [
   { id: "title", label: "Title", minWidth: 100, sortable: false },
@@ -1007,13 +1042,13 @@ export const NotificationColumns: readonly Column<NotificationData>[] = [
   { id: "action", label: "", minWidth: 100, sortable: false },
 ]
 export function createNotificationData(
-  id:string,
-  title:string,
-  type:string,
-  createAt:string,
-  scheduleAt:string,
-  status:JSX.Element,
-  action:JSX.Element
+  id: string,
+  title: string,
+  type: string,
+  createAt: string,
+  scheduleAt: string,
+  status: JSX.Element,
+  action: JSX.Element
 ): NotificationData {
   return {
     id,
@@ -1027,11 +1062,11 @@ export function createNotificationData(
 }
 
 export type UserRoleData = {
-  id:string;
-  name:string;
-  module:string;
-  users:string;
-  action:JSX.Element;
+  id: string;
+  name: string;
+  module: string;
+  users: string;
+  action: JSX.Element;
 };
 export const UserRoleColumns: readonly Column<UserRoleData>[] = [
   { id: "id", label: "RoleID", minWidth: 100, sortable: false },
@@ -1041,11 +1076,11 @@ export const UserRoleColumns: readonly Column<UserRoleData>[] = [
   { id: "action", label: "", minWidth: 100, sortable: false },
 ]
 export function createUserRoleData(
-  id:string,
-  name:string,
-  module:string,
-  users:string,
-  action:JSX.Element
+  id: string,
+  name: string,
+  module: string,
+  users: string,
+  action: JSX.Element
 ): UserRoleData {
   return {
     id,
@@ -1057,13 +1092,13 @@ export function createUserRoleData(
 }
 
 export type AdminUserData = {
-  _id:string;
-  name:string;
-  email:string;
-  role:string;
-  createdAt:string;
-  status:JSX.Element;
-  action:JSX.Element;
+  _id: string;
+  name: string;
+  email: string;
+  role: string;
+  createdAt: string;
+  status: JSX.Element;
+  action: JSX.Element;
 };
 export const AdminUserColumns: readonly Column<AdminUserData>[] = [
   { id: "_id", label: "User ID", minWidth: 100, sortable: false },
@@ -1075,13 +1110,13 @@ export const AdminUserColumns: readonly Column<AdminUserData>[] = [
   { id: "action", label: "", minWidth: 100, sortable: false },
 ]
 export function createAdminUserData(
-  _id:string,
-  name:string,
-  email:string,
-  role:string,
-  createdAt:string,
-  status:JSX.Element,
-  action:JSX.Element
+  _id: string,
+  name: string,
+  email: string,
+  role: string,
+  createdAt: string,
+  status: JSX.Element,
+  action: JSX.Element
 ): AdminUserData {
   return {
     _id,
@@ -1095,14 +1130,14 @@ export function createAdminUserData(
 }
 
 export type SupportTicketData = {
-  id:string;
-  reason:string;
-  raisedBy:string;
-  raisedAt:string;
-  resolvedAt:string;
-  resolutionTime:string;
-  lastRespond:string;
-  status:JSX.Element;
+  id: string;
+  reason: string;
+  raisedBy: string;
+  raisedAt: string;
+  resolvedAt: string;
+  resolutionTime: string;
+  lastRespond: string;
+  status: JSX.Element;
 };
 
 // Blocked Keywords Types
@@ -1137,14 +1172,14 @@ export const SupportTicketColumns: readonly Column<SupportTicketData>[] = [
   { id: "status", label: "Role", minWidth: 170, sortable: false },
 ]
 export function createSupportTicketData(
-  id:string,
-  reason:string,
-  raisedBy:string,
-  raisedAt:string,
-  resolvedAt:string,
-  resolutionTime:string,
-  lastRespond:string,
-  status:JSX.Element,
+  id: string,
+  reason: string,
+  raisedBy: string,
+  raisedAt: string,
+  resolvedAt: string,
+  resolutionTime: string,
+  lastRespond: string,
+  status: JSX.Element,
 ): SupportTicketData {
   return {
     id,

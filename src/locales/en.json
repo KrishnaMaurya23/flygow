@@ -295,5 +295,25 @@
     "receiverDetails": "Receiver details",
     "receiverName": "Receiver's Name",
     "dropLocation": "Drop location"
+  },
+  "customerDetails": {
+    "title": "Customer Details",
+    "userId": "User ID",
+    "fullName": "Full Name",
+    "phoneNumber": "Phone Number",
+    "email": "Email Address",
+    "registrationDate": "Registration Date",
+    "totalShipments": "Total Shipments",
+    "walletBalance": "Wallet Balance",
+    "lastLogin": "Last Login",
+    "deviceInfo": "Device Info",
+    "blockCustomer": "Block Customer",
+    "deleteCustomer": "Delete Customer",
+    "savedAddresses": "Saved Addresses",
+    "home": "Home",
+    "office": "Office",
+    "other": "Other",
+    "primary": "Primary",
+    "work": "Work"
   }
 }
