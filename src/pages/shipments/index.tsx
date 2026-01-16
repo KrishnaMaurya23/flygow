@@ -267,7 +267,11 @@ export default function Shipments() {
 
   return (
     <AdminLayout>
-      <Box sx={{ padding: "24px" }}>
+      <Box sx={{
+        backgroundColor: "white",
+        borderRadius: "24px",
+        padding: "24px !important",
+      }}>
         {/* Page Heading and Search in same container */}
         <Stack
           direction="row"
