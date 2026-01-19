@@ -117,6 +117,26 @@ const adminApi = api.injectEndpoints({
         url: `/admin/user/roles/${id}`,
       }),
     }),
+    getUserRolesList: builder.query({
+      query: ({ page = 1, limit = 20, search = "" }) => {
+        let url = `/admin/user/roles?page=${page}&limit=${limit}`;
+        if (search !== "") {
+          url += `&search=${search}`;
+        }
+
+        return { url };
+      },
+      providesTags: ["Roles"],
+    }),
+    getLegalDocsList: builder.query({
+      query: ({ sort }: { sort?: "asc" | "desc" | "" }) => {
+        let url = `/content-moderation/static-pages-and-faqs`;
+        if (sort) {
+          url += `?sort=${sort}`;
+        }
+        return { url };
+      },
+    }),
   }),
 });
 
@@ -132,4 +152,6 @@ export const {
   useUpdateAdminRoleMutation,
   useDeleteAdminRoleMutation,
   useGetAdminRoleByIdQuery,
+  useGetUserRolesListQuery,
+  useGetLegalDocsListQuery,
 } = adminApi;

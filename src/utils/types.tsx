@@ -1056,7 +1056,7 @@ export type LegalDocsData = {
 };
 export const LegalDocsColumns: readonly Column<LegalDocsData>[] = [
   { id: "docName", label: "Document Name", minWidth: 100, sortable: false },
-  { id: "updatedAt", label: "Last Updated At", minWidth: 100, sortable: false },
+  { id: "updatedAt", label: "Last Updated At", minWidth: 100, sortable: true },
 ]
 export function createLegalDocsData(
   docName: JSX.Element,
@@ -1232,6 +1232,46 @@ export function createSupportTicketData(
     resolvedAt,
     resolutionTime,
     lastRespond,
+    status,
+  };
+}
+// Transaction Types
+export type TransactionData = {
+  transactionId: string | JSX.Element;
+  name: string | JSX.Element;
+  paymentType: string | JSX.Element;
+  amount: string | JSX.Element;
+  vat: string | JSX.Element;
+  dateOfPayment: string | JSX.Element;
+  status: JSX.Element;
+};
+
+export const TransactionColumns: readonly Column<TransactionData>[] = [
+  { id: "transactionId", label: "Transaction ID", minWidth: 150, sortable: false },
+  { id: "name", label: "Name", minWidth: 150, sortable: false },
+  { id: "paymentType", label: "Payment Type", minWidth: 150, sortable: false },
+  { id: "amount", label: "Amount", minWidth: 120, sortable: false },
+  { id: "vat", label: "VAT", minWidth: 100, sortable: false },
+  { id: "dateOfPayment", label: "Date of Payment", minWidth: 200, sortable: true },
+  { id: "status", label: "Status", minWidth: 120, sortable: false },
+];
+
+export function createTransactionData(
+  transactionId: string,
+  name: string,
+  paymentType: string,
+  amount: string,
+  vat: string,
+  dateOfPayment: string,
+  status: JSX.Element
+): TransactionData {
+  return {
+    transactionId,
+    name,
+    paymentType,
+    amount,
+    vat,
+    dateOfPayment,
     status,
   };
 }

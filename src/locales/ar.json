@@ -7,7 +7,7 @@
     "edit": "تعديل",
     "add": "إضافة",
     "update": "تحديث",
-    "close": "إغلاق",
+    "close": "إإغلاق",
     "submit": "إرسال",
     "reset": "إعادة تعيين",
     "search": "بحث",
@@ -69,7 +69,7 @@
     "email": "عنوان البريد الإلكتروني",
     "emailPlaceholder": "أدخل عنوان البريد الإلكتروني",
     "sendOtp": "إرسال رمز OTP",
-    "sendResetLink": "إرسال رابط إعادة التعيين",
+    "sendResetLink": "إرسال رابط لإعادة التعيين",
     "backToLogin": "العودة لتسجيل الدخول",
     "otpSentMessage": "تم إرسال رمز OTP إلى بريدك الإلكتروني"
   },
@@ -330,5 +330,69 @@
     "location": "الموقع",
     "selectLocation": "اختر الموقع",
     "submit": "إضافة وإرسال دعوة"
+  },
+  "adminUsersTable": {
+    "title": "مستخدمو الإدارة",
+    "create": "إنشاء",
+    "userId": "معرف المستخدم",
+    "name": "الاسم",
+    "email": "البريد الإلكتروني",
+    "role": "الدور",
+    "createdAt": "تم الإنشاء في",
+    "status": "الحالة"
+  },
+  "createAdminDrawer": {
+    "title": "إنشاء حساب مسؤول",
+    "firstName": "الاسم الأول",
+    "lastName": "اسم العائلة",
+    "email": "البريد الإلكتروني",
+    "phone": "رقم الهاتف",
+    "role": "الدور",
+    "selectRole": "اختر الدور",
+    "submit": "إنشاء وإرسال دعوة"
+  },
+  "transactionsPage": {
+    "title": "المعاملات",
+    "transactionId": "رقم المعاملة",
+    "paymentType": "نوع الدفع",
+    "amount": "المبلغ",
+    "vat": "الضريبة",
+    "dateOfPayment": "تاريخ الدفع"
+  },
+  "successful": "ناجح",
+  "pending": "قيد الانتظار",
+  "failed": "فاشل",
+  "userRolesPage": {
+    "title": "أدوار المستخدمين",
+    "create": "إنشاء",
+    "roleId": "معرف الدور",
+    "name": "الاسم",
+    "accessibleModules": "الوحدات التي يمكن الوصول إليها",
+    "associatedUsers": "المستخدمون المرتبطون"
+  },
+  "roleDrawer": {
+    "createTitle": "إنشاء دور مسؤول جديد",
+    "updateTitle": "تحديث دور المسؤول",
+    "roleTitle": "عنوان الدور",
+    "typeHere": "اكتب هنا",
+    "accessRights": "حقوق الوصول",
+    "accessRightsSubtitle": "حدد الوحدة التي سيتمكن المستخدم المرتبط من الوصول إليها.",
+    "personalizedDashboard": "لوحة تحكم مخصصة",
+    "appUsers": "مستخدمو التطبيق",
+    "userCohorts": "مجموعات المستخدمين",
+    "notificationManagement": "إدارة الإشعارات",
+    "supportTickets": "تذاكر الدعم",
+    "auditReports": "تقارير التدقيق",
+    "userLoginSecurityLogs": "سجلات تسجيل دخول وأمان المستخدمين",
+    "administrationLogs": "سجلات الإدارة",
+    "dataDeletionLogs": "سجلات حذف البيانات",
+    "manageLegalDocs": "إدارة المستندات القانونية",
+    "manageAdminUsers": "إدارة مستخدمي الإدارة",
+    "adminUsers": "مستخدمو الإدارة",
+    "roleAccess": "الوصول إلى الدور",
+    "disclaimer": "بمجرد التحديث، سيتم تسجيل خروج جميع المستخدمين بهذا الدور تلقائياً وستدخل حقوق الوصول الخاصة بهم حيز التنفيذ من جلسة تسجيل الدخول التالية.",
+    "createRole": "إنشاء الدور",
+    "updateRole": "تحديث الدور",
+    "deleteRole": "حذف الدور"
   }
 }

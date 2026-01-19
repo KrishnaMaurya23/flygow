@@ -257,3 +257,7 @@ export function decryptAES(cipherHex: string | null | undefined): string {
 }
 
 
+
+export function logger(...args: any[]) {
+  console.log(...args);
+}

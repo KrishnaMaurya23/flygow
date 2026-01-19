@@ -330,5 +330,69 @@
     "location": "Location",
     "selectLocation": "Select location",
     "submit": "Create & Send invite"
+  },
+  "adminUsersTable": {
+    "title": "Admin Users",
+    "create": "Create",
+    "userId": "User ID",
+    "name": "Name",
+    "email": "Email address",
+    "role": "Role",
+    "createdAt": "Created At",
+    "status": "Status"
+  },
+  "createAdminDrawer": {
+    "title": "Create Admin Account",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email Address",
+    "phone": "Phone number",
+    "role": "Role",
+    "selectRole": "Select role",
+    "submit": "Create & Send invite"
+  },
+  "transactionsPage": {
+    "title": "Transactions",
+    "transactionId": "Transaction ID",
+    "paymentType": "Payment Type",
+    "amount": "Amount",
+    "vat": "VAT",
+    "dateOfPayment": "Date of Payment"
+  },
+  "successful": "Successful",
+  "pending": "Pending",
+  "failed": "Failed",
+  "userRolesPage": {
+    "title": "User Roles",
+    "create": "Create",
+    "roleId": "Role ID",
+    "name": "Name",
+    "accessibleModules": "Accessible Modules",
+    "associatedUsers": "Associated Users"
+  },
+  "roleDrawer": {
+    "createTitle": "Create New Admin Role",
+    "updateTitle": "Update Admin Role",
+    "roleTitle": "Role Title",
+    "typeHere": "Type here",
+    "accessRights": "Access Rights",
+    "accessRightsSubtitle": "Select the module to which its associated user will have access.",
+    "personalizedDashboard": "Personalized Dashboard",
+    "appUsers": "App users",
+    "userCohorts": "User Cohorts",
+    "notificationManagement": "Notification Management",
+    "supportTickets": "Support Tickets",
+    "auditReports": "Audit reports",
+    "userLoginSecurityLogs": "User Login and Security Logs",
+    "administrationLogs": "Administration Logs",
+    "dataDeletionLogs": "Data Deletion Logs",
+    "manageLegalDocs": "Manage Legal Docs",
+    "manageAdminUsers": "Manage Admin Users",
+    "adminUsers": "Admin Users",
+    "roleAccess": "Role Access",
+    "disclaimer": "Once updated, all the user with this role will be auto-logged out and their access rights will be in effect from their next logged in session.",
+    "createRole": "Create Role",
+    "updateRole": "Update Role",
+    "deleteRole": "Delete Role"
   }
 }
