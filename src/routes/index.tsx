@@ -8,7 +8,7 @@ import ResetPasswordPage from "../pages/reset-password";
 import ChangePasswordPage from "../pages/change-password";
 
 // App Section Pages
-import Dashboard from "../pages/dashboard";
+// import Dashboard from "../pages/dashboard"; // Dashboard removed from navigation
 import Shipments from "../pages/shipments";
 import ShipmentDetails from "../pages/shipments/shipment-details";
 import Customers from "../pages/customers";
@@ -29,7 +29,7 @@ import ManageCategories from "../pages/content-moderation/manage-categories";
 import CategoryDetail from "../pages/content-moderation/manage-categories/category-detail";
 
 // Other Main Pages
-import NotificationManagement from "../pages/notification-management";
+// import NotificationManagement from "../pages/notification-management"; // Notification Management removed from navigation
 import SupportTickets from "../pages/support-tickets";
 
 // Audit Reports
@@ -51,7 +51,7 @@ import ScrapperLogDetail from "../pages/content-moderation/scrapper-logs/scrappe
 import TermCondition from "../pages/manage-legal-docs/term-condition";
 import PrivacyPolicy from "../pages/manage-legal-docs/privacy-policy";
 import FAQs from "../pages/manage-legal-docs/faqs";
-import CreateEditNotification from "../pages/notification-management/create-edit-notification";
+// import CreateEditNotification from "../pages/notification-management/create-edit-notification"; // Notification Management removed from navigation
 import AdminUsersDetail from "../pages/manage-admin-users/admin-users/admin-users-detail";
 import SupportTicketDetail from "../pages/support-tickets/support-ticket-detail";
 import AboutUs from "../pages/manage-legal-docs/about-us";
@@ -127,15 +127,15 @@ export default function AppRoutes() {
       ),
     },
 
-    // Dashboard
-    {
-      path: "/dashboard",
-      element: (
-        <PrivateRoute>
-          <Dashboard />
-        </PrivateRoute>
-      ),
-    },
+    // Dashboard - Removed from navigation, redirects to /shipments
+    // {
+    //   path: "/dashboard",
+    //   element: (
+    //     <PrivateRoute>
+    //       <Dashboard />
+    //     </PrivateRoute>
+    //   ),
+    // },
 
     // Shipments
     {
@@ -364,30 +364,31 @@ export default function AppRoutes() {
     },
 
     // Notifications and Support
-    {
-      path: "/notification-management",
-      element: (
-        <PrivateRoute>
-          <NotificationManagement />
-        </PrivateRoute>
-      ),
-    },
-    {
-      path: "/notification-management/create-notification",
-      element: (
-        <PrivateRoute>
-          <CreateEditNotification />
-        </PrivateRoute>
-      ),
-    },
-    {
-      path: "/notification-management/edit-notification",
-      element: (
-        <PrivateRoute>
-          <CreateEditNotification />
-        </PrivateRoute>
-      ),
-    },
+    // Notification Management - Removed from navigation
+    // {
+    //   path: "/notification-management",
+    //   element: (
+    //     <PrivateRoute>
+    //       <NotificationManagement />
+    //     </PrivateRoute>
+    //   ),
+    // },
+    // {
+    //   path: "/notification-management/create-notification",
+    //   element: (
+    //     <PrivateRoute>
+    //       <CreateEditNotification />
+    //     </PrivateRoute>
+    //   ),
+    // },
+    // {
+    //   path: "/notification-management/edit-notification",
+    //   element: (
+    //     <PrivateRoute>
+    //       <CreateEditNotification />
+    //     </PrivateRoute>
+    //   ),
+    // },
     {
       path: "/support-tickets",
       element: (

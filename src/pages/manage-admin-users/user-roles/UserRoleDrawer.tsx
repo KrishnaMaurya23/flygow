@@ -89,10 +89,10 @@ const UserRoleDrawer: React.FC<UserRoleDrawerProps> = ({
     }, [open, initialData]);
 
     const accessRights: AccessRight[] = [
-        { id: "personalized-dashboard", label: t("roleDrawer.personalizedDashboard") },
+        // { id: "personalized-dashboard", label: t("roleDrawer.personalizedDashboard") }, // Removed from navigation
         { id: "app-users", label: t("roleDrawer.appUsers") },
         { id: "user-cohorts", label: t("roleDrawer.userCohorts") },
-        { id: "notification-management", label: t("roleDrawer.notificationManagement") },
+        // { id: "notification-management", label: t("roleDrawer.notificationManagement") }, // Removed from navigation
         { id: "support-tickets", label: t("roleDrawer.supportTickets") },
         {
             id: "audit-reports",

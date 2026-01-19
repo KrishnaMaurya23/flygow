@@ -62,7 +62,7 @@ export default function UserRoles() {
   const sampleUserRoles: UserRoleData[] = useMemo(() => [
     createUserRoleData("001", "Super Admin", "All", "3",
       <Stack direction="row" spacing={1}>
-        <IconButton size="small" onClick={() => handleOpenUpdate({ name: "Super Admin", permissions: ["personalized-dashboard", "app-users", "user-cohorts", "notification-management", "support-tickets", "audit-reports", "user-login-security-logs", "administration-logs", "data-deletion-logs", "manage-legal-docs", "manage-admin-users", "admin-users", "role-access"] })}>
+        <IconButton size="small" onClick={() => handleOpenUpdate({ name: "Super Admin", permissions: ["app-users", "user-cohorts", "support-tickets", "audit-reports", "user-login-security-logs", "administration-logs", "data-deletion-logs", "manage-legal-docs", "manage-admin-users", "admin-users", "role-access"] })}>
           <VisibilityIcon fontSize="small" />
         </IconButton>
         <IconButton size="small"><MoreVertIcon fontSize="small" /></IconButton>
@@ -76,9 +76,9 @@ export default function UserRoles() {
         <IconButton size="small"><MoreVertIcon fontSize="small" /></IconButton>
       </Stack>
     ),
-    createUserRoleData("003", "Marketing", "Notifications Management", "3",
+    createUserRoleData("003", "Marketing", "Support & Tickets", "3",
       <Stack direction="row" spacing={1}>
-        <IconButton size="small" onClick={() => handleOpenUpdate({ name: "Marketing", permissions: ["notification-management"] })}>
+        <IconButton size="small" onClick={() => handleOpenUpdate({ name: "Marketing", permissions: ["support-tickets"] })}>
           <VisibilityIcon fontSize="small" />
         </IconButton>
         <IconButton size="small"><MoreVertIcon fontSize="small" /></IconButton>

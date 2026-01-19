@@ -27,9 +27,9 @@ export default function PrivateRoute({
     return <Navigate to="/" replace />;
   }
 
-  // Logged in but role is not allowed → redirect to dashboard
+  // Logged in but role is not allowed → redirect to shipments
   if (allowedRoles && !allowedRoles.includes(user?.role)) {
-    return <Navigate to="/dashboard" replace />;
+    return <Navigate to="/shipments" replace />;
   }
 
   return children;

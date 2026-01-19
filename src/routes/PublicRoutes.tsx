@@ -11,7 +11,7 @@ export default function PublicRoute({ children }: Props) {
 
   // If logged in, redirect to a suitable page based on role
   if (isLogin) {
-    return <Navigate to="/dashboard" replace />;
+    return <Navigate to="/shipments" replace />;
   }
 
   return children;

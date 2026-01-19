@@ -20,8 +20,6 @@ import {
 import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
 // @ts-ignore
-import { prefixer } from "stylis";
-// @ts-ignore
 import rtlPlugin from "stylis-plugin-rtl";
 import { AppProvider, type Navigation } from "@toolpad/core/AppProvider";
 import { DashboardLayout } from "@toolpad/core/DashboardLayout";
@@ -51,13 +49,18 @@ const MENU_ITEM_SX: SxProps<Theme> = {
 };
 
 // Create rtl cache
+// Note: We don't use prefixer here because:
+// 1. MUI/Emotion already handles vendor prefixes automatically
+// 2. The stylis prefixer is incompatible with stylis-plugin-rtl and causes crashes
 const cacheRtl = createCache({
-  key: 'muirtl',
-  stylisPlugins: [prefixer, rtlPlugin],
+  key: "muirtl",
+  prepend: true,
+  stylisPlugins: [rtlPlugin],
 });
 
 const cacheLtr = createCache({
-  key: 'mui',
+  key: "mui",
+  prepend: true,
 });
 
 // Helper function to generate selected navigation item styles
@@ -339,12 +342,10 @@ export default function AdminLayout(props: any) {
           if (text) {
             // Map text to segment names
             const segmentMap: { [key: string]: string } = {
-              'dashboard': 'dashboard',
               'shipments': 'shipments',
               'customers': 'customers',
               'airport-handler': 'airport-handler',
               'transactions': 'transactions',
-              'notification-management': 'notification-management',
               'manage-legal-docs': 'manage-legal-docs',
               'airport-operations': 'airport-operations',
               'manage-admin-users': 'manage-admin-users',
@@ -374,11 +375,6 @@ export default function AdminLayout(props: any) {
 
   const NAVIGATION: Navigation = [
     {
-      segment: "dashboard",
-      title: t("dashboard"),
-      icon: <NavigationIcon variant="dashboard" />
-    },
-    {
       segment: "shipments",
       title: t("shipments"),
       icon: <NavigationIcon variant="shipments" />
@@ -397,11 +393,6 @@ export default function AdminLayout(props: any) {
       segment: "transactions",
       title: t("transactions"),
       icon: <NavigationIcon variant="transactions" />
-    },
-    {
-      segment: "notification-management",
-      title: t("notificationManagement"),
-      icon: <NavigationIcon variant="notification-management" />,
     },
     {
       segment: "manage-legal-docs",
@@ -446,13 +437,13 @@ export default function AdminLayout(props: any) {
     // Segments that need image filter when selected
     const segmentsWithImageFilter = [
       "user-cohorts", "content-moderation", "manage-categories",
-      "notification-management", "support-tickets", "audit-reports",
+      "support-tickets", "audit-reports",
       "manage-legal-docs", "manage-admin-users"
     ];
 
     // Simple selected segments
     const selectedSegments = [
-      "dashboard", "shipments", "customers", "airport-handler",
+      "shipments", "customers", "airport-handler",
       "transactions", "coupon-management", "master-city-table",
       "airport-location", "shipment-pricing", "delivery-assignment"
     ];
@@ -489,7 +480,8 @@ export default function AdminLayout(props: any) {
   };
 
   return (
-    <CacheProvider value={currentCache}>
+    // Force a full remount when switching between LTR/RTL caches to avoid stale style insertion state.
+    <CacheProvider value={currentCache} key={direction}>
       <AppProvider
         navigation={NAVIGATION}
         router={router}

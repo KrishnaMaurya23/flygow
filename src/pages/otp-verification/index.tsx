@@ -16,7 +16,7 @@ export default function OTPVerificationPage(): JSX.Element {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
-  const [resend, { isSuccess, data: resendData ,isError}] = useResendMutation();
+  const [resend, { isSuccess, data: resendData }] = useResendMutation();
   const [verifyOtp, { isSuccess: isVerifyOtpSuccess, data }] = useVerifyOtpMutation();
   const [verifyResetPasswordOtp, { isSuccess: isVerifyResetOtpSuccess, data: resetOtpData }] = useVerifyResetPasswordOtpMutation();
 
@@ -174,7 +174,7 @@ export default function OTPVerificationPage(): JSX.Element {
       }
     } catch (error) {
       dispatch(loginUser({}));
-      navigate("/dashboard");
+      navigate("/shipments");
       console.error('Failed to verify OTP:', error);
     }
   };
@@ -186,10 +186,10 @@ export default function OTPVerificationPage(): JSX.Element {
         message: t("otpVerification.otpVerifiedSuccessfully"),
         severity: 'success',
       }));
-      // For login flow, set user data and navigate to dashboard
+      // For login flow, set user data and navigate to shipments
       const user = data?.data;
       dispatch(loginUser(user));
-      navigate("/dashboard");
+      navigate("/shipments");
     }
   }, [isVerifyOtpSuccess, currentFlowType, data?.data, dispatch, navigate]);
 
