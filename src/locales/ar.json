@@ -394,5 +394,22 @@
     "createRole": "إنشاء الدور",
     "updateRole": "تحديث الدور",
     "deleteRole": "حذف الدور"
+  },
+  "couponManagementPage": {
+    "title": "إدارة القسائم",
+    "create": "إنشاء قسيمة جديدة",
+    "couponCode": "رمز القسيمة",
+    "couponName": "اسم القسيمة",
+    "discountType": "نوع الخصم",
+    "validity": "الصلاحية",
+    "usage": "الاستخدام",
+    "status": "الحالة",
+    "searchByCode": "البحث حسب الرمز",
+    "createDrawerTitle": "إنشاء قسيمة جديدة",
+    "editDrawerTitle": "تعديل القسيمة",
+    "discountAmount": "قيمة الخصم",
+    "startDate": "تاريخ البدء",
+    "endDate": "تاريخ الانتهاء",
+    "maxUses": "الحد الأقصى للاستخدام"
   }
 }

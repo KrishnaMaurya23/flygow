@@ -24,7 +24,7 @@ export const resetPassSchema = yup.object().shape({
     .matches(/[a-z]/, "Must contain at least one lowercase letter")
     .matches(/[0-9]/, "Must contain at least one digit")
     .matches(/[^A-Za-z0-9]/, "Must contain at least one special character")
-    .test("password-complexity", "Password must contain at least 8 characters, including uppercase, lowercase, number, and special character.", function(value) {
+    .test("password-complexity", "Password must contain at least 8 characters, including uppercase, lowercase, number, and special character.", function (value) {
       if (!value) return true; // Let required validation handle empty case
       const hasMinLength = value.length >= 8;
       const hasUpperCase = /[A-Z]/.test(value);
@@ -47,11 +47,11 @@ export const changePassSchema = yup.object().shape({
     .matches(/[a-z]/, "Must contain at least one lowercase letter")
     .matches(/[0-9]/, "Must contain at least one digit")
     .matches(/[^A-Za-z0-9]/, "Must contain at least one special character")
-    .test("no-leading-trailing-spaces", "Invalid characters detected. Please choose a valid password.", function(value) {
+    .test("no-leading-trailing-spaces", "Invalid characters detected. Please choose a valid password.", function (value) {
       if (!value) return true;
       return value === value.trim();
     })
-    .test("valid-characters", "Invalid characters detected. Please choose a valid password.", function(value) {
+    .test("valid-characters", "Invalid characters detected. Please choose a valid password.", function (value) {
       if (!value) return true;
       // Allow common password characters, reject unusual Unicode
       return /^[\x20-\x7E]+$/.test(value);
@@ -66,8 +66,8 @@ export const reasonSchema = yup.object().shape({
     .string()
     .required("Reason is required")
     .trim()
-    // .matches(/^[A-Za-z0-9 ]+$/, "Reason must not contain special characters")
-    // .min(20, "Reason must be at least 20 characters long"),
+  // .matches(/^[A-Za-z0-9 ]+$/, "Reason must not contain special characters")
+  // .min(20, "Reason must be at least 20 characters long"),
 });
 
 export const userCohortSchema = yup.object().shape({
@@ -106,25 +106,25 @@ export const addCategorySchema = yup.object().shape({
     .required("Category name is required")
     .trim()
     .min(1, "Category name cannot be empty")
-    .test("no-whitespace-only", "Category name cannot contain only whitespace", function(value) {
+    .test("no-whitespace-only", "Category name cannot contain only whitespace", function (value) {
       if (!value) return true; // Let required validation handle empty case
       return value.trim().length > 0;
     })
-    .test("min-length-after-trim", "Category name must be at least 2 characters", function(value) {
+    .test("min-length-after-trim", "Category name must be at least 2 characters", function (value) {
       if (!value) return true; // Let required validation handle empty case
       return value.trim().length >= 2;
     })
-    .test("max-length", "Category name cannot exceed 50 characters", function(value) {
+    .test("max-length", "Category name cannot exceed 50 characters", function (value) {
       if (!value) return true; // Let required validation handle empty case
       return value.trim().length <= 50;
     })
-    .test("valid-characters", "Category name contains invalid characters. Only letters, numbers, spaces, and hyphens are allowed.", function(value) {
+    .test("valid-characters", "Category name contains invalid characters. Only letters, numbers, spaces, and hyphens are allowed.", function (value) {
       if (!value) return true; // Let required validation handle empty case
       const trimmedValue = value.trim();
       // Allow letters, numbers, spaces, and hyphens
       return /^[A-Za-z0-9\s-]+$/.test(trimmedValue);
     })
-    .test("no-leading-trailing-spaces", "Category name cannot start or end with spaces", function(value) {
+    .test("no-leading-trailing-spaces", "Category name cannot start or end with spaces", function (value) {
       if (!value) return true; // Let required validation handle empty case
       return value === value.trim();
     }),
@@ -136,25 +136,25 @@ export const addSubCategorySchema = yup.object().shape({
     .required("Sub category name is required")
     .trim()
     .min(1, "Sub category name cannot be empty")
-    .test("no-whitespace-only", "Sub category name cannot contain only whitespace", function(value) {
+    .test("no-whitespace-only", "Sub category name cannot contain only whitespace", function (value) {
       if (!value) return true; // Let required validation handle empty case
       return value.trim().length > 0;
     })
-    .test("min-length-after-trim", "Sub category name must be at least 2 characters", function(value) {
+    .test("min-length-after-trim", "Sub category name must be at least 2 characters", function (value) {
       if (!value) return true; // Let required validation handle empty case
       return value.trim().length >= 2;
     })
-    .test("max-length", "Sub category name cannot exceed 50 characters", function(value) {
+    .test("max-length", "Sub category name cannot exceed 50 characters", function (value) {
       if (!value) return true; // Let required validation handle empty case
       return value.trim().length <= 50;
     })
-    .test("valid-characters", "Sub category name contains invalid characters. Only letters, numbers, spaces, and hyphens are allowed.", function(value) {
+    .test("valid-characters", "Sub category name contains invalid characters. Only letters, numbers, spaces, and hyphens are allowed.", function (value) {
       if (!value) return true; // Let required validation handle empty case
       const trimmedValue = value.trim();
       // Allow letters, numbers, spaces, and hyphens
       return /^[A-Za-z0-9\s-]+$/.test(trimmedValue);
     })
-    .test("no-leading-trailing-spaces", "Sub category name cannot start or end with spaces", function(value) {
+    .test("no-leading-trailing-spaces", "Sub category name cannot start or end with spaces", function (value) {
       if (!value) return true; // Let required validation handle empty case
       return value === value.trim();
     }),
@@ -165,25 +165,25 @@ export const addTagSchema = yup.object().shape({
     .required("Tag name is required")
     .trim()
     .min(1, "Tag name cannot be empty")
-    .test("no-whitespace-only", "Tag name cannot contain only whitespace", function(value) {
+    .test("no-whitespace-only", "Tag name cannot contain only whitespace", function (value) {
       if (!value) return true; // Let required validation handle empty case
       return value.trim().length > 0;
     })
-    .test("min-length-after-trim", "Tag name must be at least 2 characters", function(value) {
+    .test("min-length-after-trim", "Tag name must be at least 2 characters", function (value) {
       if (!value) return true; // Let required validation handle empty case
       return value.trim().length >= 2;
     })
-    .test("max-length", "Tag name cannot exceed 50 characters", function(value) {
+    .test("max-length", "Tag name cannot exceed 50 characters", function (value) {
       if (!value) return true; // Let required validation handle empty case
       return value.trim().length <= 50;
     })
-    .test("valid-characters", "Tag name contains invalid characters. Only letters, numbers, spaces, and hyphens are allowed.", function(value) {
+    .test("valid-characters", "Tag name contains invalid characters. Only letters, numbers, spaces, and hyphens are allowed.", function (value) {
       if (!value) return true; // Let required validation handle empty case
       const trimmedValue = value.trim();
       // Allow letters, numbers, spaces, and hyphens
       return /^[A-Za-z0-9\s-]+$/.test(trimmedValue);
     })
-    .test("no-leading-trailing-spaces", "Tag name cannot start or end with spaces", function(value) {
+    .test("no-leading-trailing-spaces", "Tag name cannot start or end with spaces", function (value) {
       if (!value) return true; // Let required validation handle empty case
       return value === value.trim();
     }),
@@ -197,25 +197,25 @@ export const keywordDiseaseSchema = yup.object().shape({
     .required("Keyword is required")
     .trim()
     .min(1, "Keyword cannot be empty")
-    .test("no-whitespace-only", "Keyword cannot contain only whitespace", function(value) {
+    .test("no-whitespace-only", "Keyword cannot contain only whitespace", function (value) {
       if (!value) return true; // Let required validation handle empty case
       return value.trim().length > 0;
     })
-    .test("min-length-after-trim", "Keyword must be at least 2 characters", function(value) {
+    .test("min-length-after-trim", "Keyword must be at least 2 characters", function (value) {
       if (!value) return true; // Let required validation handle empty case
       return value.trim().length >= 2;
     })
-    .test("max-length", "Keyword cannot exceed 50 characters", function(value) {
+    .test("max-length", "Keyword cannot exceed 50 characters", function (value) {
       if (!value) return true; // Let required validation handle empty case
       return value.trim().length <= 50;
     })
-    .test("valid-characters", "Keyword contains invalid characters. Only letters, numbers, spaces, and hyphens are allowed.", function(value) {
+    .test("valid-characters", "Keyword contains invalid characters. Only letters, numbers, spaces, and hyphens are allowed.", function (value) {
       if (!value) return true; // Let required validation handle empty case
       const trimmedValue = value.trim();
       // Allow letters, numbers, spaces, and hyphens
       return /^[A-Za-z0-9\s-]+$/.test(trimmedValue);
     })
-    .test("no-leading-trailing-spaces", "Keyword cannot start or end with spaces", function(value) {
+    .test("no-leading-trailing-spaces", "Keyword cannot start or end with spaces", function (value) {
       if (!value) return true; // Let required validation handle empty case
       return value === value.trim();
     }),
@@ -230,11 +230,11 @@ export const scrappingRuleSchema = yup.object().shape({
         .trim()
         .min(2, "Keyword must be at least 2 characters")
         .max(50, "Keyword cannot exceed 50 characters")
-        .test("no-whitespace-only", "Keyword cannot contain only whitespace", function(value) {
+        .test("no-whitespace-only", "Keyword cannot contain only whitespace", function (value) {
           if (!value) return true;
           return value.trim().length > 0;
         })
-        .test("valid-characters", "Keyword contains invalid characters. Only letters, numbers, spaces, and hyphens are allowed.", function(value) {
+        .test("valid-characters", "Keyword contains invalid characters. Only letters, numbers, spaces, and hyphens are allowed.", function (value) {
           if (!value) return true;
           const trimmedValue = value.trim();
           return /^[A-Za-z0-9\s-]+$/.test(trimmedValue);
@@ -248,9 +248,9 @@ export const faqFormSchema = yup.object().shape({
     .required("Question is required")
     .min(15, "Atleast 15 character required"),
   answer: yup
-        .string()
-        .required("Answer is required")
-        .min(30, "Atleast 30 character required")
+    .string()
+    .required("Answer is required")
+    .min(30, "Atleast 30 character required")
 });
 export const notificationSchema = yup.object().shape({
   scheduleDate: yup.date().required("Date is required"),
@@ -260,7 +260,7 @@ export const notificationSchema = yup.object().shape({
   subject: yup.string().required("Subject/Heading is required").min(5, "Subject must be at least 5 characters"),
   content: yup.string()
     .required("Content is required")
-    .test("content-length", "Content must be at least 10 characters", function(value) {
+    .test("content-length", "Content must be at least 10 characters", function (value) {
       // Remove HTML tags for email content to check actual text length
       const textContent = value ? value.replace(/<[^>]*>/g, "").trim() : "";
       return textContent.length >= 10;
@@ -276,4 +276,15 @@ export const createSubAdminSchema = yup.object().shape({
     .required("User Email Address is required")
     .email("Enter a valid email address"),
   role: yup.string().required("Role is required"),
+});
+export const couponFormSchema = yup.object().shape({
+  couponCode: yup.string().required("Coupon code is required"),
+  couponName: yup.string().required("Coupon name is required"),
+  discountType: yup.string().oneOf(["flat", "percentage"], "Select a valid discount type").required("Discount type is required"),
+  discountAmount: yup.number().typeError("Discount amount must be a number").required("Discount amount is required"),
+  startDate: yup.date().required("Start date is required"),
+  endDate: yup.date()
+    .required("End date is required")
+    .min(yup.ref("startDate"), "End date must be after start date"),
+  maxUses: yup.number().typeError("Maximum uses must be a number").required("Maximum uses is required"),
 });

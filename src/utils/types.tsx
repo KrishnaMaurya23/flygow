@@ -1275,3 +1275,43 @@ export function createTransactionData(
     status,
   };
 }
+// Coupon Types
+export type CouponData = {
+  couponCode: string | JSX.Element;
+  couponName: string | JSX.Element;
+  discountType: string | JSX.Element;
+  validity: string | JSX.Element;
+  usage: string | JSX.Element;
+  status: JSX.Element;
+  action: JSX.Element;
+};
+
+export const CouponColumns: readonly Column<CouponData>[] = [
+  { id: "couponCode", label: "Coupon code", minWidth: 120, sortable: false },
+  { id: "couponName", label: "Coupon name", minWidth: 120, sortable: false },
+  { id: "discountType", label: "Discount Type", minWidth: 120, sortable: false },
+  { id: "validity", label: "Validity", minWidth: 150, sortable: false },
+  { id: "usage", label: "Usage", minWidth: 100, sortable: false },
+  { id: "status", label: "Status", minWidth: 100, sortable: false },
+  { id: "action", label: "", minWidth: 80, sortable: false },
+];
+
+export function createCouponData(
+  couponCode: string | JSX.Element,
+  couponName: string | JSX.Element,
+  discountType: string | JSX.Element,
+  validity: string | JSX.Element,
+  usage: string | JSX.Element,
+  status: JSX.Element,
+  action: JSX.Element
+): CouponData {
+  return {
+    couponCode,
+    couponName,
+    discountType,
+    validity,
+    usage,
+    status,
+    action,
+  };
+}

@@ -394,5 +394,22 @@
     "createRole": "Create Role",
     "updateRole": "Update Role",
     "deleteRole": "Delete Role"
+  },
+  "couponManagementPage": {
+    "title": "Coupon management",
+    "create": "Create new coupon",
+    "couponCode": "Coupon code",
+    "couponName": "Coupon name",
+    "discountType": "Discount Type",
+    "validity": "Validity",
+    "usage": "Usage",
+    "status": "Status",
+    "searchByCode": "Search by code",
+    "createDrawerTitle": "Create new coupon",
+    "editDrawerTitle": "Edit coupon",
+    "discountAmount": "Discount amount",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "maxUses": "Maximum uses"
   }
 }
