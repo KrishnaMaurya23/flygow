@@ -411,5 +411,101 @@
     "startDate": "Start Date",
     "endDate": "End Date",
     "maxUses": "Maximum uses"
+  },
+  "masterCityPage": {
+    "title": "City",
+    "create": "Create New City",
+    "city": "City",
+    "createdAt": "Created At",
+    "search": "Search",
+    "drawer": {
+      "createTitle": "City",
+      "updateTitle": "Edit City",
+      "cityName": "City Name",
+      "enterCityName": "Enter city name",
+      "create": "Create",
+      "update": "Update",
+      "deleteCity": "Delete City"
+    }
+  },
+  "airportLocationPage": {
+    "title": "Airport Location",
+    "create": "Create New Location",
+    "search": "Search",
+    "status": "Status",
+    "all": "All",
+    "columns": {
+      "locationId": "Location ID",
+      "locationCity": "Location City",
+      "locationName": "Location Name",
+      "supervisor": "Supervisor",
+      "supervisorContact": "Supervisor Contact",
+      "status": "Status"
+    },
+    "drawer": {
+      "createTitle": "Create Airport Location",
+      "editTitle": "Edit Airport Location",
+      "locationCity": "Location City",
+      "selectCity": "Select City",
+      "locationId": "Location ID",
+      "enterLocationId": "Enter Location ID",
+      "locationName": "Location Name",
+      "enterLocationName": "Enter Location Name",
+      "supervisor": "Supervisor",
+      "selectSupervisor": "Select Supervisor",
+      "supervisorPhone": "Supervisor Phone",
+      "enterSupervisorPhone": "Enter Supervisor Phone",
+      "create": "Create",
+      "save": "Save"
+    }
+  },
+  "shipmentPricingPage": {
+    "title": "Route Pricing",
+    "create": "Create New Pricing",
+    "search": "Search",
+    "status": "Status",
+    "all": "All",
+    "columns": {
+      "sourceCity": "Source City",
+      "airportLocation": "Airport Location",
+      "destinationCity": "Destination City",
+      "totalPrice": "Total Price"
+    },
+    "drawer": {
+      "createTitle": "Create Shipment Price",
+      "editTitle": "Edit Shipment Price",
+      "sourceCity": "Source City",
+      "airportLocation": "Airport Location",
+      "destinationCity": "Destination city",
+      "price": "Price",
+      "to": "To",
+      "selectLocation": "Select location",
+      "create": "Create",
+      "save": "Save"
+    }
+  },
+  "deliveryAssignmentPage": {
+    "title": "Delivery Assignment",
+    "create": "New Delivery Assignment",
+    "search": "Search",
+    "columns": {
+      "shipmentType": "Shipment Type",
+      "assignmentStage": "Assignment Stage",
+      "defaultAssignmentRule": "Default Assignment Rule",
+      "notes": "Notes"
+    },
+    "drawer": {
+      "createTitle": "Create Delivery Assignment",
+      "editTitle": "Edit Delivery Assignment",
+      "shipmentType": "Shipment Type",
+      "selectShipmentType": "Select shipment type",
+      "assignmentStage": "Assignment Stage",
+      "selectAssignmentStage": "Select Assignment Stage",
+      "defaultAssignmentRule": "Default Assignment Rule",
+      "selectAssignmentRule": "Select Assignment Rule",
+      "note": "Note",
+      "create": "Create",
+      "save": "Save"
+    }
   }
 }
