@@ -115,6 +115,56 @@
     "otpVerifiedSuccessfully": "OTP verified Successfully",
     "emailNotAvailable": "Email is not available."
   },
+  "customerPage": {
+    "dialogs": {
+      "block": {
+        "title": "Block User Account",
+        "subtitle": "Are you sure want to block this user’s account? Please specify the reason.",
+        "reasonLabel": "Block Reason"
+      },
+      "delete": {
+        "title": "Delete User Account",
+        "subtitle": "Are you sure want to delete this user’s account? Please specify the reason.",
+        "reasonLabel": "Delete Reason"
+      },
+      "reactivate": {
+        "title": "Reactivate User Account",
+        "subtitle": "Are you sure want to reactivate this user’s account?",
+        "reasonLabel": "Reactivation Reason"
+      },
+      "placeholder": "Type here"
+    },
+    "menu": {
+      "reactivate": "Re-activate",
+      "block": "Block",
+      "delete": "Delete"
+    }
+  },
+  "adminUsersPage": {
+    "dialogs": {
+      "block": {
+        "title": "Block User Account",
+        "subtitle": "Are you sure you want to block this user account? Please specify the reason.",
+        "reasonLabel": "Block Reason"
+      },
+      "delete": {
+        "title": "Delete User Account",
+        "subtitle": "Are you sure you want to delete this user account? Please specify the reason.",
+        "reasonLabel": "Delete Reason"
+      },
+      "reactivate": {
+        "title": "Reactivate User Account",
+        "subtitle": "Are you sure you want to reactivate this user account?",
+        "reasonLabel": "Reactivation Reason"
+      },
+      "placeholder": "Type here"
+    },
+    "menu": {
+      "reactivate": "Re-activate",
+      "block": "Block",
+      "delete": "Delete"
+    }
+  },
   "checkMail": {
     "title": "Check Mail",
     "subtitle": "We've sent a password reset link to your email address.",
@@ -148,6 +198,7 @@
   "adminUsers": "Admin Users",
   "userRoles": "User Roles",
   "couponManagement": "Coupon management",
+  "cancellationPolicy": "Cancellation Policy",
   "appUsers": "App users",
   "userCohorts": "User Cohorts",
   "contentModeration": "Content Moderation",
@@ -286,7 +337,20 @@
     "price": "Price",
     "vat": "VAT",
     "totalPrice": "Total Price",
-    "arrivedAtPickup": "Arrived at Pickup Airport"
+    "arrivedAtPickup": "Arrived at Pickup Airport",
+    "dialogs": {
+      "cancel": {
+        "title": "Cancel Shipment",
+        "subtitle": "Are you sure want to cancel this shipment? Please specify the reason.",
+        "reasonLabel": "Cancel Specific Reason"
+      },
+      "onHold": {
+        "title": "On-hold shipment",
+        "subtitle": "Are you sure want to On-hold shipment this shipment? Please specify the reason.",
+        "reasonLabel": "On-hold Specific Reason"
+      },
+      "placeholder": "Type here"
+    }
   },
   "infoLabels": {
     "senderDetails": "Sender details",
@@ -368,7 +432,30 @@
     "roleId": "Role ID",
     "name": "Name",
     "accessibleModules": "Accessible Modules",
-    "associatedUsers": "Associated Users"
+    "associatedUsers": "Associated Users",
+    "dialogs": {
+      "delete": {
+        "title": "Delete User Role",
+        "subtitle": "Are you sure you want to delete this user role?"
+      },
+      "unableToDelete": {
+        "title": "Unable to Delete User Role",
+        "subtitle": "Disassociate all the admin user linked to this role before deleting it!",
+        "button": "Okay"
+      },
+      "create": {
+        "title": "Create New User Role",
+        "subtitle": "Are you sure you want to create this new user role?"
+      },
+      "update": {
+        "title": "Update User Role",
+        "subtitle": "Are you sure you want to update this new user role?"
+      }
+    },
+    "menu": {
+      "edit": "Edit",
+      "delete": "Delete"
+    }
   },
   "roleDrawer": {
     "createTitle": "Create New Admin Role",
@@ -411,6 +498,42 @@
     "startDate": "Start Date",
     "endDate": "End Date",
     "maxUses": "Maximum uses"
+  },
+  "cancellationPolicyPage": {
+    "title": "Cancellation Policies",
+    "addPolicy": "Add Policy",
+    "search": "Search",
+    "status": "Status",
+    "all": "All",
+    "deliveryStage": "Delivery Stage",
+    "description": "Description",
+    "penalty": "Penalty",
+    "noPenalty": "No Penalty",
+    "drawer": {
+      "addTitle": "Add Cancellation Policy",
+      "editTitle": "Edit Cancellation Policy",
+      "subtitle": "Configure cancellation rules per delivery stage.",
+      "deliveryStage": "Delivery stage",
+      "selectStage": "Select delivery stage",
+      "cancellationDescription": "Cancellation Description (Shown to customer)",
+      "descriptionPlaceholder": "Type cancellation description here",
+      "penaltyType": "Penalty type",
+      "fixedAmount": "Fixed Amount",
+      "percentage": "Percentage",
+      "fixedAmountPlusPercentage": "Fixed Amount + Percentage",
+      "amountPlaceholder": "Enter amount",
+      "percentagePlaceholder": "Enter percentage",
+      "allowCancellation": "Allow cancellation at this stage",
+      "savePolicy": "Save Policy",
+      "cancel": "Cancel"
+    },
+    "stages": {
+      "orderConfirmed": "Order confirmed",
+      "pickedUpByPartner": "Picked up by partner",
+      "arrivedAtPickupAirport": "Arrived at pickup airport/ carrier",
+      "arrivedAtDestinationAirport": "Arrived at destination airport",
+      "deliveredToRecipient": "Delivered to Recipient"
+    }
   },
   "masterCityPage": {
     "title": "City",

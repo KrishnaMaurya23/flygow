@@ -11,6 +11,7 @@ interface UserActionDialogProps {
   reason: string;
   handleCancel: () => void;
   onSubmit: (reason: {}) => void;
+  placeholder?: string;
 }
 
 interface ReasonInput {
@@ -20,10 +21,11 @@ interface ReasonInput {
 
 export default function CommonActionDialog({
   title,
-  subtitle, 
+  subtitle,
   reason,
   handleCancel,
   onSubmit,
+  placeholder
 }: UserActionDialogProps) {
   const { t } = useTranslation();
   const theme = useTheme();
@@ -51,14 +53,14 @@ export default function CommonActionDialog({
             height: "56px",
           }}
         />
-          <Typography variant="h5" fontWeight={600} fontSize={"28px"}>
-            {title}
-          </Typography>
+        <Typography variant="h5" fontWeight={600} fontSize={"28px"}>
+          {title}
+        </Typography>
       </Stack>
 
-        <Typography variant="subtitle1" fontSize={"22px"}>
-          {subtitle}
-        </Typography>
+      <Typography variant="subtitle1" fontSize={"22px"}>
+        {subtitle}
+      </Typography>
       <form onSubmit={handleSubmit(submitHandler)}>
         <Typography
           variant="h6"
@@ -70,13 +72,13 @@ export default function CommonActionDialog({
         <StyledTextField
           fullWidth
           variant="outlined"
-          placeholder={t("labels.reason")}
+          placeholder={placeholder || t("labels.reason")}
           margin="normal"
           {...register("reason")}
           error={Boolean(errors.reason)}
           helperText={errors.reason?.message}
           sx={{
-            mt:0,
+            mt: 0,
           }}
         />
         <Stack flexDirection={"row"} justifyContent={"flex-end"} gap={2}>

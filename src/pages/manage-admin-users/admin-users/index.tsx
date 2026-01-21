@@ -1,5 +1,4 @@
 import { useState, useMemo } from "react";
-import type { JSX } from "react";
 import {
   Typography,
   Box,
@@ -7,6 +6,8 @@ import {
   Chip,
   IconButton,
   Button,
+  Menu,
+  MenuItem,
 } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -23,6 +24,8 @@ import {
 import { colors } from "../../../utils/constants";
 import SelectFilter from "../../../components/select-filter/SelectFilter";
 import CreateAdminDrawer from "./CreateAdminDrawer";
+import GlobalDialog from "../../../components/dialog";
+import CommonActionDialog from "../../../components/dialog/dialog-content/CommonActionDialog";
 
 // Status color function for Admin Users
 const getStatusColor = (status: string) => {
@@ -61,6 +64,117 @@ const StatusBadge = ({ status }: { status: string }) => {
   );
 };
 
+// Admin User Actions Component
+const AdminUserActions = ({ userId, status }: { userId: string; status: string }) => {
+  const { t } = useTranslation();
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [dialogType, setDialogType] = useState<"block" | "delete" | "reactivate" | null>(null);
+
+  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    event.stopPropagation();
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleDialogOpen = (type: "block" | "delete" | "reactivate") => {
+    setDialogType(type);
+    handleMenuClose();
+  };
+
+  const handleDialogClose = () => {
+    setDialogType(null);
+  };
+
+  const handleConfirm = (data: any) => {
+    console.log(`Confirmed ${dialogType} for user ${userId}:`, data);
+    handleDialogClose();
+  };
+
+  const dialogContent = () => {
+    if (!dialogType) return <></>;
+
+    const config = {
+      block: {
+        title: t("adminUsersPage.dialogs.block.title"),
+        subtitle: t("adminUsersPage.dialogs.block.subtitle"),
+        reason: t("adminUsersPage.dialogs.block.reasonLabel"),
+      },
+      delete: {
+        title: t("adminUsersPage.dialogs.delete.title"),
+        subtitle: t("adminUsersPage.dialogs.delete.subtitle"),
+        reason: t("adminUsersPage.dialogs.delete.reasonLabel"),
+      },
+      reactivate: {
+        title: t("adminUsersPage.dialogs.reactivate.title"),
+        subtitle: t("adminUsersPage.dialogs.reactivate.subtitle"),
+        reason: t("adminUsersPage.dialogs.reactivate.reasonLabel"),
+      },
+    }[dialogType];
+
+    return (
+      <CommonActionDialog
+        title={config.title}
+        subtitle={config.subtitle}
+        reason={config.reason}
+        placeholder={t("adminUsersPage.dialogs.placeholder")}
+        handleCancel={handleDialogClose}
+        onSubmit={handleConfirm}
+      />
+    );
+  };
+
+  return (
+    <>
+      <IconButton size="small" onClick={handleMenuOpen}>
+        <MoreVertIcon fontSize="small" />
+      </IconButton>
+      <Menu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleMenuClose}
+        PaperProps={{
+          style: {
+            minWidth: "160px",
+            boxShadow: "0px 4px 20px 0px #0000001A",
+            borderRadius: "12px",
+          },
+        }}
+      >
+        <MenuItem onClick={(e) => {
+          e.stopPropagation();
+          handleDialogOpen("reactivate");
+        }}>
+          <Typography fontSize="14px" color={colors["Gray-700"]}>{t("adminUsersPage.menu.reactivate")}</Typography>
+        </MenuItem>
+        <MenuItem onClick={(e) => {
+          e.stopPropagation();
+          handleDialogOpen("block");
+        }}>
+          <Typography fontSize="14px" color={colors["Gray-700"]}>{t("adminUsersPage.menu.block")}</Typography>
+        </MenuItem>
+        <MenuItem onClick={(e) => {
+          e.stopPropagation();
+          handleDialogOpen("delete");
+        }}>
+          <Typography fontSize="14px" color={colors["Error-600"]}>{t("adminUsersPage.menu.delete")}</Typography>
+        </MenuItem>
+      </Menu>
+
+      <div onClick={(e) => e.stopPropagation()}>
+        <GlobalDialog
+          open={!!dialogType}
+          handleClose={handleDialogClose}
+          component={dialogContent()}
+        />
+      </div>
+    </>
+  );
+};
+
+
 // Helper to create admin user with status tracking
 const createAdminWithStatus = (
   _id: string,
@@ -69,7 +183,6 @@ const createAdminWithStatus = (
   role: string,
   createdAt: string,
   statusValue: string,
-  action: JSX.Element
 ): AdminUserData & { statusValue: string } => {
   return {
     ...createAdminUserData(
@@ -79,7 +192,10 @@ const createAdminWithStatus = (
       role,
       createdAt,
       <StatusBadge status={statusValue} />,
-      action
+      <Stack direction="row" spacing={1}>
+        <IconButton size="small"><VisibilityIcon fontSize="small" /></IconButton>
+        <AdminUserActions userId={_id} status={statusValue} />
+      </Stack>
     ),
     statusValue,
   };
@@ -98,66 +214,16 @@ export default function AdminUsers() {
 
   // Sample data based on image
   const sampleAdminUsers: (AdminUserData & { statusValue: string })[] = useMemo(() => [
-    createAdminWithStatus("001", "Olivia Rhye", "olivia@untitledui.com", "Super Admin", "2025-05-01 11:00 AM UTC", "Active",
-      <Stack direction="row" spacing={1}>
-        <IconButton size="small"><VisibilityIcon fontSize="small" /></IconButton>
-        <IconButton size="small"><MoreVertIcon fontSize="small" /></IconButton>
-      </Stack>
-    ),
-    createAdminWithStatus("002", "Phoenix Baker", "phoenix@untitledui.com", "Content Moderator", "2025-05-01 11:00 AM UTC", "Blocked",
-      <Stack direction="row" spacing={1}>
-        <IconButton size="small"><VisibilityIcon fontSize="small" /></IconButton>
-        <IconButton size="small"><MoreVertIcon fontSize="small" /></IconButton>
-      </Stack>
-    ),
-    createAdminWithStatus("003", "Lana Steiner", "lana@untitledui.com", "Content Moderator", "2025-05-01 11:00 AM UTC", "Deleted",
-      <Stack direction="row" spacing={1}>
-        <IconButton size="small"><VisibilityIcon fontSize="small" /></IconButton>
-        <IconButton size="small"><MoreVertIcon fontSize="small" /></IconButton>
-      </Stack>
-    ),
-    createAdminWithStatus("004", "Demi Wilkinson", "demi@untitledui.com", "Super Admin", "2025-05-01 11:00 AM UTC", "Active",
-      <Stack direction="row" spacing={1}>
-        <IconButton size="small"><VisibilityIcon fontSize="small" /></IconButton>
-        <IconButton size="small"><MoreVertIcon fontSize="small" /></IconButton>
-      </Stack>
-    ),
-    createAdminWithStatus("005", "Candice Wu", "candice@untitledui.com", "Content Moderator", "2025-05-01 11:00 AM UTC", "Active",
-      <Stack direction="row" spacing={1}>
-        <IconButton size="small"><VisibilityIcon fontSize="small" /></IconButton>
-        <IconButton size="small"><MoreVertIcon fontSize="small" /></IconButton>
-      </Stack>
-    ),
-    createAdminWithStatus("006", "Natali Craig", "natali@untitledui.com", "Marketing", "2025-05-01 11:00 AM UTC", "Active",
-      <Stack direction="row" spacing={1}>
-        <IconButton size="small"><VisibilityIcon fontSize="small" /></IconButton>
-        <IconButton size="small"><MoreVertIcon fontSize="small" /></IconButton>
-      </Stack>
-    ),
-    createAdminWithStatus("007", "Drew Cano", "drew@untitledui.com", "Compliance Officer", "2025-05-01 11:00 AM UTC", "Active",
-      <Stack direction="row" spacing={1}>
-        <IconButton size="small"><VisibilityIcon fontSize="small" /></IconButton>
-        <IconButton size="small"><MoreVertIcon fontSize="small" /></IconButton>
-      </Stack>
-    ),
-    createAdminWithStatus("008", "Orlando Diggs", "orlando@untitledui.com", "Support Desk", "2025-05-01 11:00 AM UTC", "Active",
-      <Stack direction="row" spacing={1}>
-        <IconButton size="small"><VisibilityIcon fontSize="small" /></IconButton>
-        <IconButton size="small"><MoreVertIcon fontSize="small" /></IconButton>
-      </Stack>
-    ),
-    createAdminWithStatus("009", "Andi Lane", "andi@untitledui.com", "Support Desk", "2025-05-01 11:00 AM UTC", "Active",
-      <Stack direction="row" spacing={1}>
-        <IconButton size="small"><VisibilityIcon fontSize="small" /></IconButton>
-        <IconButton size="small"><MoreVertIcon fontSize="small" /></IconButton>
-      </Stack>
-    ),
-    createAdminWithStatus("010", "Kate Morrison", "kate@untitledui.com", "Support Desk", "2025-05-01 11:00 AM UTC", "Active",
-      <Stack direction="row" spacing={1}>
-        <IconButton size="small"><VisibilityIcon fontSize="small" /></IconButton>
-        <IconButton size="small"><MoreVertIcon fontSize="small" /></IconButton>
-      </Stack>
-    ),
+    createAdminWithStatus("001", "Olivia Rhye", "olivia@untitledui.com", "Super Admin", "2025-05-01 11:00 AM UTC", "Active"),
+    createAdminWithStatus("002", "Phoenix Baker", "phoenix@untitledui.com", "Content Moderator", "2025-05-01 11:00 AM UTC", "Blocked"),
+    createAdminWithStatus("003", "Lana Steiner", "lana@untitledui.com", "Content Moderator", "2025-05-01 11:00 AM UTC", "Deleted"),
+    createAdminWithStatus("004", "Demi Wilkinson", "demi@untitledui.com", "Super Admin", "2025-05-01 11:00 AM UTC", "Active"),
+    createAdminWithStatus("005", "Candice Wu", "candice@untitledui.com", "Content Moderator", "2025-05-01 11:00 AM UTC", "Active"),
+    createAdminWithStatus("006", "Natali Craig", "natali@untitledui.com", "Marketing", "2025-05-01 11:00 AM UTC", "Active"),
+    createAdminWithStatus("007", "Drew Cano", "drew@untitledui.com", "Compliance Officer", "2025-05-01 11:00 AM UTC", "Active"),
+    createAdminWithStatus("008", "Orlando Diggs", "orlando@untitledui.com", "Support Desk", "2025-05-01 11:00 AM UTC", "Active"),
+    createAdminWithStatus("009", "Andi Lane", "andi@untitledui.com", "Support Desk", "2025-05-01 11:00 AM UTC", "Active"),
+    createAdminWithStatus("010", "Kate Morrison", "kate@untitledui.com", "Support Desk", "2025-05-01 11:00 AM UTC", "Active"),
   ], []);
 
   const filteredAdmins = useMemo(() => {

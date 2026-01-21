@@ -15,6 +15,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useTranslation } from "react-i18next";
 import { colors } from "../../../utils/constants";
 import { StyledActionButton } from "../../../utils/helper";
+import GlobalDialog from "../../../components/dialog";
+import CommonDialog from "../../../components/dialog/dialog-content/CommonDialog";
 
 const StyledTextField = styled(TextField)(() => ({
     "& .MuiOutlinedInput-root": {
@@ -77,6 +79,7 @@ const UserRoleDrawer: React.FC<UserRoleDrawerProps> = ({
     const { t } = useTranslation();
     const [roleTitle, setRoleTitle] = useState("");
     const [selectedPermissions, setSelectedPermissions] = useState<string[]>([]);
+    const [showConfirmDialog, setShowConfirmDialog] = useState(false);
 
     useEffect(() => {
         if (open && initialData) {
@@ -86,6 +89,7 @@ const UserRoleDrawer: React.FC<UserRoleDrawerProps> = ({
             setRoleTitle("");
             setSelectedPermissions([]);
         }
+        setShowConfirmDialog(false);
     }, [open, initialData]);
 
     const accessRights: AccessRight[] = [
@@ -250,7 +254,7 @@ const UserRoleDrawer: React.FC<UserRoleDrawerProps> = ({
                             buttonType="secondary"
 
                             variant="contained"
-                            onClick={onClose}
+                            onClick={() => setShowConfirmDialog(true)}
 
                         >
                             {mode === "create" ? t("roleDrawer.createRole") : t("roleDrawer.updateRole")}
@@ -258,6 +262,25 @@ const UserRoleDrawer: React.FC<UserRoleDrawerProps> = ({
                     </Stack>
                 </Box>
             </Box>
+
+            {/* Confirmation Dialog */}
+            <GlobalDialog
+                open={showConfirmDialog}
+                handleClose={() => setShowConfirmDialog(false)}
+                component={
+                    <CommonDialog
+                        title={mode === "create" ? t("userRolesPage.dialogs.create.title") : t("userRolesPage.dialogs.update.title")}
+                        subTitle={mode === "create" ? t("userRolesPage.dialogs.create.subtitle") : t("userRolesPage.dialogs.update.subtitle")}
+                        handleCancel={() => setShowConfirmDialog(false)}
+                        handleConfirm={() => {
+                            console.log("Confirmed:", { roleTitle, selectedPermissions, mode });
+                            // Perform actual create/update operation here
+                            setShowConfirmDialog(false);
+                            onClose();
+                        }}
+                    />
+                }
+            />
         </Drawer>
     );
 };

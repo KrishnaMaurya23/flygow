@@ -1,8 +1,11 @@
+import { useState } from "react";
 import { Box, Stack, Typography, IconButton, useTheme, Divider } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { colors } from "../../../utils/constants";
 import { StyledActionButton } from "../../../utils/helper";
+import GlobalDialog from "../../../components/dialog";
+import CommonActionDialog from "../../../components/dialog/dialog-content/CommonActionDialog";
 
 interface InfoItemProps {
     label: string;
@@ -40,6 +43,54 @@ export default function CustomerInfoCard() {
     const { t } = useTranslation();
     const theme = useTheme();
     const isRtl = theme.direction === "rtl";
+
+    const [dialogType, setDialogType] = useState<"block" | "delete" | "reactivate" | null>(null);
+
+    const handleOpenDialog = (type: "block" | "delete" | "reactivate") => {
+        setDialogType(type);
+    };
+
+    const handleCloseDialog = () => {
+        setDialogType(null);
+    };
+
+    const handleConfirm = (data: any) => {
+        console.log(`Confirmed ${dialogType}:`, data);
+        handleCloseDialog();
+    };
+
+    const dialogContent = () => {
+        if (!dialogType) return <></>;
+
+        const config = {
+            block: {
+                title: t("customerPage.dialogs.block.title"),
+                subtitle: t("customerPage.dialogs.block.subtitle"),
+                reason: t("customerPage.dialogs.block.reasonLabel"),
+            },
+            delete: {
+                title: t("customerPage.dialogs.delete.title"),
+                subtitle: t("customerPage.dialogs.delete.subtitle"),
+                reason: t("customerPage.dialogs.delete.reasonLabel"),
+            },
+            reactivate: {
+                title: t("customerPage.dialogs.reactivate.title"),
+                subtitle: t("customerPage.dialogs.reactivate.subtitle"),
+                reason: t("customerPage.dialogs.reactivate.reasonLabel"),
+            },
+        }[dialogType];
+
+        return (
+            <CommonActionDialog
+                title={config.title}
+                subtitle={config.subtitle}
+                reason={config.reason}
+                placeholder={t("customerPage.dialogs.placeholder")}
+                handleCancel={handleCloseDialog}
+                onSubmit={handleConfirm}
+            />
+        );
+    };
 
     return (
         <Box sx={{ width: "100%", }}>
@@ -109,10 +160,18 @@ export default function CustomerInfoCard() {
                         sx={{ width: { xs: "100%", sm: "auto" } }}
                     >
                         <StyledActionButton
+                            variant="outlined"
+                            buttonType="secondary" // Or success if available, using secondary for now
+                            buttonStyle="flat"
+                            onClick={() => handleOpenDialog("reactivate")}
+                        >
+                            {t("customerPage.menu.reactivate")}
+                        </StyledActionButton>
+                        <StyledActionButton
                             variant="contained"
                             buttonType="error"
                             buttonStyle="flat"
-
+                            onClick={() => handleOpenDialog("delete")}
                         >
                             {t("buttons.delete")}
                         </StyledActionButton>
@@ -120,6 +179,7 @@ export default function CustomerInfoCard() {
                             variant="outlined"
                             buttonType="error"
                             buttonStyle="flat"
+                            onClick={() => handleOpenDialog("block")}
                         >
                             {t("buttons.block")}
                         </StyledActionButton>
@@ -139,6 +199,12 @@ export default function CustomerInfoCard() {
                 </Stack>
                 <Divider sx={{ my: 2 }} />
             </Box>
+
+            <GlobalDialog
+                open={!!dialogType}
+                handleClose={handleCloseDialog}
+                component={dialogContent()}
+            />
         </Box>
     );
 }

@@ -1,8 +1,11 @@
+import { useState } from "react";
 import { Box, Stack, Typography, IconButton, Divider, useTheme } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { colors } from "../../../utils/constants";
 import { StyledActionButton } from "../../../utils/helper";
+import GlobalDialog from "../../../components/dialog";
+import CommonActionDialog from "../../../components/dialog/dialog-content/CommonActionDialog";
 
 interface InfoItemProps {
   label: string;
@@ -44,6 +47,49 @@ export default function ShipmentDetailsCard() {
   const { t } = useTranslation();
   const theme = useTheme();
   const isRtl = theme.direction === "rtl";
+
+  const [dialogType, setDialogType] = useState<"cancel" | "onHold" | null>(null);
+
+  const handleOpenDialog = (type: "cancel" | "onHold") => {
+    setDialogType(type);
+  };
+
+  const handleCloseDialog = () => {
+    setDialogType(null);
+  };
+
+  const handleConfirm = (data: any) => {
+    console.log("Confirmed action:", dialogType, data);
+    handleCloseDialog();
+  };
+
+  const dialogContent = () => {
+    if (dialogType === "cancel") {
+      return (
+        <CommonActionDialog
+          title={t("shipmentDetails.dialogs.cancel.title")}
+          subtitle={t("shipmentDetails.dialogs.cancel.subtitle")}
+          reason={t("shipmentDetails.dialogs.cancel.reasonLabel")}
+          placeholder={t("shipmentDetails.dialogs.placeholder")}
+          handleCancel={handleCloseDialog}
+          onSubmit={handleConfirm}
+        />
+      );
+    }
+    if (dialogType === "onHold") {
+      return (
+        <CommonActionDialog
+          title={t("shipmentDetails.dialogs.onHold.title")}
+          subtitle={t("shipmentDetails.dialogs.onHold.subtitle")}
+          reason={t("shipmentDetails.dialogs.onHold.reasonLabel")}
+          placeholder={t("shipmentDetails.dialogs.placeholder")}
+          handleCancel={handleCloseDialog}
+          onSubmit={handleConfirm}
+        />
+      );
+    }
+    return <></>;
+  };
 
   return (
     <Box
@@ -160,6 +206,7 @@ export default function ShipmentDetailsCard() {
             buttonStyle="rounded"
             fullWidth={false}
             sx={{ width: { xs: "100%", sm: "auto" } }}
+            onClick={() => handleOpenDialog("cancel")}
           >
             {t("shipmentDetails.cancelShipment")}
           </StyledActionButton>
@@ -169,6 +216,7 @@ export default function ShipmentDetailsCard() {
             buttonStyle="rounded"
             fullWidth={false}
             sx={{ width: { xs: "100%", sm: "auto" } }}
+            onClick={() => handleOpenDialog("onHold")}
           >
             {t("shipmentDetails.onHoldShipment")}
           </StyledActionButton>
@@ -225,6 +273,12 @@ export default function ShipmentDetailsCard() {
           <InfoItem label={t("shipmentDetails.totalPrice")} value="SAR 122.00" />
         </Box>
       </Box>
+
+      <GlobalDialog
+        open={!!dialogType}
+        handleClose={handleCloseDialog}
+        component={dialogContent()}
+      />
     </Box>
   );
 }

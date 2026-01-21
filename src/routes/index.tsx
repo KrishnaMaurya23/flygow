@@ -15,6 +15,7 @@ import Customers from "../pages/customers";
 import AirportHandler from "../pages/airport-handler";
 import Transactions from "../pages/transactions";
 import CouponManagement from "../pages/coupon-management";
+import CancellationPolicy from "../pages/cancellation-policy";
 import AppUsers from "../pages/app-users";
 import UserCohorts from "../pages/user-cohorts";
 
@@ -225,6 +226,16 @@ export default function AppRoutes() {
       element: (
         <PrivateRoute>
           <CouponManagement />
+        </PrivateRoute>
+      ),
+    },
+
+    // Cancellation Policy
+    {
+      path: "/cancellation-policy",
+      element: (
+        <PrivateRoute>
+          <CancellationPolicy />
         </PrivateRoute>
       ),
     },

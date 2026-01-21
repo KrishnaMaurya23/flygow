@@ -350,6 +350,7 @@ export default function AdminLayout(props: any) {
               'airport-operations': 'airport-operations',
               'manage-admin-users': 'manage-admin-users',
               'coupon-management': 'coupon-management',
+              'cancellation-policy': 'cancellation-policy',
               // Children mapping to enable submenu selection
               'master-city-table': 'master-city-table',
               'airport-location': 'airport-location',
@@ -424,6 +425,11 @@ export default function AdminLayout(props: any) {
       title: t("couponManagement"),
       icon: <NavigationIcon variant="coupon-management" />,
     },
+    {
+      segment: "cancellation-policy",
+      title: t("cancellationPolicy"),
+      icon: <NavigationIcon variant="cancellation-policy" />,
+    },
   ];
   const isXs = useMediaQuery(muiTheme.breakpoints.down('sm'));
   const isMd = useMediaQuery(muiTheme.breakpoints.down('md'));
@@ -444,7 +450,7 @@ export default function AdminLayout(props: any) {
     // Simple selected segments
     const selectedSegments = [
       "shipments", "customers", "airport-handler",
-      "transactions", "coupon-management", "master-city-table",
+      "transactions", "coupon-management", "cancellation-policy", "master-city-table",
       "airport-location", "shipment-pricing", "delivery-assignment"
     ];
 

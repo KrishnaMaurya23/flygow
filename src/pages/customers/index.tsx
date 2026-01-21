@@ -6,9 +6,12 @@ import {
   Stack,
   Chip,
   IconButton,
+  Menu,
+  MenuItem,
 } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { useTranslation } from "react-i18next";
 import AdminLayout from "../../layouts/AdminLayout";
 import GlobalTable from "../../components/globaltable";
 import GlobalSearch from "../../components/global-search/GlobalSearch";
@@ -19,6 +22,8 @@ import {
 } from "../../utils/types";
 import { colors } from "../../utils/constants";
 import SelectFilter from "../../components/select-filter/SelectFilter";
+import GlobalDialog from "../../components/dialog";
+import CommonActionDialog from "../../components/dialog/dialog-content/CommonActionDialog";
 
 // Status color function for Customers
 const getStatusColor = (status: string) => {
@@ -57,6 +62,116 @@ const StatusBadge = ({ status }: { status: string }) => {
   );
 };
 
+// Customer Actions Component with Menu and Dialogs
+const CustomerActions = ({ userId, status }: { userId: string; status: string }) => {
+  const { t } = useTranslation();
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [dialogType, setDialogType] = useState<"block" | "delete" | "reactivate" | null>(null);
+
+  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    event.stopPropagation();
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleDialogOpen = (type: "block" | "delete" | "reactivate") => {
+    setDialogType(type);
+    handleMenuClose();
+  };
+
+  const handleDialogClose = () => {
+    setDialogType(null);
+  };
+
+  const handleConfirm = (data: any) => {
+    console.log(`Confirmed ${dialogType} for user ${userId}:`, data);
+    handleDialogClose();
+  };
+
+  const dialogContent = () => {
+    if (!dialogType) return <></>;
+
+    const config = {
+      block: {
+        title: t("customerPage.dialogs.block.title"),
+        subtitle: t("customerPage.dialogs.block.subtitle"),
+        reason: t("customerPage.dialogs.block.reasonLabel"),
+      },
+      delete: {
+        title: t("customerPage.dialogs.delete.title"),
+        subtitle: t("customerPage.dialogs.delete.subtitle"),
+        reason: t("customerPage.dialogs.delete.reasonLabel"),
+      },
+      reactivate: {
+        title: t("customerPage.dialogs.reactivate.title"),
+        subtitle: t("customerPage.dialogs.reactivate.subtitle"),
+        reason: t("customerPage.dialogs.reactivate.reasonLabel"),
+      },
+    }[dialogType];
+
+    return (
+      <CommonActionDialog
+        title={config.title}
+        subtitle={config.subtitle}
+        reason={config.reason}
+        placeholder={t("customerPage.dialogs.placeholder")}
+        handleCancel={handleDialogClose}
+        onSubmit={handleConfirm}
+      />
+    );
+  };
+
+  return (
+    <>
+      <IconButton size="small" onClick={handleMenuOpen}>
+        <MoreVertIcon fontSize="small" />
+      </IconButton>
+      <Menu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleMenuClose}
+        PaperProps={{
+          style: {
+            minWidth: "160px",
+            boxShadow: "0px 4px 20px 0px #0000001A",
+            borderRadius: "12px",
+          },
+        }}
+      >
+        <MenuItem onClick={(e) => {
+          e.stopPropagation();
+          handleDialogOpen("reactivate");
+        }}>
+          <Typography fontSize="14px" color={colors["Gray-700"]}>{t("customerPage.menu.reactivate")}</Typography>
+        </MenuItem>
+        <MenuItem onClick={(e) => {
+          e.stopPropagation();
+          handleDialogOpen("block");
+        }}>
+          <Typography fontSize="14px" color={colors["Gray-700"]}>{t("customerPage.menu.block")}</Typography>
+        </MenuItem>
+        <MenuItem onClick={(e) => {
+          e.stopPropagation();
+          handleDialogOpen("delete");
+        }}>
+          <Typography fontSize="14px" color={colors["Error-600"]}>{t("customerPage.menu.delete")}</Typography>
+        </MenuItem>
+      </Menu>
+
+      <div onClick={(e) => e.stopPropagation()}>
+        <GlobalDialog
+          open={!!dialogType}
+          handleClose={handleDialogClose}
+          component={dialogContent()}
+        />
+      </div>
+    </>
+  );
+};
+
 // Helper to create customer with status tracking
 const createCustomerWithStatus = (
   userId: string,
@@ -64,7 +179,6 @@ const createCustomerWithStatus = (
   registrationDate: string,
   phoneNumber: string | null,
   statusValue: string,
-  action: JSX.Element
 ): CustomerData & { statusValue: string } => {
   return {
     ...createCustomerData(
@@ -73,7 +187,11 @@ const createCustomerWithStatus = (
       registrationDate,
       phoneNumber,
       <StatusBadge status={statusValue} />,
-      action
+      // Render Actions
+      <Stack direction="row" spacing={1}>
+        <IconButton size="small"><VisibilityIcon fontSize="small" /></IconButton>
+        <CustomerActions userId={userId} status={statusValue} />
+      </Stack>
     ),
     statusValue,
   };
@@ -81,66 +199,16 @@ const createCustomerWithStatus = (
 
 // Sample data based on image
 const sampleCustomers: (CustomerData & { statusValue: string })[] = [
-  createCustomerWithStatus("001", "Olivia Rhye", "Mar 20, 2025", "+966 9877827388", "Active",
-    <Stack direction="row" spacing={1}>
-      <IconButton size="small"><VisibilityIcon fontSize="small" /></IconButton>
-      <IconButton size="small"><MoreVertIcon fontSize="small" /></IconButton>
-    </Stack>
-  ),
-  createCustomerWithStatus("002", "Phoenix Baker", "Mar 20, 2025", "+966 9877827388", "Blocked",
-    <Stack direction="row" spacing={1}>
-      <IconButton size="small"><VisibilityIcon fontSize="small" /></IconButton>
-      <IconButton size="small"><MoreVertIcon fontSize="small" /></IconButton>
-    </Stack>
-  ),
-  createCustomerWithStatus("003", "Lana Steiner", "Mar 20, 2025", "+966 9877827388", "Deleted",
-    <Stack direction="row" spacing={1}>
-      <IconButton size="small"><VisibilityIcon fontSize="small" /></IconButton>
-      <IconButton size="small"><MoreVertIcon fontSize="small" /></IconButton>
-    </Stack>
-  ),
-  createCustomerWithStatus("004", "Demi Wilkinson", "Mar 20, 2025", "+966 9877827388", "Active",
-    <Stack direction="row" spacing={1}>
-      <IconButton size="small"><VisibilityIcon fontSize="small" /></IconButton>
-      <IconButton size="small"><MoreVertIcon fontSize="small" /></IconButton>
-    </Stack>
-  ),
-  createCustomerWithStatus("005", "Candice Wu", "Mar 20, 2025", "+966 9877827388", "Active",
-    <Stack direction="row" spacing={1}>
-      <IconButton size="small"><VisibilityIcon fontSize="small" /></IconButton>
-      <IconButton size="small"><MoreVertIcon fontSize="small" /></IconButton>
-    </Stack>
-  ),
-  createCustomerWithStatus("006", "Natali Craig", "Mar 20, 2025", "+966 9877827388", "Active",
-    <Stack direction="row" spacing={1}>
-      <IconButton size="small"><VisibilityIcon fontSize="small" /></IconButton>
-      <IconButton size="small"><MoreVertIcon fontSize="small" /></IconButton>
-    </Stack>
-  ),
-  createCustomerWithStatus("007", "Drew Cano", "Mar 20, 2025", "+966 9877827388", "Active",
-    <Stack direction="row" spacing={1}>
-      <IconButton size="small"><VisibilityIcon fontSize="small" /></IconButton>
-      <IconButton size="small"><MoreVertIcon fontSize="small" /></IconButton>
-    </Stack>
-  ),
-  createCustomerWithStatus("008", "Orlando Diggs", "Mar 20, 2025", "+966 9877827388", "Active",
-    <Stack direction="row" spacing={1}>
-      <IconButton size="small"><VisibilityIcon fontSize="small" /></IconButton>
-      <IconButton size="small"><MoreVertIcon fontSize="small" /></IconButton>
-    </Stack>
-  ),
-  createCustomerWithStatus("009", "Andi Lane", "Mar 20, 2025", "+966 9877827388", "Active",
-    <Stack direction="row" spacing={1}>
-      <IconButton size="small"><VisibilityIcon fontSize="small" /></IconButton>
-      <IconButton size="small"><MoreVertIcon fontSize="small" /></IconButton>
-    </Stack>
-  ),
-  createCustomerWithStatus("010", "Kate Morrison", "Mar 20, 2025", "+966 9877827388", "Active",
-    <Stack direction="row" spacing={1}>
-      <IconButton size="small"><VisibilityIcon fontSize="small" /></IconButton>
-      <IconButton size="small"><MoreVertIcon fontSize="small" /></IconButton>
-    </Stack>
-  ),
+  createCustomerWithStatus("001", "Olivia Rhye", "Mar 20, 2025", "+966 9877827388", "Active"),
+  createCustomerWithStatus("002", "Phoenix Baker", "Mar 20, 2025", "+966 9877827388", "Blocked"),
+  createCustomerWithStatus("003", "Lana Steiner", "Mar 20, 2025", "+966 9877827388", "Deleted"),
+  createCustomerWithStatus("004", "Demi Wilkinson", "Mar 20, 2025", "+966 9877827388", "Active"),
+  createCustomerWithStatus("005", "Candice Wu", "Mar 20, 2025", "+966 9877827388", "Active"),
+  createCustomerWithStatus("006", "Natali Craig", "Mar 20, 2025", "+966 9877827388", "Active"),
+  createCustomerWithStatus("007", "Drew Cano", "Mar 20, 2025", "+966 9877827388", "Active"),
+  createCustomerWithStatus("008", "Orlando Diggs", "Mar 20, 2025", "+966 9877827388", "Active"),
+  createCustomerWithStatus("009", "Andi Lane", "Mar 20, 2025", "+966 9877827388", "Active"),
+  createCustomerWithStatus("010", "Kate Morrison", "Mar 20, 2025", "+966 9877827388", "Active"),
 ];
 
 export default function Customers() {
