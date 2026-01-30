@@ -45,19 +45,28 @@ export default function LoginPage(): JSX.Element {
 
   const onSubmit = async (data: LoginFormInputs) => {
     try {
-      const encryptedEmail = await encryptionService.encrypt(data.email);
-      const encryptedPassword = await encryptionService.encrypt(data.password);
+      // const encryptedEmail = await encryptionService.encrypt(data.email);
+      // const encryptedPassword = await encryptionService.encrypt(data.password);
 
-      if (!encryptedEmail || !encryptedPassword) {
-        throw new Error("Encryption failed");
-      }
+      // if (!encryptedEmail || !encryptedPassword) {
+      //   throw new Error("Encryption failed");
+      // }
 
-      await login({
-        email: encryptedEmail,
-        password: encryptedPassword,
-      }).unwrap();
+      // await login({
+      //   email: encryptedEmail,
+      //   password: encryptedPassword,
+      // }).unwrap();
       // Store the email for OTP verification
       sessionStorage.setItem('loginEmail', data.email);
+      const loginEmail = sessionStorage.getItem('loginEmail') || "";
+
+      navigate("/login-otp-verification", {
+        state: {
+          email: loginEmail,
+          verifyToken: successData?.data?.verifyToken || "",
+          type: "login"
+        },
+      });
     } catch (err: any) {
       console.error("Login error:", err);
     }
